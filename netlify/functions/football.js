@@ -1,12 +1,13 @@
 // netlify/functions/football.js
-// API-Football 서버사이드 프록시 — CORS 완전 해결
+// football-data.org 프록시 (유럽 리그 무료 현재시즌)
+// + api-sports 프록시 (K리그 - 무료플랜 2022~2024만, 데모로 대체)
 
-const API_BASE = 'https://v3.football.api-sports.io';
+const FD_BASE = 'https://api.football-data.org/v4';
 
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+    'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
   };
@@ -15,37 +16,25 @@ exports.handler = async (event) => {
     return { statusCode: 204, headers, body: '' };
   }
 
-  // API 키: 환경변수 우선, 없으면 클라이언트 헤더에서
-  const apiKey = process.env.FOOTBALL_API_KEY || event.headers['x-api-key'];
+  const apiKey = process.env.FOOTBALL_API_KEY;
   if (!apiKey) {
-    return {
-      statusCode: 401,
-      headers,
-      body: JSON.stringify({ error: 'API key required' }),
-    };
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'No API key' }) };
   }
 
   const params = { ...(event.queryStringParameters || {}) };
-  const path = params.path || '/status';
+  const path = params.path || '/competitions';
   delete params.path;
 
   const qs = new URLSearchParams(params).toString();
-  const url = `${API_BASE}${path}${qs ? '?' + qs : ''}`;
+  const url = `${FD_BASE}${path}${qs ? '?' + qs : ''}`;
 
   try {
     const res = await fetch(url, {
-      headers: {
-        'x-apisports-key': apiKey,
-        'x-apisports-host': 'v3.football.api-sports.io',
-      },
+      headers: { 'X-Auth-Token': apiKey }
     });
     const data = await res.json();
     return { statusCode: 200, headers, body: JSON.stringify(data) };
   } catch (err) {
-    return {
-      statusCode: 502,
-      headers,
-      body: JSON.stringify({ error: 'Upstream failed', detail: err.message }),
-    };
+    return { statusCode: 502, headers, body: JSON.stringify({ error: err.message }) };
   }
 };
