@@ -12,25 +12,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 
 :root{
-  --bg:#050c17;
-  --bg2:#070f1c;
-  --bg3:#0c1a2e;
-  --bg4:#0f2040;
-  --accent:#00c3ff;
-  --accent2:#0088ff;
+  --bg:#050e08;
+  --bg2:#060f09;
+  --bg3:#091408;
+  --bg4:#0d1e0f;
+  --grass:#00ff87;
+  --grass2:#00cc6a;
+  --grass3:#009e52;
+  --amber:#ffb800;
   --red:#ff3355;
-  --gold:#ffc107;
-  --green:#00e676;
-  --purple:#7c4dff;
-  --text:#ddeeff;
-  --text2:#6a8caa;
-  --text3:#2d4a66;
-  --border:rgba(0,195,255,.12);
-  --border2:rgba(0,195,255,.25);
-  --card:rgba(12,26,46,.9);
-  --card2:rgba(15,32,64,.95);
-  --glow:0 0 20px rgba(0,195,255,.15);
-  --glow2:0 0 40px rgba(0,195,255,.08);
+  --white:#f0fff4;
+  --text:#c8ffd4;
+  --text2:#5a9970;
+  --text3:#2a5535;
+  --border:rgba(0,255,135,.1);
+  --border2:rgba(0,255,135,.22);
+  --card:rgba(6,15,9,.92);
+  --card2:rgba(9,20,8,.96);
+  --glow:0 0 24px rgba(0,255,135,.18);
+  --glow2:0 0 40px rgba(0,255,135,.07);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -40,137 +40,163 @@ body{
   color:var(--text);
   font-family:'Noto Sans KR',sans-serif;
   max-width:480px;margin:0 auto;
-  min-height:100%;
-  overflow-x:hidden;
+  min-height:100%;overflow-x:hidden;
+  /* 잔디 줄무늬 배경 */
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(0,136,255,.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(0,195,255,.03) 0%, transparent 50%);
+    repeating-linear-gradient(
+      180deg,
+      rgba(0,255,135,.013) 0px,
+      rgba(0,255,135,.013) 28px,
+      transparent 28px,
+      transparent 56px
+    ),
+    radial-gradient(ellipse at 50% 0%, rgba(0,255,135,.06) 0%, transparent 60%);
 }
 
 /* ── 상단바 ── */
 .topbar{
-  background:linear-gradient(180deg,rgba(7,15,28,1) 0%,rgba(5,12,23,.98) 100%);
+  background:linear-gradient(180deg,#050e08 0%,rgba(5,14,8,.97) 100%);
   border-bottom:1px solid var(--border2);
-  padding:11px 15px;
+  padding:10px 14px;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:100;
-  box-shadow:0 2px 20px rgba(0,0,0,.5);
+  box-shadow:0 2px 30px rgba(0,0,0,.7),0 1px 0 rgba(0,255,135,.15);
 }
 .logo{
   font-family:'Bebas Neue',sans-serif;
-  font-size:22px;letter-spacing:4px;
-  background:linear-gradient(135deg,#00c3ff,#0088ff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:drop-shadow(0 0 8px rgba(0,195,255,.4));
+  font-size:21px;letter-spacing:3px;
+  color:var(--grass);
+  filter:drop-shadow(0 0 10px rgba(0,255,135,.5));
+  display:flex;align-items:center;gap:6px;
 }
-.top-right{display:flex;align-items:center;gap:8px;}
+.logo-ball{
+  font-size:18px;
+  animation:spin3d 8s linear infinite;
+  display:inline-block;
+}
+@keyframes spin3d{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+.top-right{display:flex;align-items:center;gap:7px;}
 .live-badge{
   font-size:9px;font-weight:700;
-  background:rgba(255,51,85,.15);
+  background:rgba(255,51,85,.12);
   color:var(--red);
-  padding:3px 8px;border-radius:20px;
+  padding:3px 9px;border-radius:20px;
   border:1px solid rgba(255,51,85,.3);
-  animation:livepulse 2s infinite;
   display:none;
+  animation:livepulse 1.8s infinite;
 }
-@keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(255,51,85,.4);}50%{box-shadow:0 0 0 4px rgba(255,51,85,0);}}
+@keyframes livepulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,51,85,.5),0 0 8px rgba(255,51,85,.3);}
+  50%{box-shadow:0 0 0 5px rgba(255,51,85,0),0 0 0 rgba(255,51,85,0);}
+}
 .icon-btn{
-  background:rgba(0,195,255,.08);
+  background:rgba(0,255,135,.07);
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:9px;
   cursor:pointer;font-size:15px;
-  color:var(--text2);padding:5px 8px;
+  color:var(--text2);padding:6px 9px;
   line-height:1;transition:all .2s;
 }
-.icon-btn:active{background:rgba(0,195,255,.2);color:var(--accent);}
+.icon-btn:active{background:rgba(0,255,135,.18);color:var(--grass);}
 
 /* ── 리그탭 ── */
 .ltabs{
   background:var(--bg2);
   display:flex;overflow-x:auto;
-  padding:6px 10px 0;gap:3px;
+  padding:6px 10px 0;gap:2px;
   border-bottom:1px solid var(--border);
   scrollbar-width:none;
+  position:relative;
+}
+.ltabs::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--grass2),transparent);
+  opacity:.4;
 }
 .ltabs::-webkit-scrollbar{display:none;}
 .ltab{
   display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:4px 10px 8px;cursor:pointer;
+  padding:4px 9px 8px;cursor:pointer;
   border-bottom:2px solid transparent;flex-shrink:0;
-  transition:all .2s;border-radius:8px 8px 0 0;
+  transition:all .15s;border-radius:8px 8px 0 0;
 }
-.ltab:active{background:rgba(0,195,255,.05);}
-.ltab.on{border-bottom:2px solid var(--accent);}
-.ltab img{width:20px;height:20px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
+.ltab:active{background:rgba(0,255,135,.06);}
+.ltab.on{border-bottom:2px solid var(--grass);}
+.ltab img{width:20px;height:20px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6));}
 .ltab span{font-size:8px;color:var(--text3);white-space:nowrap;font-weight:500;}
-.ltab.on span{color:var(--accent);}
+.ltab.on span{color:var(--grass);text-shadow:0 0 8px rgba(0,255,135,.4);}
 
 /* ── 하단 네비 ── */
 .bnav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);
   width:100%;max-width:480px;
-  background:linear-gradient(0deg,rgba(5,12,23,1) 0%,rgba(7,15,28,.97) 100%);
+  background:linear-gradient(0deg,#050e08 0%,rgba(6,15,9,.97) 100%);
   border-top:1px solid var(--border2);
-  display:flex;padding:8px 0 max(12px,env(safe-area-inset-bottom));
+  display:flex;padding:9px 0 max(13px,env(safe-area-inset-bottom));
   z-index:100;
-  box-shadow:0 -4px 20px rgba(0,0,0,.4);
+  box-shadow:0 -4px 30px rgba(0,0,0,.6),0 -1px 0 rgba(0,255,135,.12);
 }
-.nb{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-  cursor:pointer;background:none;border:none;transition:all .2s;
-}
-.nb:active{transform:scale(.92);}
-.nb-ic{font-size:18px;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
-.nb-lb{font-size:9px;color:var(--text3);font-family:'Noto Sans KR';font-weight:500;}
-.nb.on .nb-lb{color:var(--accent);}
-.nb.on .nb-ic{filter:drop-shadow(0 0 6px rgba(0,195,255,.6));}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;background:none;border:none;transition:all .2s;}
+.nb:active{transform:scale(.9);}
+.nb-ic{font-size:19px;line-height:1;}
+.nb-lb{font-size:9px;color:var(--text3);font-family:'Noto Sans KR';font-weight:500;transition:all .2s;}
+.nb.on .nb-lb{color:var(--grass);}
+.nb.on .nb-ic{filter:drop-shadow(0 0 6px rgba(0,255,135,.7));}
 
 /* ── 페이지 ── */
-.page{display:none;padding-bottom:74px;min-height:60vh;}
+.page{display:none;padding-bottom:76px;min-height:60vh;}
 .page.on{display:block;}
 
 /* ── 섹션 헤더 ── */
 .sec{padding:12px 14px 6px;display:flex;justify-content:space-between;align-items:center;}
 .sl{
-  font-size:10px;font-weight:700;
-  color:var(--accent);letter-spacing:1px;
-  text-transform:uppercase;
-  text-shadow:0 0 10px rgba(0,195,255,.3);
+  font-size:9px;font-weight:700;color:var(--grass2);
+  letter-spacing:1.5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:5px;
 }
+.sl::before{content:'';width:3px;height:12px;background:var(--grass);border-radius:2px;display:inline-block;box-shadow:0 0 6px var(--grass);}
 .sm{font-size:9px;color:var(--text3);}
 
 /* ── 경기 카드 ── */
 .mcard{
-  margin:0 10px 10px;
+  margin:0 10px 9px;
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
+  border-radius:16px;
   padding:12px 14px;
   cursor:pointer;
-  transition:all .2s;
-  box-shadow:var(--glow2);
-  backdrop-filter:blur(10px);
+  transition:all .18s;
+  position:relative;
+  overflow:hidden;
 }
-.mcard:active{background:var(--card2);border-color:var(--border2);box-shadow:var(--glow);}
-.mcard:hover{border-color:var(--border2);}
+.mcard::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at top right,rgba(0,255,135,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.mcard:active{border-color:var(--border2);box-shadow:var(--glow);}
+
 .mc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .lrow{display:flex;align-items:center;gap:5px;}
 .pdot{
   width:7px;height:7px;border-radius:50%;
   background:var(--red);
-  box-shadow:0 0 6px var(--red);
+  box-shadow:0 0 8px var(--red);
   animation:pu 1s infinite;
 }
-@keyframes pu{0%,100%{opacity:1;box-shadow:0 0 6px var(--red);}50%{opacity:.3;box-shadow:none;}}
-.lmin{font-size:11px;font-weight:700;color:var(--red);text-shadow:0 0 8px rgba(255,51,85,.5);}
+@keyframes pu{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.lmin{font-size:11px;font-weight:700;color:var(--red);}
 .ltag{
   font-size:8px;color:var(--text3);
-  background:rgba(255,255,255,.05);
-  padding:3px 8px;border-radius:20px;
-  border:1px solid var(--border);
-  font-weight:500;
+  background:rgba(255,255,255,.04);
+  padding:3px 9px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.07);font-weight:500;
 }
+
 .mct{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .ts{display:flex;align-items:center;gap:7px;flex:1;min-width:0;}
 .ts.r{flex-direction:row-reverse;}
@@ -178,144 +204,115 @@ body{
 .tn.r{text-align:right;}
 .sb{display:flex;align-items:center;gap:4px;flex-shrink:0;}
 .sn{
-  font-size:24px;font-weight:700;color:#fff;
+  font-size:26px;font-weight:700;color:#fff;
   font-family:'Bebas Neue',sans-serif;
   min-width:16px;text-align:center;
-  text-shadow:0 2px 10px rgba(0,0,0,.5);
+  line-height:1;
 }
-.ssep{font-size:14px;color:var(--text3);}
-.mstat{margin-top:8px;display:flex;flex-direction:column;gap:4px;}
+.ssep{font-size:15px;color:var(--text3);font-family:'Bebas Neue',sans-serif;}
+
+.mstat{margin-top:9px;display:flex;flex-direction:column;gap:4px;}
 .srow{display:flex;align-items:center;gap:4px;}
 .sv{font-size:9px;color:var(--text2);width:28px;text-align:right;font-weight:500;}
 .sv.r{text-align:left;}
-.bbg{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
-.bfb{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent2),var(--accent));}
+.bbg{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+.bfb{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--grass3),var(--grass));}
 .bfr{height:100%;border-radius:2px;background:linear-gradient(90deg,#ff6080,var(--red));margin-left:auto;}
 .slab{font-size:8px;color:var(--text3);width:36px;text-align:center;}
 
 /* ── 일정 카드 ── */
 .fcard{
   margin:0 10px 8px;
-  background:rgba(9,18,32,.8);
+  background:rgba(6,14,8,.85);
   border:1px solid var(--border);
-  border-radius:12px;padding:11px 14px;
-  transition:all .2s;
-  backdrop-filter:blur(8px);
+  border-radius:13px;padding:11px 14px;
+  transition:all .18s;position:relative;overflow:hidden;
 }
 .fcard:active{border-color:var(--border2);background:var(--card);}
-.ft{font-size:9px;color:var(--accent);margin-bottom:6px;font-weight:600;letter-spacing:.3px;}
+.ft{font-size:9px;color:var(--grass2);margin-bottom:6px;font-weight:600;letter-spacing:.3px;}
 .fr{display:flex;align-items:center;justify-content:space-between;}
 .fteam{display:flex;align-items:center;gap:6px;}
 .fteam.r{flex-direction:row-reverse;}
 .ftn{font-size:11px;color:var(--text2);font-weight:500;}
-.fvs{
-  font-size:11px;font-weight:700;
-  color:var(--text3);
-  font-family:'Bebas Neue',sans-serif;
-  letter-spacing:1px;
-}
+.fvs{font-size:13px;font-weight:700;color:var(--text3);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
 
 /* ── 날짜 탭 ── */
 .dscroll{
   display:flex;overflow-x:auto;padding:10px 12px;gap:7px;
-  scrollbar-width:none;
-  background:var(--bg2);
+  scrollbar-width:none;background:var(--bg2);
   border-bottom:1px solid var(--border);
 }
 .dscroll::-webkit-scrollbar{display:none;}
 .dpill{
-  display:flex;flex-direction:column;align-items:center;padding:7px 14px;
-  border-radius:24px;cursor:pointer;flex-shrink:0;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.03);
+  display:flex;flex-direction:column;align-items:center;
+  padding:7px 13px;border-radius:26px;cursor:pointer;flex-shrink:0;
+  border:1px solid var(--border);background:rgba(0,255,135,.03);
   transition:all .2s;
 }
-.dpill:active{transform:scale(.95);}
+.dpill:active{transform:scale(.94);}
 .dpill.on{
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  border-color:var(--accent);
-  box-shadow:0 0 15px rgba(0,195,255,.3);
+  background:var(--grass);
+  border-color:var(--grass);
+  box-shadow:0 0 20px rgba(0,255,135,.35),0 4px 12px rgba(0,255,135,.2);
 }
 .dpill .dow{font-size:9px;color:var(--text3);font-weight:500;}
-.dpill.on .dow{color:rgba(255,255,255,.85);}
-.dpill .dom{
-  font-size:17px;font-weight:700;color:var(--text2);
-  font-family:'Bebas Neue',sans-serif;line-height:1.1;
-}
-.dpill.on .dom{color:#fff;}
-.todot{width:4px;height:4px;border-radius:50%;background:var(--accent);margin-top:2px;}
-.dpill.on .todot{background:rgba(255,255,255,.8);}
+.dpill.on .dow{color:rgba(0,20,8,.9);font-weight:700;}
+.dpill .dom{font-size:17px;font-weight:700;color:var(--text2);font-family:'Bebas Neue',sans-serif;line-height:1.1;}
+.dpill.on .dom{color:#001a06;font-weight:900;}
+.todot{width:4px;height:4px;border-radius:50%;background:var(--grass2);margin-top:2px;}
+.dpill.on .todot{background:rgba(0,20,8,.7);}
 
-/* ── 순위표 ── */
+/* ── 순위 ── */
 .sthd{
   display:flex;padding:6px 13px;
-  background:rgba(0,195,255,.04);
+  background:rgba(0,255,135,.04);
   font-size:8px;color:var(--text3);font-weight:700;
   border-bottom:1px solid var(--border);
   letter-spacing:.5px;text-transform:uppercase;
 }
 .strow{
   display:flex;align-items:center;padding:8px 13px;
-  border-bottom:1px solid rgba(0,195,255,.06);
-  transition:background .15s;
+  border-bottom:1px solid rgba(0,255,135,.05);
+  transition:background .15s;position:relative;
 }
-.strow:active{background:rgba(0,195,255,.05);}
+.strow:active{background:rgba(0,255,135,.04);}
+.strow.rank1{background:linear-gradient(90deg,rgba(255,184,0,.06),transparent);}
+.strow.rank1::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);border-radius:0 2px 2px 0;}
 .rnk{
-  font-size:11px;font-weight:700;color:var(--text2);
+  font-size:14px;font-weight:700;color:var(--text3);
   width:18px;text-align:center;flex-shrink:0;
-  font-family:'Bebas Neue',sans-serif;font-size:14px;
+  font-family:'Bebas Neue',sans-serif;
 }
-.rnk.t{color:var(--accent);text-shadow:0 0 8px rgba(0,195,255,.4);}
+.rnk.t{color:var(--grass);text-shadow:0 0 8px rgba(0,255,135,.4);}
 .rnk.b{color:var(--red);}
 .stnm{font-size:11px;color:var(--text);flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .stnum{font-size:10px;color:var(--text2);width:20px;text-align:center;flex-shrink:0;}
-.stpts{
-  font-size:13px;color:#fff;font-weight:700;
-  width:26px;text-align:center;flex-shrink:0;
-  font-family:'Bebas Neue',sans-serif;
-}
+.stpts{font-size:14px;color:#fff;font-weight:700;width:26px;text-align:center;flex-shrink:0;font-family:'Bebas Neue',sans-serif;}
 .fdots{display:flex;gap:2px;flex-shrink:0;}
 .fd{width:9px;height:9px;border-radius:50%;}
 
 /* ── 선수 카드 ── */
-.pcard{
-  margin:0 10px 10px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-  box-shadow:var(--glow2);
-}
+.pcard{margin:0 10px 10px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
 .phero{
-  background:linear-gradient(135deg,rgba(0,136,255,.15),rgba(5,12,23,.8));
+  background:linear-gradient(135deg,rgba(0,100,40,.2),rgba(5,14,8,.8));
   padding:14px;display:flex;gap:12px;align-items:flex-start;
   border-bottom:1px solid var(--border);
 }
 .pav{
   width:54px;height:54px;border-radius:12px;
-  background:linear-gradient(135deg,#0c1a2e,#0f2040);
+  background:linear-gradient(135deg,#091408,#0d1e0f);
   display:flex;align-items:center;justify-content:center;font-size:24px;
   border:1px solid var(--border2);flex-shrink:0;overflow:hidden;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
 }
 .pav img{width:100%;height:100%;object-fit:cover;}
-.pnm{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.pnm{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
 .ptags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;}
-.ptag{
-  font-size:8px;padding:2px 6px;border-radius:20px;
-  background:rgba(255,255,255,.06);color:var(--text2);
-  border:1px solid var(--border);
-}
-.ptag.pos{
-  background:rgba(0,195,255,.12);color:var(--accent);
-  border:1px solid rgba(0,195,255,.3);
-}
+.ptag{font-size:8px;padding:2px 6px;border-radius:20px;background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border);}
+.ptag.pos{background:rgba(0,255,135,.1);color:var(--grass2);border:1px solid rgba(0,255,135,.25);}
 .ptrow{display:flex;align-items:center;gap:4px;}
 .ptrow span{font-size:9px;color:var(--text3);}
 .psgrid{display:grid;grid-template-columns:repeat(4,1fr);}
-.psbox{
-  padding:9px 4px;text-align:center;
-  border-top:1px solid var(--border);
-  border-right:1px solid var(--border);
-}
+.psbox{padding:9px 4px;text-align:center;border-top:1px solid var(--border);border-right:1px solid var(--border);}
 .psbox:nth-child(4n){border-right:none;}
 .psv{font-size:16px;font-weight:700;color:#fff;font-family:'Bebas Neue',sans-serif;}
 .psl{font-size:8px;color:var(--text3);margin-top:2px;}
@@ -324,136 +321,87 @@ body{
 .feat{
   margin:0 10px 10px;
   background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:14px;
-  box-shadow:var(--glow2);
-  backdrop-filter:blur(8px);
+  border-radius:16px;padding:14px;
+  position:relative;overflow:hidden;
 }
-.ftitle{
-  font-size:11px;font-weight:700;color:var(--text);
-  margin-bottom:10px;display:flex;justify-content:space-between;
+.feat::after{
+  content:'';position:absolute;top:0;right:0;
+  width:80px;height:80px;
+  background:radial-gradient(circle,rgba(0,255,135,.05) 0%,transparent 70%);
+  pointer-events:none;
 }
+.ftitle{font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;justify-content:space-between;}
 .ftitle span:last-child{font-size:9px;color:var(--text3);font-weight:400;}
 .domrow{display:flex;align-items:center;gap:5px;margin-bottom:5px;}
 .dv{font-size:9px;color:var(--text2);width:28px;text-align:right;font-weight:500;}
 .dbar{flex:1;height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
-.dfb{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));}
+.dfb{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--grass3),var(--grass));}
 .dfr{height:100%;border-radius:3px;background:linear-gradient(90deg,#ff6080,var(--red));margin-left:auto;}
 .dt{font-size:8px;color:var(--text3);width:32px;text-align:center;}
 .tleg{display:flex;gap:10px;margin-top:6px;}
 .tlegitem{display:flex;align-items:center;gap:3px;font-size:8px;color:var(--text3);}
 .tlegdot{width:8px;height:8px;border-radius:2px;}
+
+/* 배당 버튼 */
 .oddsg{display:flex;gap:5px;margin-bottom:7px;}
 .obtn{
   flex:1;
-  background:rgba(255,255,255,.04);
-  border-radius:10px;padding:9px 4px;
+  background:rgba(0,255,135,.04);
+  border-radius:11px;padding:9px 4px;
   text-align:center;
   border:1px solid var(--border);
-  transition:all .2s;
+  transition:all .18s;
 }
-.obtn:active{background:rgba(0,195,255,.1);border-color:var(--border2);}
+.obtn:active{background:rgba(0,255,135,.12);border-color:var(--border2);}
 .otype{font-size:8px;color:var(--text3);margin-bottom:4px;font-weight:500;}
-.oval{
-  font-size:19px;font-weight:700;color:#fff;
-  font-family:'Bebas Neue',sans-serif;
-}
-.oval.fav{
-  color:var(--accent);
-  text-shadow:0 0 10px rgba(0,195,255,.4);
-}
-.oval.hot{color:var(--gold);}
+.oval{font-size:19px;font-weight:700;color:#fff;font-family:'Bebas Neue',sans-serif;line-height:1.1;}
+.oval.fav{color:var(--grass);text-shadow:0 0 10px rgba(0,255,135,.4);}
+.oval.hot{color:var(--amber);}
 .ochg{font-size:8px;margin-top:2px;}
-.ochg.up{color:var(--green);}
+.ochg.up{color:var(--grass2);}
 .ochg.dn{color:var(--red);}
 .ochg.nc{color:var(--text3);}
 .omore{display:flex;gap:5px;flex-wrap:wrap;}
-.oex{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  border-radius:8px;padding:6px 10px;
-}
-.oextype{font-size:8px;color:var(--text3);margin-bottom:1px;}
+.oex{background:rgba(0,255,135,.03);border:1px solid var(--border);border-radius:9px;padding:6px 10px;}
+.oextype{font-size:8px;color:var(--text3);margin-bottom:2px;}
 .oexval{font-size:13px;font-weight:700;color:#fff;font-family:'Bebas Neue',sans-serif;}
 
 /* ── 설정 ── */
-.setup{
-  margin:12px;
-  background:rgba(0,195,255,.06);
-  border:1px solid rgba(0,195,255,.2);
-  border-radius:14px;padding:16px;
-  backdrop-filter:blur(8px);
-}
-.setup-ttl{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:9px;}
+.setup{margin:12px;background:rgba(0,255,135,.05);border:1px solid rgba(0,255,135,.18);border-radius:16px;padding:16px;}
+.setup-ttl{font-size:13px;font-weight:700;color:var(--grass2);margin-bottom:9px;}
 .setup-step{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start;}
-.step-n{
-  width:22px;height:22px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#fff;font-size:10px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
-  box-shadow:0 2px 8px rgba(0,195,255,.3);
-}
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--grass);color:#001a06;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;box-shadow:0 2px 8px rgba(0,255,135,.3);}
 .step-t{font-size:11px;color:var(--text2);line-height:1.6;}
-.step-t a{color:var(--accent);}
+.step-t a{color:var(--grass2);}
 .inp-row{display:flex;gap:7px;margin-top:5px;}
-.kinput{
-  flex:1;background:rgba(255,255,255,.04);
-  border:1px solid var(--border2);border-radius:10px;
-  padding:11px 13px;color:var(--text);font-size:13px;font-family:'Noto Sans KR';
-  transition:border .2s;
-}
-.kinput:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,195,255,.1);}
-.kbtn{
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  border:none;border-radius:10px;padding:11px 18px;
-  color:#fff;font-size:13px;font-weight:700;cursor:pointer;
-  font-family:'Noto Sans KR';
-  box-shadow:0 4px 15px rgba(0,195,255,.3);
-  transition:all .2s;
-}
-.kbtn:active{transform:scale(.97);box-shadow:0 2px 8px rgba(0,195,255,.2);}
+.kinput{flex:1;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:11px;padding:11px 13px;color:var(--text);font-size:13px;font-family:'Noto Sans KR';transition:all .2s;}
+.kinput:focus{outline:none;border-color:var(--grass);box-shadow:0 0 0 3px rgba(0,255,135,.1);}
+.kbtn{background:var(--grass);border:none;border-radius:11px;padding:11px 18px;color:#001a06;font-size:13px;font-weight:900;cursor:pointer;font-family:'Noto Sans KR';box-shadow:0 4px 15px rgba(0,255,135,.3);transition:all .2s;}
+.kbtn:active{transform:scale(.97);opacity:.9;}
 .kstatus{font-size:10px;margin-top:8px;min-height:16px;}
 
 /* ── 공통 ── */
 .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:14px;}
-.spin{
-  width:32px;height:32px;
-  border:2px solid var(--border2);
-  border-top-color:var(--accent);
-  border-radius:50%;animation:sp .8s linear infinite;
-  box-shadow:0 0 10px rgba(0,195,255,.2);
-}
+.spin{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--grass);border-radius:50%;animation:sp .7s linear infinite;box-shadow:0 0 10px rgba(0,255,135,.2);}
 @keyframes sp{to{transform:rotate(360deg);}}
 .ltxt{font-size:11px;color:var(--text3);}
 .empty{text-align:center;padding:50px 20px;font-size:11px;color:var(--text3);}
 .empty strong{display:block;font-size:14px;color:var(--text2);margin-bottom:8px;}
-.srctag{
-  font-size:8px;color:var(--text3);
-  padding:3px 7px;
-  background:rgba(255,255,255,.04);
-  border-radius:20px;border:1px solid var(--border);
-}
-.chip{
-  display:inline-flex;align-items:center;
-  background:rgba(255,193,7,.1);
-  border:1px solid rgba(255,193,7,.25);
-  color:var(--gold);font-size:9px;padding:3px 9px;border-radius:20px;
-  font-weight:500;
-}
+.srctag{font-size:8px;color:var(--text3);padding:3px 8px;background:rgba(0,255,135,.05);border-radius:20px;border:1px solid var(--border);}
+.chip{display:inline-flex;align-items:center;background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.25);color:var(--amber);font-size:9px;padding:3px 9px;border-radius:20px;font-weight:600;}
 
 @keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.fu{animation:fu .25s ease forwards;}
+.fu{animation:fu .22s ease forwards;}
 
-/* ── 스코어 배지 스타일 (1위 표시) ── */
-.rank1{
-  background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.08));
-  border-color:rgba(255,193,7,.25) !important;
-}
+/* ── 모달 ── */
+#match-modal{scrollbar-width:none;}
+#match-modal::-webkit-scrollbar{display:none;}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="logo">⚽ K FOOTBALL</div>
+  <div class="logo"><span class="logo-ball">⚽</span> K FOOTBALL</div>
   <div class="top-right">
     <span class="live-badge" id="lcnt">● LIVE</span>
     <button class="icon-btn" onclick="toggleSetup()">⚙</button>
@@ -952,7 +900,7 @@ function buildDateBar(){
     const y=d.getUTCFullYear(), m=d.getUTCMonth()+1, dt=d.getUTCDate(), dow=d.getUTCDay();
     const ds=`${y}-${String(m).padStart(2,'0')}-${String(dt).padStart(2,'0')}`;
     const isT=i===0;
-    pills+=`<div class="dpill ${ds===selDate?'on':''}" onclick="pickDate('${ds}',this)"><span class="dow">${isT?'오늘':DOW[dow]}</span><span class="dom">${dt}</span>${isT?'<div class="todot"></div>':''}</div>`;
+    pills+=`<div class="dpill ${ds===selDate?'on':''}" onclick="pickDate('${ds}',this)"><span class="dow" style="${ds===selDate?'color:rgba(0,20,8,.8);':''} ">${isT?'오늘':DOW[dow]}</span><span class="dom">${dt}</span>${isT?'<div class="todot"></div>':''}</div>`;
   }
   document.getElementById('date-bar').innerHTML=`<div class="dscroll">${pills}</div>`;
 }
@@ -986,7 +934,7 @@ async function loadStd(){
   c.innerHTML=`<div style="padding:4px 13px 2px;"><span class="srctag">football-data.org · 실시간</span></div>`+rows.map(t=>{
     const form=(t.form||'').split(',').filter(Boolean).slice(-5).map(f=>`<div class="fd" style="background:${fc[f]||'var(--text3)'}"></div>`).join('');
     const gd=t.goalDifference>=0?'+'+t.goalDifference:t.goalDifference;
-    return `<div class="strow fu"><span class="rnk ${t.position<=3?'t':''} ${t.position>=total-1?'b':''}">${t.position}</span>${tlogo(t.team.crest,20,3)}<span class="stnm">${t.team.shortName||t.team.name}</span><span class="stnum">${t.playedGames}</span><span class="stnum">${t.won}</span><span class="stnum">${t.draw}</span><span class="stnum">${t.lost}</span><span class="stnum" style="width:26px;">${gd}</span><span class="stpts">${t.points}</span><div class="fdots">${form}</div></div>`;
+    return `<div class="strow fu ${t.position===1?'rank1':''}"><span class="rnk ${t.position<=3?'t':''} ${t.position>=total-1?'b':''}">${t.position}</span>${tlogo(t.team.crest,20,3)}<span class="stnm">${t.team.shortName||t.team.name}</span><span class="stnum">${t.playedGames}</span><span class="stnum">${t.won}</span><span class="stnum">${t.draw}</span><span class="stnum">${t.lost}</span><span class="stnum" style="width:26px;">${gd}</span><span class="stpts">${t.points}</span><div class="fdots">${form}</div></div>`;
   }).join('');
 }
 
