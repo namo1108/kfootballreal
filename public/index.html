@@ -1293,23 +1293,54 @@ async function loadOdds(){
 
 // 배당률 추정 (홈/원정 랭킹 기반 합리적 계산)
 function calcOdds(m){
-  const hPos=m.homeTeam?.position||6, aPos=m.awayTeam?.position||6;
-  const diff=hPos-aPos; // 양수면 홈이 낮은 순위
-  // 홈 승 기본 배당 (홈 어드밴티지 포함)
-  let hw=1.8+diff*0.12; hw=Math.max(1.25,Math.min(6.5,hw));
-  let aw=1.8-diff*0.12; aw=Math.max(1.25,Math.min(6.5,aw));
-  let dr=3.8-Math.abs(diff)*0.05; dr=Math.max(3.1,Math.min(4.2,dr));
-  // 정규화 (마진 8%)
-  const sum=1/hw+1/dr+1/aw;
-  const margin=1.08;
-  hw=(1/(1/hw/sum)*margin).toFixed(2);
-  dr=(1/(1/dr/sum)*margin).toFixed(2);
-  aw=(1/(1/aw/sum)*margin).toFixed(2);
-  const ov=(1.85+Math.random()*0.2).toFixed(2);
-  const un=(1.95-parseFloat(ov)+3.8).toFixed(2);
-  const btts=(1.75+Math.random()*0.2).toFixed(2);
-  const hc=(parseFloat(hw)+0.4+Math.random()*0.3).toFixed(2);
-  return {hw,dr,aw,ov,un:Math.max(1.5,parseFloat(un)).toFixed(2),btts,hc};
+  // 팀 ID 기반 시드 → 경기마다 일관된 다른 값
+  const hId = m.homeTeam?.id || 0;
+  const aId = m.awayTeam?.id || 0;
+  const seed = (hId * 31 + aId * 17 + (m.id||0)) % 1000;
+
+  // 시드 기반 의사난수 (0~1)
+  function seeded(offset){
+    const x = Math.sin(seed + offset) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  // 팀 순위 사용 가능하면 사용, 없으면 시드 기반
+  const hPos = m.homeTeam?.position || Math.floor(seeded(1)*10)+1;
+  const aPos = m.awayTeam?.position || Math.floor(seeded(2)*10)+1;
+  const diff = hPos - aPos;
+
+  // 홈 어드밴티지 0.15 반영
+  let hw = 1.75 + diff * 0.13 + seeded(3) * 0.25 - 0.12;
+  let aw = 1.75 - diff * 0.13 + seeded(4) * 0.25 - 0.12;
+  let dr = 3.20 + seeded(5) * 0.6;
+
+  hw = Math.max(1.20, Math.min(8.0, hw));
+  aw = Math.max(1.20, Math.min(8.0, aw));
+  dr = Math.max(2.90, Math.min(4.50, dr));
+
+  // 마진 8% 정규화
+  const sum = 1/hw + 1/dr + 1/aw;
+  const margin = 1.08;
+  hw = (hw / sum * margin).toFixed(2);
+  dr = (dr / sum * margin).toFixed(2);
+  aw = (aw / sum * margin).toFixed(2);
+
+  // 오버언더 / 양팀득점 / 핸디
+  const ov = (1.72 + seeded(6) * 0.36).toFixed(2);
+  const un = (3.70 - parseFloat(ov) + seeded(7)*0.2 + 0.3).toFixed(2);
+  const btts = (1.62 + seeded(8) * 0.38).toFixed(2);
+  const hFav = parseFloat(hw) < parseFloat(aw);
+  const hc = hFav
+    ? (parseFloat(hw) + 0.35 + seeded(9)*0.3).toFixed(2)
+    : (parseFloat(aw) + 0.35 + seeded(9)*0.3).toFixed(2);
+
+  return {
+    hw, dr, aw,
+    ov,
+    un: Math.max(1.40, parseFloat(un)).toFixed(2),
+    btts,
+    hc
+  };
 }
 
 // ── 분석: 오늘의 경기 예측 ────────────
