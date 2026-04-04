@@ -497,6 +497,90 @@ body{
   transition:all .2s;
 }
 #my-team-badge:active{transform:scale(.9);}
+
+/* ── 골 애니메이션 ── */
+@keyframes goalBurst{
+  0%{transform:scale(0) rotate(0deg);opacity:0;}
+  30%{transform:scale(1.4) rotate(180deg);opacity:1;}
+  60%{transform:scale(1.1) rotate(320deg);opacity:1;}
+  100%{transform:scale(1) rotate(360deg);opacity:1;}
+}
+@keyframes goalFade{
+  0%{opacity:0;transform:translateY(10px);}
+  20%{opacity:1;transform:translateY(0);}
+  80%{opacity:1;transform:translateY(0);}
+  100%{opacity:0;transform:translateY(-10px);}
+}
+@keyframes goalGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,255,135,.4);}
+  50%{box-shadow:0 0 0 12px rgba(0,255,135,0);}
+}
+.goal-toast{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:9998;pointer-events:none;text-align:center;
+  animation:goalFade 3s ease forwards;
+}
+.goal-ball{font-size:52px;display:block;animation:goalBurst .6s ease forwards;}
+.goal-text{
+  font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;
+  color:#fff;margin-top:4px;display:block;
+  text-shadow:0 0 20px var(--grass),0 0 40px var(--grass);
+}
+.goal-scorer{font-size:13px;color:var(--grass2);display:block;margin-top:2px;}
+.goal-min{font-size:11px;color:var(--text3);display:block;margin-top:1px;}
+
+/* ── 라이브 타이머 ── */
+.live-timer{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:13px;color:var(--red);
+  background:rgba(255,51,85,.1);
+  border:1px solid rgba(255,51,85,.25);
+  padding:2px 8px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.live-timer-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--red);
+  animation:pu .8s infinite;
+  flex-shrink:0;
+}
+
+/* ── 골 이벤트 바 ── */
+.goal-events{
+  display:flex;flex-wrap:wrap;gap:4px;
+  margin-top:7px;padding-top:7px;
+  border-top:1px solid var(--border);
+}
+.goal-event{
+  display:flex;align-items:center;gap:3px;
+  font-size:10px;color:var(--text2);
+  background:rgba(0,255,135,.06);
+  border:1px solid var(--border);
+  border-radius:6px;padding:3px 7px;
+}
+.goal-event .min{color:var(--grass2);font-weight:700;font-family:'Bebas Neue',sans-serif;font-size:12px;}
+
+/* ── 순위 배지 ── */
+.pos-badge{
+  font-size:9px;font-weight:700;
+  background:rgba(0,255,135,.1);
+  color:var(--grass2);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:1px 4px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:11px;
+  flex-shrink:0;
+}
+.pos-badge.top{background:rgba(0,255,135,.18);color:var(--grass);border-color:rgba(0,255,135,.3);}
+.pos-badge.bot{background:rgba(255,51,85,.1);color:var(--red);border-color:rgba(255,51,85,.25);}
+
+/* ── 라이브 카드 강조 ── */
+.mcard.live-card{
+  border-color:rgba(255,51,85,.2);
+  background:rgba(255,51,85,.03);
+  animation:goalGlow 3s infinite;
+}
 </style>
 </head>
 <body>
@@ -1372,6 +1456,22 @@ function renderLive(c, matches, noToday){
   if(sched.length){ html+=`<div class="sec" style="margin-top:3px;"><span class="sl">${noToday?'예정':'오늘 예정 · '+sched.length+'경기'}</span></div>`; sched.forEach(m=>{html+=mkCard(m,'sched');}); }
   if(fin.length){ html+=`<div class="sec" style="margin-top:3px;"><span class="sl">종료</span></div>`; fin.forEach(m=>{html+=mkCard(m,'fin');}); }
   c.innerHTML=html;
+  // 골 감지 (라이브 경기만)
+  checkGoals(live);
+}
+
+// 골 이벤트 파싱
+function parseGoals(m){
+  if(!m.goals && !m.score?.goalScorer) return {home:[], away:[]};
+  const home=[], away=[];
+  (m.goals||[]).forEach(g=>{
+    const name=g.scorer?.name||g.player?.name||'';
+    const min=g.minute||'';
+    const minStr=min+(g.injuryTime?'+'+g.injuryTime:'');
+    if(g.team?.id===m.homeTeam?.id) home.push({name,min:minStr});
+    else away.push({name,min:minStr});
+  });
+  return {home,away};
 }
 
 function mkCard(m, type){
@@ -1381,12 +1481,35 @@ function mkCard(m, type){
   const odds=calcOdds(m);
   const isLive=type==='live';
   const isFin=type==='fin';
-  const statusLabel={IN_PLAY:'진행중',PAUSED:'HT',HALFTIME:'HT',EXTRA_TIME:'연장',PENALTY_SHOOTOUT:'PK',FINISHED:'FT',AWARDED:'FT'}[m.status]||m.status||'FT';
-  const minStr=m.minute?`${m.minute}'`:statusLabel;
+  const statusMap={IN_PLAY:'진행중',PAUSED:'HT',HALFTIME:'HT',EXTRA_TIME:'연장',PENALTY_SHOOTOUT:'PK',FINISHED:'FT',AWARDED:'FT'};
+  const statusLabel=statusMap[m.status]||m.status||'FT';
+  const elapsed=m.minute||(m.status==='IN_PLAY'?'?':null);
+  const minStr=elapsed?`${elapsed}'`:statusLabel;
   const timeKST=kstTime(m.utcDate);
   const dateKST=kstDate(m.utcDate);
+
+  // 순위 배지 (API 데이터 우선, 없으면 캐시 사용)
+  const hPos=h.position||teamPositionCache[h.id], aPos=a.position||teamPositionCache[a.id];
+  const hPosBadge=hPos?`<span class="pos-badge ${hPos<=3?'top':hPos>=18?'bot':''}">${hPos}위</span>`:'';
+  const aPosBadge=aPos?`<span class="pos-badge ${aPos<=3?'top':aPos>=18?'bot':''}">${aPos}위</span>`:'';
+
+  // 골 이벤트
+  const goals=parseGoals(m);
+  const goalEventsHtml=(isLive||isFin)&&(goals.home.length||goals.away.length)?`
+    <div class="goal-events">
+      <div style="width:100%;display:flex;justify-content:space-between;gap:6px;">
+        <div style="flex:1;display:flex;flex-wrap:wrap;gap:3px;">
+          ${goals.home.map(g=>`<span class="goal-event">⚽ <span class="min">${g.min}'</span> ${g.name.split(' ').pop()}</span>`).join('')}
+        </div>
+        <div style="flex:1;display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;">
+          ${goals.away.map(g=>`<span class="goal-event">${g.name.split(' ').pop()} <span class="min">${g.min}'</span> ⚽</span>`).join('')}
+        </div>
+      </div>
+    </div>`:'';
+
+  // 배당률
   const oddsHtml=!isFin?`
-    <div class="oddsg" style="margin:6px 0 4px;">
+    <div class="oddsg" style="margin:7px 0 4px;">
       <div class="obtn"><div class="otype">${(h.shortName||h.name).slice(0,7)}</div><div class="oval ${parseFloat(odds.hw)<2.5?'fav':''}" style="font-size:15px;">${odds.hw}</div></div>
       <div class="obtn"><div class="otype">무승부</div><div class="oval" style="font-size:15px;">${odds.dr}</div></div>
       <div class="obtn"><div class="otype">${(a.shortName||a.name).slice(0,7)}</div><div class="oval ${parseFloat(odds.aw)<2.5?'fav':''}" style="font-size:15px;">${odds.aw}</div></div>
@@ -1398,20 +1521,28 @@ function mkCard(m, type){
       <div class="oex"><div class="oextype">핸디-1</div><div class="oexval" style="color:var(--gold);font-size:11px;">${odds.hc}</div></div>
     </div>`:'';
 
-  return `<div class="mcard fu" onclick="showMatchDetail(${m.id},'${(h.shortName||h.name).replace(/'/g,'')}','${(a.shortName||a.name).replace(/'/g,'')}','${CL.code||''}')" style="cursor:pointer;">
+  return `<div class="mcard fu ${isLive?'live-card':''}" onclick="showMatchDetail(${m.id},'${(h.shortName||h.name).replace(/'/g,"'")}','${(a.shortName||a.name).replace(/'/g,"'")}','${CL.code||''}')" style="cursor:pointer;">
     <div class="mc-top">
       <div class="lrow">
         ${isLive?'<div class="pdot"></div>':''}
-        <span class="lmin" style="${isLive?'':'color:var(--text2);font-size:10px;font-weight:500;'}">${isLive?minStr:statusLabel}</span>
+        ${isLive
+          ? `<span class="live-timer"><span class="live-timer-dot"></span>${minStr}</span>`
+          : `<span class="lmin" style="color:var(--text2);font-size:10px;font-weight:500;">${statusLabel}</span>`
+        }
         ${!isLive?`<span style="font-size:8px;color:var(--text3);margin-left:4px;">${dateKST} ${timeKST} KST</span>`:''}
       </div>
-      <span class="ltag">${m.competition?.name||CL.name} ${m.matchday?m.matchday+'R':''} <span style="font-size:7px;color:var(--text3);">탭하여 상세보기</span></span>
+      <span class="ltag">${m.competition?.name||CL.name} ${m.matchday?m.matchday+'R':''}</span>
     </div>
     <div class="mct">
-      <div class="ts">${tlogo(h.crest,27)}<span class="tn">${h.shortName||h.name}</span></div>
-      <div class="sb"><span class="sn">${hg}</span><span class="ssep">:</span><span class="sn">${ag}</span></div>
-      <div class="ts r">${tlogo(a.crest,27)}<span class="tn r">${a.shortName||a.name}</span></div>
+      <div class="ts">${tlogo(h.crest,27)}${hPosBadge}<span class="tn">${h.shortName||h.name}</span></div>
+      <div class="sb">
+        <span class="sn" style="${isLive?'color:var(--grass);text-shadow:0 0 10px rgba(0,255,135,.4);':''}">${hg}</span>
+        <span class="ssep">:</span>
+        <span class="sn" style="${isLive?'color:var(--grass);text-shadow:0 0 10px rgba(0,255,135,.4);':''}">${ag}</span>
+      </div>
+      <div class="ts r">${aPosBadge}${tlogo(a.crest,27)}<span class="tn r">${a.shortName||a.name}</span></div>
     </div>
+    ${goalEventsHtml}
     ${oddsHtml}
   </div>`;
 }
@@ -1594,6 +1725,9 @@ function matchRow(m, league){
 }
 
 // ── 순위 ─────────────────────────────
+// 팀 포지션 캐시 (라이브 카드 순위 표시용)
+const teamPositionCache = {};
+
 async function loadStd(){
   const c=document.getElementById('std-body');
   if(!CL.real){ c.innerHTML=kDemoStd(CL.lid); return; }
@@ -1601,6 +1735,8 @@ async function loadStd(){
   const data=await fdFetch(`/competitions/${CL.code}/standings`);
   if(!data?.standings){ c.innerHTML=empty('불러오기 실패','잠시 후 다시 시도해주세요'); return; }
   const rows=data.standings[0].table, total=rows.length;
+  // 포지션 캐시 저장
+  rows.forEach(t=>{ teamPositionCache[t.team.id]=t.position; });
   const fc={W:'var(--green)',D:'var(--gold)',L:'var(--red)'};
   c.innerHTML=`<div style="padding:4px 13px 2px;"><span class="srctag">football-data.org · 실시간</span></div>`+rows.map(t=>{
     const form=(t.form||'').split(',').filter(Boolean).slice(-5).map(f=>`<div class="fd" style="background:${fc[f]||'var(--text3)'}"></div>`).join('');
@@ -1849,11 +1985,58 @@ else { showTeamBadge(); }
 initOnboarding();
 // ESC 키로 모달 닫기
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+// ── 골 감지 시스템 ──
+const prevScores = {};
+
+function checkGoals(matches){
+  matches.forEach(m=>{
+    if(!['IN_PLAY','PAUSED','HALFTIME'].includes(m.status)) return;
+    const id=m.id;
+    const hg=m.score?.fullTime?.home??m.score?.halfTime?.home??0;
+    const ag=m.score?.fullTime?.away??m.score?.halfTime?.away??0;
+    const key=`${hg}-${ag}`;
+    if(prevScores[id] && prevScores[id]!==key){
+      // 골 발생!
+      const prev=prevScores[id].split('-');
+      const isHomeGoal=parseInt(hg)>parseInt(prev[0]);
+      const scorer=getLastScorer(m,isHomeGoal);
+      const teamName=isHomeGoal?(m.homeTeam?.shortName||m.homeTeam?.name):(m.awayTeam?.shortName||m.awayTeam?.name);
+      const min=m.minute?`${m.minute}'`:'';
+      showGoalAnimation(teamName,scorer,min);
+    }
+    prevScores[id]=key;
+  });
+}
+
+function getLastScorer(m,isHome){
+  const goals=(m.goals||[]).filter(g=>isHome?g.team?.id===m.homeTeam?.id:g.team?.id===m.awayTeam?.id);
+  const last=goals[goals.length-1];
+  return last?.scorer?.name||last?.player?.name||'';
+}
+
+function showGoalAnimation(team,scorer,min){
+  const existing=document.getElementById('goal-toast');
+  if(existing) existing.remove();
+  const toast=document.createElement('div');
+  toast.id='goal-toast';
+  toast.className='goal-toast';
+  toast.innerHTML=`
+    <span class="goal-ball">⚽</span>
+    <span class="goal-text">GOAL!</span>
+    <span class="goal-scorer" style="color:var(--grass);font-size:14px;font-weight:700;">${team}</span>
+    ${scorer?`<span class="goal-scorer">${scorer}</span>`:''}
+    ${min?`<span class="goal-min">${min}</span>`:''}
+  `;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),3200);
+}
+
+// 30초마다 라이브 갱신 (골 감지)
 setInterval(()=>{
   const pg=document.querySelector('.page.on').id;
   if(pg==='pg-live') loadLive();
   if(pg==='pg-spec') loadAnalysis();
-}, 60000);
+}, 30000);
 </script>
 </body>
 </html>
