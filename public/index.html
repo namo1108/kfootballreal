@@ -501,6 +501,40 @@ body{
 </head>
 <body>
 
+<!-- 온보딩 화면 -->
+<div id="onboarding" style="display:none;position:fixed;inset:0;z-index:9999;background:#050e08;overflow-y:auto;">
+  <div style="min-height:100vh;display:flex;flex-direction:column;padding:0 0 30px;">
+    <!-- 헤더 -->
+    <div style="text-align:center;padding:48px 20px 24px;">
+      <div style="font-size:40px;margin-bottom:12px;animation:spin3d 6s linear infinite;display:inline-block;">⚽</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:#00ff87;filter:drop-shadow(0 0 12px rgba(0,255,135,.5));margin-bottom:6px;">K FOOTBALL</div>
+      <div style="font-size:13px;color:#5a9970;line-height:1.7;">응원하는 팀을 선택하면<br>그 팀의 컬러로 앱이 바뀌어요</div>
+    </div>
+
+    <!-- 기본 테마 -->
+    <div style="padding:0 16px 8px;">
+      <div id="ob-default" onclick="obSelect(null)" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(0,255,135,.2);background:rgba(0,255,135,.06);margin-bottom:16px;cursor:pointer;transition:all .2s;">
+        <span style="font-size:24px;">🌿</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">기본 테마</div>
+          <div style="font-size:10px;color:#5a9970;margin-top:2px;">잔디 초록 스타일</div>
+        </div>
+        <div id="ob-default-check" style="margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid rgba(0,255,135,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+      </div>
+    </div>
+
+    <!-- 리그별 팀 목록 -->
+    <div id="ob-leagues" style="padding:0 16px;"></div>
+
+    <!-- 시작 버튼 -->
+    <div style="padding:20px 16px 0;position:sticky;bottom:0;">
+      <button id="ob-start-btn" onclick="obFinish()" style="width:100%;padding:15px;border-radius:14px;border:none;background:rgba(0,255,135,.15);color:#5a9970;font-size:15px;font-weight:700;font-family:'Noto Sans KR';cursor:pointer;transition:all .2s;" disabled>
+        팀을 선택해주세요
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="topbar">
   <div class="logo"><span class="logo-ball">⚽</span> K FOOTBALL</div>
   <div class="top-right">
@@ -855,6 +889,113 @@ function showTeamBadge(){
     badge.innerHTML='⚙';
     badge.style.display='flex';
   }
+}
+
+// ── 온보딩 ────────────────────────────
+let obSelected = null; // 선택된 팀 ID (null=기본)
+
+function initOnboarding(){
+  // 이미 선택한 팀 있으면 온보딩 스킵
+  if(localStorage.getItem('kf_myteam') !== null || localStorage.getItem('kf_ob_done') === '1'){
+    return;
+  }
+  // 온보딩 표시
+  document.getElementById('onboarding').style.display='block';
+  renderObLeagues();
+}
+
+function renderObLeagues(){
+  const leagues = [
+    {name:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 프리미어리그', ids:[33,40,50,57,49,66,73,39,34,51]},
+    {name:'🇪🇸 라리가',             ids:[541,529,530,548,532]},
+    {name:'🇮🇹 세리에A',            ids:[489,505,492,496,497]},
+    {name:'🇩🇪 분데스리가',          ids:[157,165,559]},
+    {name:'🇰🇷 K리그1',             ids:[2729,2730,2733,2731,2732,2741,2740,2737,10155,2744,2742,10152]},
+  ];
+
+  const container = document.getElementById('ob-leagues');
+  let html = '';
+  leagues.forEach(lg=>{
+    html += `<div style="margin-bottom:18px;">
+      <div style="font-size:10px;font-weight:700;color:#2a5535;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;padding-left:2px;">${lg.name}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">`;
+    lg.ids.forEach(id=>{
+      const tc=TEAM_COLORS[id];
+      if(!tc) return;
+      const pr=parseInt(tc.primary.slice(1,3),16),pg_=parseInt(tc.primary.slice(3,5),16),pb=parseInt(tc.primary.slice(5,7),16);
+      html+=`<div id="ob-team-${id}" onclick="obSelect(${id})" style="padding:12px 6px 10px;border-radius:12px;cursor:pointer;text-align:center;border:1.5px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);transition:all .2s;-webkit-tap-highlight-color:transparent;">
+        <img src="https://media.api-sports.io/football/teams/${id}.png" style="width:34px;height:34px;object-fit:contain;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto;" onerror="this.style.opacity='.3'" alt="">
+        <div style="font-size:9px;color:#6a8caa;font-weight:500;line-height:1.3;word-break:keep-all;">${tc.name.length>8?tc.name.slice(0,9)+'..':tc.name}</div>
+        <div style="width:20px;height:3px;border-radius:2px;background:${tc.primary};margin:5px auto 0;opacity:.7;"></div>
+      </div>`;
+    });
+    html+='</div></div>';
+  });
+  container.innerHTML=html;
+}
+
+function obSelect(id){
+  obSelected=id;
+  // 모든 팀 카드 기본 스타일로
+  document.querySelectorAll('[id^="ob-team-"]').forEach(el=>{
+    el.style.border='1.5px solid rgba(255,255,255,.07)';
+    el.style.background='rgba(255,255,255,.03)';
+    el.style.transform='';
+  });
+  // 기본 테마 카드
+  const defCard=document.getElementById('ob-default');
+  const defCheck=document.getElementById('ob-default-check');
+  if(id===null){
+    defCard.style.border='1.5px solid rgba(0,255,135,.5)';
+    defCard.style.background='rgba(0,255,135,.1)';
+    defCheck.innerHTML='<span style="color:#00ff87;font-size:13px;">✓</span>';
+    // 온보딩 배경 초록으로
+    document.getElementById('onboarding').style.background='#050e08';
+  } else {
+    defCard.style.border='1.5px solid rgba(0,255,135,.2)';
+    defCard.style.background='rgba(0,255,135,.06)';
+    defCheck.innerHTML='';
+    // 선택 팀 카드 강조
+    const tc=TEAM_COLORS[id];
+    const card=document.getElementById('ob-team-'+id);
+    if(card && tc){
+      card.style.border=`1.5px solid ${tc.primary}`;
+      card.style.background=`rgba(${parseInt(tc.primary.slice(1,3),16)},${parseInt(tc.primary.slice(3,5),16)},${parseInt(tc.primary.slice(5,7),16)},.18)`;
+      card.style.transform='scale(1.04)';
+      // 온보딩 배경을 팀 색으로
+      document.getElementById('onboarding').style.background=tc.bg||'#050e08';
+    }
+  }
+  // 시작 버튼 활성화
+  const btn=document.getElementById('ob-start-btn');
+  const tc=id?TEAM_COLORS[id]:null;
+  const btnColor=tc?.primary||'#00ff87';
+  const pr=parseInt(btnColor.slice(1,3),16),pg_=parseInt(btnColor.slice(3,5),16),pb=parseInt(btnColor.slice(5,7),16);
+  btn.disabled=false;
+  btn.style.background=`rgba(${pr},${pg_},${pb},.2)`;
+  btn.style.color=btnColor;
+  btn.style.border=`1px solid rgba(${pr},${pg_},${pb},.4)`;
+  btn.textContent=tc?`${tc.name} 팀으로 시작하기 →`:'기본 테마로 시작하기 →';
+}
+
+function obFinish(){
+  localStorage.setItem('kf_ob_done','1');
+  if(obSelected!==null){
+    const tc=TEAM_COLORS[obSelected];
+    myTeam={id:obSelected,...tc};
+    localStorage.setItem('kf_myteam',JSON.stringify(myTeam));
+  } else {
+    myTeam=null;
+    localStorage.removeItem('kf_myteam');
+  }
+  // 테마 적용
+  applyTheme(obSelected);
+  showTeamBadge();
+  // 온보딩 닫기 (페이드 아웃)
+  const ob=document.getElementById('onboarding');
+  ob.style.transition='opacity .4s';
+  ob.style.opacity='0';
+  setTimeout(()=>{ ob.style.display='none'; ob.style.opacity='1'; },400);
 }
 
 // KST 현재 날짜 (UTC+9)
@@ -1641,6 +1782,8 @@ if(_lt) _lt.style.display='none';
 // 저장된 팀 테마 적용
 if(myTeam){ applyTheme(myTeam.id); showTeamBadge(); }
 else { showTeamBadge(); }
+// 온보딩 (첫 실행시)
+initOnboarding();
 // ESC 키로 모달 닫기
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 setInterval(()=>{
