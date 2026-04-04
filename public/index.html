@@ -311,7 +311,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 </div>
 
 <div class="page" id="pg-spec">
-  <div class="sec" style="padding-top:11px;"><span class="sl">매치 도미넌스</span><span class="sm">전북 vs 울산 · K리그1</span></div>
+  <div class="sec" style="padding-top:11px;"><span class="sl">오늘의 경기 분석</span><span class="sm">AI 승리 예측 · 배당률 기반</span></div>
+  <div id="analysis-body"></div>
+  <div class="sec" style="margin-top:4px;"><span class="sl">매치 도미넌스 (데모)</span><span class="sm">전북 vs 울산</span></div>
   <div class="feat">
     <div class="ftitle"><span>시간대별 지배력</span><span>전북 ■ / 울산 ■</span></div>
     <div id="domrows"></div>
@@ -386,16 +388,188 @@ function asLogo(id,sz=27){
   return `<img src="https://media.api-sports.io/football/teams/${id}.png" style="width:${sz}px;height:${sz}px;object-fit:contain;border-radius:3px;flex-shrink:0;" onerror="this.style.opacity='.2'" alt="">`;
 }
 
-// ── football-data.org API 호출 ──
+// ── football-data.org API ──
 async function fdFetch(path){
-  if(cache[path] && Date.now()-cache[path].ts < 90000) return cache[path].data;
+  if(cache['fd'+path] && Date.now()-cache['fd'+path].ts < 90000) return cache['fd'+path].data;
   try {
-    const r = await fetch(`/api/football?path=${encodeURIComponent(path)}`);
+    const r = await fetch(`/api/football?type=fd&path=${encodeURIComponent(path)}`);
     if(!r.ok) return null;
     const data = await r.json();
-    cache[path] = {data, ts:Date.now()};
+    cache['fd'+path] = {data, ts:Date.now()};
     return data;
   } catch { return null; }
+}
+
+// ── The Odds API ──
+async function oddsFetch(sport, params={}){
+  const ck='odds'+sport+JSON.stringify(params);
+  if(cache[ck] && Date.now()-cache[ck].ts < 300000) return cache[ck].data;
+  try {
+    const qs=new URLSearchParams(params).toString();
+    const r=await fetch(`/api/football?type=odds&path=/sports/${sport}/odds&${qs}`);
+    if(!r.ok) return null;
+    const data=await r.json();
+    cache[ck]={data,ts:Date.now()};
+    return data;
+  } catch { return null; }
+}
+
+// 리그코드 → odds sport key 매핑
+const ODDS_SPORT = {
+  PL:'soccer_england_league1',
+  PD:'soccer_spain_la_liga',
+  SA:'soccer_italy_serie_a',
+  FL1:'soccer_france_ligue_one',
+  CL:'soccer_uefa_champs_league',
+  UEL:'soccer_uefa_europa_league',
+  FAC:'soccer_fa_cup',
+  ELC:'soccer_england_league_cup',
+};
+
+// ── 경기 상세 모달 ──
+async function showMatchDetail(matchId, homeTeam, awayTeam, leagueCode){
+  // 모달 생성
+  let modal=document.getElementById('match-modal');
+  if(!modal){
+    modal=document.createElement('div');
+    modal.id='match-modal';
+    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;overflow-y:auto;padding:16px;';
+    modal.onclick=e=>{ if(e.target===modal) closeModal(); };
+    document.body.appendChild(modal);
+  }
+  modal.style.display='block';
+  modal.innerHTML=`<div style="background:#0a1628;border-radius:16px;max-width:440px;margin:0 auto;overflow:hidden;">
+    <div style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:.5px solid #1a3060;">
+      <span style="font-size:13px;font-weight:700;color:#e0ecff;">${homeTeam} vs ${awayTeam}</span>
+      <button onclick="closeModal()" style="background:none;border:none;color:#7a9abb;font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div id="modal-body" style="padding:14px;">${spin('데이터 불러오는 중...')}</div>
+  </div>`;
+
+  // 상대전적 + 배당률 병렬 로딩
+  const [h2h, odds] = await Promise.all([
+    fdFetch(`/matches/${matchId}`),
+    ODDS_SPORT[leagueCode] ? oddsFetch(ODDS_SPORT[leagueCode], {
+      regions:'eu',markets:'h2h,spreads,totals',oddsFormat:'decimal',
+      eventIds:''
+    }) : Promise.resolve(null)
+  ]);
+
+  // 상대전적 가져오기
+  const h2hData = await fdFetch(`/teams/${h2h?.homeTeam?.id||''}/matches?status=FINISHED&limit=5`);
+  const h2hData2 = h2hData?.matches?.filter(m=>
+    (m.homeTeam?.id===h2h?.homeTeam?.id && m.awayTeam?.id===h2h?.awayTeam?.id) ||
+    (m.homeTeam?.id===h2h?.awayTeam?.id && m.awayTeam?.id===h2h?.homeTeam?.id)
+  ).slice(0,5) || [];
+
+  const mb=document.getElementById('modal-body');
+  if(!mb) return;
+
+  // 배당률 섹션
+  const realOdds = findMatchOdds(odds, homeTeam, awayTeam);
+  const calcO = calcOdds(h2h||{});
+  const hw=realOdds?.hw||calcO.hw, dr=realOdds?.dr||calcO.dr, aw=realOdds?.aw||calcO.aw;
+  const src=realOdds?'실제 배당 (bet365 등)':'추정 배당';
+
+  // AI 승리 예측
+  const pred=predictWin(hw,dr,aw);
+
+  mb.innerHTML=`
+    <!-- 배당률 -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.8px;margin-bottom:8px;">💰 배당률 · <span style="font-size:8px;font-weight:400;color:var(--text3);">${src}</span></div>
+      <div class="oddsg">
+        <div class="obtn"><div class="otype">${homeTeam.slice(0,8)} 승</div><div class="oval ${parseFloat(hw)<2.5?'fav':''}">${hw}</div></div>
+        <div class="obtn"><div class="otype">무승부</div><div class="oval">${dr}</div></div>
+        <div class="obtn"><div class="otype">${awayTeam.slice(0,8)} 승</div><div class="oval ${parseFloat(aw)<2.5?'fav':''}">${aw}</div></div>
+      </div>
+      <div class="omore" style="margin-top:5px;">
+        <div class="oex"><div class="oextype">오버2.5</div><div class="oexval" style="color:var(--gold);font-size:11px;">${calcO.ov}</div></div>
+        <div class="oex"><div class="oextype">언더2.5</div><div class="oexval" style="font-size:11px;">${calcO.un}</div></div>
+        <div class="oex"><div class="oextype">양팀득점</div><div class="oexval" style="font-size:11px;">${calcO.btts}</div></div>
+        <div class="oex"><div class="oextype">핸디-1</div><div class="oexval" style="color:var(--gold);font-size:11px;">${calcO.hc}</div></div>
+      </div>
+    </div>
+
+    <!-- 승리 예측 -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.8px;margin-bottom:8px;">🤖 AI 승리 예측</div>
+      <div style="background:#081322;border-radius:10px;padding:11px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:12px;color:#fff;font-weight:700;">${pred.winner}</span>
+          <span style="font-size:9px;background:rgba(74,158,255,.15);color:var(--accent);padding:2px 8px;border-radius:10px;border:.5px solid rgba(74,158,255,.3);">승리 확률 ${pred.pct}%</span>
+        </div>
+        <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;gap:2px;margin-bottom:6px;">
+          <div style="width:${pred.hPct}%;background:var(--accent);border-radius:3px 0 0 3px;"></div>
+          <div style="width:${pred.dPct}%;background:var(--gold);"></div>
+          <div style="width:${pred.aPct}%;background:var(--red);border-radius:0 3px 3px 0;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <span style="font-size:9px;color:var(--accent);">${homeTeam.slice(0,8)} ${pred.hPct}%</span>
+          <span style="font-size:9px;color:var(--gold);">무 ${pred.dPct}%</span>
+          <span style="font-size:9px;color:var(--red);">${awayTeam.slice(0,8)} ${pred.aPct}%</span>
+        </div>
+        <div style="margin-top:8px;font-size:10px;color:var(--text2);line-height:1.6;border-top:.5px solid #1a3060;padding-top:7px;">${pred.comment}</div>
+      </div>
+    </div>
+
+    <!-- 상대전적 -->
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.8px;margin-bottom:8px;">⚔️ 최근 상대전적</div>
+      ${h2hData2.length ? h2hData2.map(m=>{
+        const isHome=m.homeTeam?.id===h2h?.homeTeam?.id;
+        const hg=m.score?.fullTime?.home??'-', ag=m.score?.fullTime?.away??'-';
+        const winner=hg>ag?'home':ag>hg?'away':'draw';
+        const myWin=(isHome&&winner==='home')||(!isHome&&winner==='away');
+        const draw=winner==='draw';
+        const result=draw?'D':myWin?'W':'L';
+        const rc=draw?'var(--gold)':myWin?'var(--green)':'var(--red)';
+        const dt=kstDate(m.utcDate);
+        return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:.5px solid #0a1a30;">
+          <div style="width:20px;height:20px;border-radius:50%;background:${rc};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">${result}</div>
+          <span style="font-size:9px;color:var(--text3);width:50px;flex-shrink:0;">${dt}</span>
+          <span style="font-size:10px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.homeTeam?.shortName||m.homeTeam?.name} <b style="color:#fff;">${hg} : ${ag}</b> ${m.awayTeam?.shortName||m.awayTeam?.name}</span>
+        </div>`;
+      }).join('') : '<div style="text-align:center;color:var(--text3);font-size:11px;padding:20px;">상대전적 데이터 없음</div>'}
+    </div>`;
+}
+
+function closeModal(){
+  const m=document.getElementById('match-modal');
+  if(m) m.style.display='none';
+}
+
+// 실제 배당 매칭
+function findMatchOdds(oddsData, home, away){
+  if(!Array.isArray(oddsData)) return null;
+  const norm=s=>s.toLowerCase().replace(/[^a-z]/g,'');
+  const match=oddsData.find(e=>{
+    return norm(e.home_team).includes(norm(home.slice(0,4))) ||
+           norm(e.away_team).includes(norm(away.slice(0,4)));
+  });
+  if(!match) return null;
+  const h2h=match.bookmakers?.[0]?.markets?.find(m=>m.key==='h2h');
+  if(!h2h?.outcomes) return null;
+  const ho=h2h.outcomes.find(o=>norm(o.name).includes(norm(match.home_team.slice(0,4))));
+  const ao=h2h.outcomes.find(o=>norm(o.name).includes(norm(match.away_team.slice(0,4))));
+  const dr=h2h.outcomes.find(o=>o.name==='Draw');
+  if(!ho||!ao) return null;
+  return {hw:ho.price.toFixed(2), dr:dr?.price.toFixed(2)||'3.40', aw:ao.price.toFixed(2)};
+}
+
+// AI 승리 예측 (배당률 기반 역산)
+function predictWin(hw, dr, aw){
+  const h=1/parseFloat(hw), d=1/parseFloat(dr), a=1/parseFloat(aw);
+  const tot=h+d+a;
+  const hPct=Math.round(h/tot*100), dPct=Math.round(d/tot*100), aPct=100-hPct-dPct;
+  let winner, pct, comment;
+  if(hPct>=aPct && hPct>=dPct){ winner='홈팀 우세'; pct=hPct; }
+  else if(aPct>=hPct && aPct>=dPct){ winner='원정팀 우세'; pct=aPct; }
+  else { winner='팽팽한 접전'; pct=dPct; }
+  if(pct>=65) comment='배당률상 한 팀이 크게 우세합니다. 강팀과 약팀의 대결로 보입니다.';
+  else if(pct>=55) comment='약간의 전력 차이가 있는 경기입니다. 이변 가능성도 열려있어요.';
+  else comment='전력이 거의 비슷한 경기입니다. 어느 팀이 이겨도 이상하지 않아요.';
+  return {winner, pct, hPct, dPct, aPct, comment};
 }
 
 // ── 네비 ─────────────────────────────
@@ -419,6 +593,7 @@ function loadCur(){
   if(pg==='pg-sched') loadSched();
   if(pg==='pg-std') loadStd();
   if(pg==='pg-player') loadPlayers();
+  if(pg==='pg-spec') loadAnalysis();
 }
 function doRefresh(){ Object.keys(cache).forEach(k=>delete cache[k]); loadCur(); }
 function toggleSetup(){ alert('API 키는 서버에 설정돼 있어요!'); }
@@ -490,14 +665,14 @@ function mkCard(m, type){
       <div class="oex"><div class="oextype">핸디-1</div><div class="oexval" style="color:var(--gold);font-size:11px;">${odds.hc}</div></div>
     </div>`:'';
 
-  return `<div class="mcard fu">
+  return `<div class="mcard fu" onclick="showMatchDetail(${m.id},'${(h.shortName||h.name).replace(/'/g,'')}','${(a.shortName||a.name).replace(/'/g,'')}','${CL.code||''}')" style="cursor:pointer;">
     <div class="mc-top">
       <div class="lrow">
         ${isLive?'<div class="pdot"></div>':''}
         <span class="lmin" style="${isLive?'':'color:var(--text2);font-size:10px;font-weight:500;'}">${isLive?minStr:statusLabel}</span>
         ${!isLive?`<span style="font-size:8px;color:var(--text3);margin-left:4px;">${dateKST} ${timeKST} KST</span>`:''}
       </div>
-      <span class="ltag">${m.competition?.name||CL.name} ${m.matchday?m.matchday+'R':''}</span>
+      <span class="ltag">${m.competition?.name||CL.name} ${m.matchday?m.matchday+'R':''} <span style="font-size:7px;color:var(--text3);">탭하여 상세보기</span></span>
     </div>
     <div class="mct">
       <div class="ts">${tlogo(h.crest,27)}<span class="tn">${h.shortName||h.name}</span></div>
@@ -673,6 +848,68 @@ function calcOdds(m){
   return {hw,dr,aw,ov,un:Math.max(1.5,parseFloat(un)).toFixed(2),btts,hc};
 }
 
+// ── 분석: 오늘의 경기 예측 ────────────
+async function loadAnalysis(){
+  const c=document.getElementById('analysis-body');
+  if(!c) return;
+  c.innerHTML=spin('오늘 경기 분석 중...');
+  const td=dStr(new Date(new Date().getTime()+9*60*60*1000));
+  // 현재 선택 리그 오늘 경기
+  let data;
+  if(CL.real){
+    data=await fdFetch(`/competitions/${CL.code}/matches?dateFrom=${td}&dateTo=${td}`);
+  }
+  const matches=(data?.matches||[]).filter(m=>['SCHEDULED','TIMED','IN_PLAY','PAUSED'].includes(m.status)).slice(0,6);
+  if(!matches.length){ c.innerHTML=empty('오늘 예측할 경기 없음','다른 리그를 선택해보세요'); return; }
+
+  // The Odds API로 실제 배당 시도
+  const sportKey=ODDS_SPORT[CL.code];
+  let oddsData=null;
+  if(sportKey) oddsData=await oddsFetch(sportKey,{regions:'eu',markets:'h2h',oddsFormat:'decimal'});
+
+  c.innerHTML=matches.map(m=>{
+    const h=m.homeTeam, a=m.awayTeam;
+    const realO=findMatchOdds(oddsData,h.shortName||h.name,a.shortName||a.name);
+    const calcO_=calcOdds(m);
+    const hw=realO?.hw||calcO_.hw, dr=realO?.dr||calcO_.dr, aw=realO?.aw||calcO_.aw;
+    const pred=predictWin(hw,dr,aw);
+    const timeKST=kstTime(m.utcDate);
+    const isLive=['IN_PLAY','PAUSED'].includes(m.status);
+    return `<div class="feat fu" onclick="showMatchDetail(${m.id},'${(h.shortName||h.name).replace(/'/g,'')}','${(a.shortName||a.name).replace(/'/g,'')}','${CL.code}')" style="cursor:pointer;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        ${isLive?'<div class="pdot"></div>':''}
+        <div style="display:flex;align-items:center;gap:6px;flex:1;">
+          ${tlogo(h.crest,20)}<span style="font-size:11px;color:var(--text);">${h.shortName||h.name}</span>
+          <span style="font-size:9px;color:var(--text3);margin:0 2px;">vs</span>
+          <span style="font-size:11px;color:var(--text);">${a.shortName||a.name}</span>${tlogo(a.crest,20)}
+        </div>
+        <span style="font-size:9px;color:${isLive?'var(--red)':'var(--accent)'};">${isLive?'● LIVE':timeKST+' KST'}</span>
+      </div>
+      <!-- 예측 바 -->
+      <div style="margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+          <span style="font-size:9px;color:var(--accent);">홈 ${pred.hPct}%</span>
+          <span style="font-size:9px;color:var(--text3);font-weight:700;">${pred.winner}</span>
+          <span style="font-size:9px;color:var(--red);">원정 ${pred.aPct}%</span>
+        </div>
+        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px;">
+          <div style="width:${pred.hPct}%;background:var(--accent);border-radius:4px 0 0 4px;transition:width .5s;"></div>
+          <div style="width:${pred.dPct}%;background:var(--gold);"></div>
+          <div style="width:${pred.aPct}%;background:var(--red);border-radius:0 4px 4px 0;"></div>
+        </div>
+        <div style="text-align:center;font-size:8px;color:var(--text3);margin-top:2px;">무 ${pred.dPct}%</div>
+      </div>
+      <!-- 배당 -->
+      <div class="oddsg" style="margin-bottom:0;">
+        <div class="obtn"><div class="otype">홈 승</div><div class="oval ${parseFloat(hw)<2.5?'fav':''}" style="font-size:15px;">${hw}</div></div>
+        <div class="obtn"><div class="otype">무승부</div><div class="oval" style="font-size:15px;">${dr}</div></div>
+        <div class="obtn"><div class="otype">원정 승</div><div class="oval ${parseFloat(aw)<2.5?'fav':''}" style="font-size:15px;">${aw}</div></div>
+      </div>
+      <div style="font-size:8px;color:var(--text3);margin-top:5px;text-align:right;">${realO?'bet365 등 실제 배당':'추정 배당'} · 탭하여 상세보기</div>
+    </div>`;
+  }).join('');
+}
+
 // ── 분석 화면 ─────────────────────────
 function renderSpec(){
   const doms=[{t:"0-15'",a:72,b:28},{t:"15-30'",a:58,b:42},{t:"30-45'",a:51,b:49},{t:"45-60'",a:44,b:56},{t:"60-72'",a:63,b:37}];
@@ -688,10 +925,12 @@ function renderSpec(){
 renderSpec();
 loadLive();
 document.getElementById('refBtn').style.display='block';
+// ESC 키로 모달 닫기
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 setInterval(()=>{
   const pg=document.querySelector('.page.on').id;
   if(pg==='pg-live') loadLive();
-  if(pg==='pg-odds') loadOdds();
+  if(pg==='pg-spec') loadAnalysis();
 }, 60000);
 </script>
 </body>
