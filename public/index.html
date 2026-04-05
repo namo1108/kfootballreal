@@ -3,81 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>PITCH Pro — Tactical Ops Center</title>
+    <title>PITCH Pro — Tactical Ops</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #020608; --bg2: #040c10; --card: rgba(4, 12, 16, 0.95);
-            --p-color: #00ff87; /* 기본 포인트 컬러 */
-            --p-glow: rgba(0, 255, 135, 0.5);
+            --bg: #020608; --bg2: #040c10; --card: rgba(10, 24, 32, 0.8);
+            --p-color: #00ff87; /* 선택 팀에 따라 가변 */
+            --p-glow: rgba(0, 255, 135, 0.3);
             --t: #d0ffe8; --t2: #5a8870; --t3: #1e3d2e;
-            --red: #ff3b5c;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif;
-            max-width: 480px; margin: 0 auto; overflow-x: hidden; height: 100vh;
-        }
-
-        /* --- 온보딩 화면 --- */
-        #onboarding {
-            position: fixed; inset: 0; background: var(--bg); z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .ob-title { font-family: 'Orbitron'; font-size: 24px; font-weight: 900; color: var(--p-color); letter-spacing: 4px; margin-bottom: 10px; text-shadow: 0 0 20px var(--p-glow); }
-        .ob-sub { color: var(--t2); font-size: 13px; margin-bottom: 40px; text-align: center; }
-        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
-        .team-card { 
-            background: var(--bg2); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;
-            padding: 15px 10px; text-align: center; cursor: pointer; transition: 0.3s;
-        }
-        .team-card:hover { border-color: var(--p-color); transform: translateY(-5px); background: rgba(255,255,255,0.02); }
-        .team-card img { width: 50px; height: 50px; margin-bottom: 10px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); }
-        .team-card span { display: block; font-family: 'Orbitron'; font-size: 10px; font-weight: 700; color: #fff; }
-
-        /* --- 메인 레이아웃 --- */
-        .topbar { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron'; font-size: 18px; font-weight: 900; color: var(--p-color); letter-spacing: 2px; }
+        body { background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif; max-width: 480px; margin: 0 auto; overflow: hidden; height: 100vh; position: relative; }
         
-        .nav { display: flex; overflow-x: auto; background: var(--bg2); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-item { padding: 15px 20px; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; color: var(--t3); cursor: pointer; white-space: nowrap; }
-        .nav-item.active { color: var(--p-color); border-bottom: 2px solid var(--p-color); }
+        /* --- [1] 온보딩: 5대 리그 팀 선택 --- */
+        #onboarding { position: fixed; inset: 0; background: var(--bg); z-index: 1000; padding: 40px 20px; overflow-y: auto; transition: 0.5s; }
+        .ob-header { text-align: center; margin-bottom: 30px; }
+        .ob-title { font-family: 'Orbitron'; font-size: 22px; color: var(--p-color); letter-spacing: 3px; }
+        .league-sel-group { margin-bottom: 25px; }
+        .lg-name { font-family: 'Orbitron'; font-size: 12px; color: var(--t2); margin-bottom: 10px; border-left: 3px solid var(--p-color); padding-left: 10px; }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .t-item { background: var(--bg2); padding: 10px 5px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid transparent; }
+        .t-item img { width: 35px; height: 35px; margin-bottom: 5px; }
+        .t-item div { font-size: 9px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .t-item:active { border-color: var(--p-color); background: rgba(255,255,255,0.05); }
 
-        /* --- 아코디언 일정 --- */
-        .league-wrap { margin: 15px 10px; }
-        .league-header { 
-            background: var(--bg2); padding: 12px 15px; border-radius: 12px; 
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px;
-        }
-        .league-title { display: flex; align-items: center; gap: 10px; font-family: 'Orbitron'; font-size: 12px; font-weight: 700; }
-        .league-icon { width: 20px; height: 20px; }
-        .league-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
-        .league-content.open { max-height: 1000px; }
+        /* --- [2] 메인 레이아웃 --- */
+        .top-nav { height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid rgba(0,255,135,0.1); }
+        .logo { font-family: 'Orbitron'; font-size: 18px; font-weight: 900; color: var(--p-color); }
+        
+        .content-page { height: calc(100vh - 120px); overflow-y: auto; padding: 15px; display: none; }
+        .content-page.active { display: block; animation: fadeIn 0.3s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .match-card { 
-            background: var(--card); border: 1px solid rgba(255,255,255,0.03); 
-            border-radius: 12px; padding: 15px; margin-bottom: 8px; display: flex; align-items: center;
-        }
-        .m-time { font-family: 'Share Tech Mono'; font-size: 12px; color: var(--t2); width: 50px; }
-        .m-teams { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .m-team { display: flex; align-items: center; gap: 10px; }
-        .m-team img { width: 18px; height: 18px; }
-        .m-team span { font-size: 13px; font-weight: 500; }
-        .m-score { font-family: 'Orbitron'; font-size: 16px; font-weight: 900; margin-left: auto; color: var(--p-color); }
+        /* --- [3] 페이지별 UI --- */
+        .section-title { font-family: 'Orbitron'; font-size: 11px; color: var(--p-color); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--p-glow), transparent); }
+        
+        /* 일정 아코디언 */
+        .acc-item { background: var(--bg2); border-radius: 12px; margin-bottom: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .acc-head { padding: 12px 15px; display: flex; justify-content: space-between; cursor: pointer; font-family: 'Orbitron'; font-size: 11px; }
+        .acc-body { max-height: 0; transition: 0.4s; overflow: hidden; background: rgba(0,0,0,0.2); }
+        .acc-body.open { max-height: 500px; padding: 10px; }
+        
+        /* 뉴스 카드 */
+        .news-card { display: flex; gap: 15px; background: var(--card); padding: 12px; border-radius: 12px; margin-bottom: 10px; }
+        .news-img { width: 80px; height: 60px; background: #1a2a33; border-radius: 8px; flex-shrink: 0; }
+        .news-info h4 { font-size: 13px; margin-bottom: 5px; color: #fff; }
+        .news-info p { font-size: 10px; color: var(--t2); }
 
-        /* --- 골 애니메이션 --- */
-        #goal-overlay {
-            position: fixed; inset: 0; pointer-events: none; z-index: 2000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle, var(--p-glow) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        #goal-overlay.active { opacity: 1; animation: flash 0.5s infinite; }
-        @keyframes flash { 50% { background: radial-gradient(circle, var(--p-glow) 30%, transparent 80%); } }
-        .goal-text { font-family: 'Orbitron'; font-size: 60px; font-weight: 900; color: #fff; text-shadow: 0 0 30px var(--p-color); }
+        /* 직관 인증 */
+        .stadium-card { background: linear-gradient(135deg, var(--p-bg), var(--bg2)); padding: 20px; border-radius: 16px; text-align: center; border: 1px dashed var(--p-color); }
+        .v-btn { margin-top: 15px; background: var(--p-color); color: var(--bg); border: none; padding: 10px 25px; border-radius: 8px; font-family: 'Orbitron'; font-weight: 900; cursor: pointer; }
+
+        /* --- [4] 하단 네비게이션 --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; height: 70px; background: var(--bg2); display: flex; border-top: 1px solid rgba(255,255,255,0.05); }
+        .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; opacity: 0.4; transition: 0.3s; }
+        .nav-btn.active { opacity: 1; color: var(--p-color); }
+        .nav-btn i { font-size: 20px; }
+        .nav-btn span { font-size: 9px; font-family: 'Orbitron'; font-weight: 700; }
 
         .hidden { display: none !important; }
     </style>
@@ -85,129 +68,145 @@
 <body>
 
     <div id="onboarding">
-        <div class="ob-title">SELECT SQUAD</div>
-        <div class="ob-sub">가장 좋아하는 팀을 선택해 보세요.<br>팀 컬러에 맞춰 인터페이스가 변합니다.</div>
-        <div class="team-grid" id="team-list">
+        <div class="ob-header">
+            <div class="ob-title">SELECT YOUR CLUB</div>
+            <p style="color: var(--t2); font-size: 11px; margin-top: 5px;">인터페이스 테마가 해당 팀의 컬러로 적용됩니다.</p>
+        </div>
+        <div id="league-containers">
             </div>
     </div>
 
     <div id="main-app" class="hidden">
-        <div class="topbar">
+        <div class="top-nav">
             <div class="logo">PITCH PRO</div>
-            <div id="my-team-badge" style="font-size: 20px;"></div>
+            <div id="user-team-icon">⚽</div>
         </div>
 
-        <div class="nav">
-            <div class="nav-item active">LIVE</div>
-            <div class="nav-item">FIXTURES</div>
-            <div class="nav-item">TABLES</div>
-            <div class="nav-item">MY SQUAD</div>
-        </div>
-
-        <div id="content-area">
-            <div class="league-wrap">
-                <div class="league-header" onclick="toggleLeague('pl')">
-                    <div class="league-title">
-                        <img src="https://crests.football-data.org/PL.png" class="league-icon">
-                        PREMIER LEAGUE
-                    </div>
-                    <span>▼</span>
-                </div>
-                <div id="league-pl" class="league-content open">
-                    <div class="match-card" onclick="triggerGoal('TOTTENHAM')">
-                        <div class="m-time">22:00</div>
-                        <div class="m-teams">
-                            <div class="m-team"><img src="https://crests.football-data.org/73.png"><span>Tottenham</span></div>
-                            <div class="m-team"><img src="https://crests.football-data.org/65.png"><span>Man City</span></div>
-                        </div>
-                        <div class="m-score">2 : 1</div>
-                    </div>
-                </div>
-
-                <div class="league-header" onclick="toggleLeague('ll')">
-                    <div class="league-title">
-                        <img src="https://crests.football-data.org/PD.png" class="league-icon">
-                        LA LIGA
-                    </div>
-                    <span>▼</span>
-                </div>
-                <div id="league-ll" class="league-content">
-                    <div class="match-card">
-                        <div class="m-time">04:00</div>
-                        <div class="m-teams">
-                            <div class="m-team"><img src="https://crests.football-data.org/86.png"><span>Real Madrid</span></div>
-                            <div class="m-team"><img src="https://crests.football-data.org/81.png"><span>Barcelona</span></div>
-                        </div>
-                        <div class="m-score">0 : 0</div>
-                    </div>
+        <div id="page-live" class="content-page active">
+            <div class="section-title">LIVE OPERATIONS</div>
+            <div class="acc-item" style="border-color: var(--p-color);">
+                <div class="acc-head" style="color: var(--p-color);"><span>● LIVE</span><span>82'</span></div>
+                <div style="padding: 15px; text-align: center; display: flex; justify-content: space-around; align-items: center;">
+                    <div><img src="https://crests.football-data.org/73.png" width="40"><p style="font-size:11px;">TOT</p></div>
+                    <div style="font-family:'Orbitron'; font-size:24px; font-weight:900;">2 : 1</div>
+                    <div><img src="https://crests.football-data.org/65.png" width="40"><p style="font-size:11px;">MCI</p></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="goal-overlay">
-        <div class="goal-text">GOAL!</div>
-        <div id="goal-info" style="font-family:'Orbitron'; margin-top:10px; font-weight:700;"></div>
+        <div id="page-fixtures" class="content-page">
+            <div class="section-title">FIXTURES</div>
+            <div class="acc-item">
+                <div class="acc-head" onclick="this.nextElementSibling.classList.toggle('open')"><span>PREMIER LEAGUE</span><span>▼</span></div>
+                <div class="acc-body open">
+                    <p style="font-size:11px; padding: 10px; color: var(--t2); text-align: center;">데이터를 불러오는 중...</p>
+                </div>
+            </div>
+            <div class="acc-item">
+                <div class="acc-head" onclick="this.nextElementSibling.classList.toggle('open')"><span>LA LIGA</span><span>▼</span></div>
+                <div class="acc-body">
+                    <p style="font-size:11px; padding: 10px; color: var(--t2); text-align: center;">데이터를 불러오는 중...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-table" class="content-page">
+            <div class="section-title">LEAGUE TABLE</div>
+            <div style="background: var(--bg2); border-radius: 12px; padding: 10px; font-family: 'Share Tech Mono'; font-size: 11px;">
+                <div style="display: flex; border-bottom: 1px solid var(--t3); padding-bottom: 5px; margin-bottom: 5px; color: var(--t2);">
+                    <span style="width:30px;">#</span><span style="flex:1;">TEAM</span><span>PTS</span>
+                </div>
+                <div style="display: flex; margin-bottom: 8px;">
+                    <span style="width:30px; color:var(--p-color);">1</span><span style="flex:1;">Man City</span><span>82</span>
+                </div>
+                <div style="display: flex; margin-bottom: 8px;">
+                    <span style="width:30px; color:var(--p-color);">2</span><span style="flex:1;">Arsenal</span><span>81</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-news" class="content-page">
+            <div class="section-title">FOOTBALL INTEL</div>
+            <div class="news-card">
+                <div class="news-img"></div>
+                <div class="news-info">
+                    <h4>여름 이적시장 대어급 이동 포착</h4>
+                    <p>유럽 축구 이적 전문가 로마노가 전하는 최신 뉴스...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-checkin" class="content-page">
+            <div class="section-title">STADIUM CHECK-IN</div>
+            <div class="stadium-card">
+                <div style="font-size: 40px; margin-bottom: 10px;">🎫</div>
+                <h3 style="font-family:'Orbitron'; font-size: 14px;">CERTIFY YOUR ATTENDANCE</h3>
+                <p style="font-size: 10px; color: var(--t2); margin-top: 5px;">경기장 반경 1km 이내에서 GPS 인증 시<br>디지털 티켓 배지를 드립니다.</p>
+                <button class="v-btn" onclick="alert('GPS 신호 탐색 중...')">VERIFY NOW</button>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-btn active" onclick="showPage('live', this)"><i>⚡</i><span>LIVE</span></div>
+            <div class="nav-btn" onclick="showPage('fixtures', this)"><i>📅</i><span>FIXTURES</span></div>
+            <div class="nav-btn" onclick="showPage('table', this)"><i>📊</i><span>TABLE</span></div>
+            <div class="nav-btn" onclick="showPage('news', this)"><i>📰</i><span>NEWS</span></div>
+            <div class="nav-btn" onclick="showPage('checkin', this)"><i>🎫</i><span>CHECK-IN</span></div>
+        </div>
     </div>
 
     <script>
-        const myTeams = [
-            { id: 1, name: 'TOTTENHAM', color: '#ffffff', glow: 'rgba(255,255,255,0.4)', icon: '⚽', crest: 'https://crests.football-data.org/73.png' },
-            { id: 2, name: 'MAN CITY', color: '#6caddf', glow: 'rgba(108,173,223,0.5)', icon: '💎', crest: 'https://crests.football-data.org/65.png' },
-            { id: 3, name: 'ARSENAL', color: '#ef0107', glow: 'rgba(239,1,7,0.5)', icon: '🔫', crest: 'https://crests.football-data.org/57.png' },
-            { id: 4, name: 'LIVERPOOL', color: '#e31b23', glow: 'rgba(227,27,35,0.5)', icon: '🔴', crest: 'https://crests.football-data.org/64.png' },
-            { id: 5, name: 'MUNICH', color: '#dc052d', glow: 'rgba(220,5,45,0.5)', icon: '🍺', crest: 'https://crests.football-data.org/503.png' },
-            { id: 6, name: 'PSG', color: '#004170', glow: 'rgba(0,65,112,0.5)', icon: '🗼', crest: 'https://crests.football-data.org/524.png' }
+        // 5대 리그 데이터 (샘플)
+        const leagues = [
+            { name: "PREMIER LEAGUE", teams: [
+                { name: "Tottenham", color: "#ffffff", crest: "73" },
+                { name: "Man City", color: "#6caddf", crest: "65" },
+                { name: "Arsenal", color: "#ef0107", crest: "57" },
+                { name: "Liverpool", color: "#e31b23", crest: "64" }
+            ]},
+            { name: "LA LIGA", teams: [
+                { name: "Real Madrid", color: "#ffffff", crest: "86" },
+                { name: "Barcelona", color: "#a50044", crest: "81" },
+                { name: "Atletico", color: "#cb3524", crest: "78" }
+            ]},
+            { name: "BUNDESLIGA", teams: [
+                { name: "Munich", color: "#dc052d", crest: "503" },
+                { name: "Dortmund", color: "#fde100", crest: "4" }
+            ]}
         ];
 
         // 온보딩 리스트 생성
-        const teamList = document.getElementById('team-list');
-        myTeams.forEach(team => {
-            const card = document.createElement('div');
-            card.className = 'team-card';
-            card.innerHTML = `<img src="${team.crest}"><span>${team.name}</span>`;
-            card.onclick = () => selectTeam(team);
-            teamList.appendChild(card);
+        const container = document.getElementById('league-containers');
+        leagues.forEach(lg => {
+            let html = `<div class="league-sel-group"><div class="lg-name">${lg.name}</div><div class="team-grid">`;
+            lg.teams.forEach(t => {
+                html += `<div class="t-item" onclick="selectTeam('${t.color}', '${t.name}')">
+                    <img src="https://crests.football-data.org/${t.crest}.png">
+                    <div>${t.name}</div>
+                </div>`;
+            });
+            html += `</div></div>`;
+            container.innerHTML += html;
         });
 
-        // 팀 선택 및 테마 적용
-        function selectTeam(team) {
-            document.documentElement.style.setProperty('--p-color', team.color);
-            document.documentElement.style.setProperty('--p-glow', team.glow);
-            document.getElementById('my-team-badge').innerText = team.icon;
-            
-            const ob = document.getElementById('onboarding');
-            ob.style.opacity = '0';
-            ob.style.transform = 'scale(1.1)';
-            
+        // 팀 선택
+        function selectTeam(color, name) {
+            document.documentElement.style.setProperty('--p-color', color);
+            document.documentElement.style.setProperty('--p-glow', color + '44');
+            document.getElementById('onboarding').style.transform = 'translateY(-100%)';
             setTimeout(() => {
-                ob.classList.add('hidden');
+                document.getElementById('onboarding').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-            }, 600);
+            }, 500);
         }
 
-        // 아코디언 토글
-        function toggleLeague(id) {
-            const content = document.getElementById('league-' + id);
-            content.classList.toggle('open');
+        // 페이지 전환
+        function showPage(pageId, btn) {
+            document.querySelectorAll('.content-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            btn.classList.add('active');
         }
-
-        // 골 애니메이션 실행
-        function triggerGoal(teamName) {
-            const overlay = document.getElementById('goal-overlay');
-            const info = document.getElementById('goal-info');
-            info.innerText = teamName + ' SCORED!';
-            
-            overlay.classList.add('active');
-            
-            // 3초 후 제거
-            setTimeout(() => {
-                overlay.classList.remove('active');
-            }, 3000);
-        }
-
-        // 테스트용: 5초 뒤에 자동으로 골 애니메이션 한 번 보여주기
-        // setTimeout(() => triggerGoal('TOTTENHAM'), 8000);
     </script>
 </body>
 </html>
