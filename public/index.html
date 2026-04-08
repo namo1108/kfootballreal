@@ -1,70 +1,53 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>PitchPro API Test</title>
-</head>
-<body style="background:#0b0f14; color:white; font-family:sans-serif;">
+<script>
+const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
 
-  <h1 style="color:#00ff9f;">PITCH PRO</h1>
-  <p id="status">상태: 대기중</p>
-  <button onclick="loadMatches()">경기 불러오기</button>
+async function loadMatches() {
+  const status = document.getElementById("status");
+  const container = document.getElementById("matches");
 
-  <div id="matches" style="margin-top:20px;"></div>
+  status.innerText = "요청중...";
+  container.innerHTML = "";
 
-  <script>
-    const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
-
-    async function loadMatches() {
-      const status = document.getElementById("status");
-      const container = document.getElementById("matches");
-
-      status.innerText = "요청중...";
-      container.innerHTML = "";
-
-      try {
-        const res = await fetch(
-          "https://cors-anywhere.herokuapp.com/https://v3.football.api-sports.io/fixtures?league=39&season=2024",
-          {
-            method: "GET",
-            headers: {
-              "x-apisports-key": API_KEY
-            }
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error("응답 실패: " + res.status);
+  try {
+    const res = await fetch(
+      "https://cors-anywhere.herokuapp.com/https://v3.football.api-sports.io/fixtures?date=2024-04-01",
+      {
+        headers: {
+          "x-apisports-key": API_KEY
         }
-
-        const data = await res.json();
-        console.log(data);
-
-        status.innerText = "✅ 성공!";
-
-        const matches = data.response;
-
-        matches.slice(0, 10).forEach(match => {
-          const home = match.teams.home.name;
-          const away = match.teams.away.name;
-          const date = match.fixture.date;
-
-          const div = document.createElement("div");
-          div.style.marginBottom = "10px";
-          div.innerHTML = `
-            <b>${home}</b> vs <b>${away}</b><br/>
-            <span style="color:gray">${date}</span>
-          `;
-
-          container.appendChild(div);
-        });
-
-      } catch (e) {
-        console.error(e);
-        status.innerText = "❌ 실패: " + e.message;
       }
-    }
-  </script>
+    );
 
-</body>
-</html>
+    const data = await res.json();
+
+    console.log(data);
+
+    const matches = data.response;
+
+    if (!matches || matches.length === 0) {
+      status.innerText = "⚠️ 경기 없음";
+      return;
+    }
+
+    status.innerText = "✅ 성공 (" + matches.length + "경기)";
+
+    matches.forEach(match => {
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <div style="margin-bottom:15px;">
+          <b>${match.teams.home.name}</b> vs 
+          <b>${match.teams.away.name}</b><br/>
+          <span style="color:gray">${match.fixture.date}</span>
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+
+  } catch (e) {
+    console.error(e);
+    status.innerText = "❌ 실패";
+  }
+}
+</script>
