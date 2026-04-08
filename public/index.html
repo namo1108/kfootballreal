@@ -3,149 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <title>PITCH Pro | Live Connection</title>
+    <title>PITCH Pro | Direct-Sync</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #05070a; --card: #11151c; --p: #00ff87; --t: #e1e1e1; --t3: #485058; --border: rgba(255, 255, 255, 0.05);
-        }
+        :root { --bg: #05070a; --card: #11151c; --p: #00ff87; --t: #e1e1e1; --t3: #485058; --red: #ff3b5c; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif; max-width: 480px; margin: 0 auto; }
+        body { background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif; max-width: 480px; margin: 0 auto; min-height: 100vh; }
         
-        .hdr { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--border); }
-        .hdr-logo { font-family: 'Orbitron'; font-weight: 900; color: var(--p); letter-spacing: 2px; }
-        
-        .status-bar { padding: 10px 20px; font-size: 11px; background: rgba(0,255,135,0.05); color: var(--p); display: flex; justify-content: space-between; }
-        
-        .page { padding: 15px; min-height: 100vh; }
-        .mc { background: var(--card); border-radius: 15px; border: 1px solid var(--border); margin-bottom: 12px; padding: 15px; }
-        .match-row { display: flex; align-items: center; justify-content: space-between; text-align: center; }
-        .team { flex: 1; font-size: 13px; font-weight: 700; }
-        .score-box { flex: 1; font-family: 'Orbitron'; font-size: 20px; font-weight: 900; color: var(--p); }
-        
-        .bnav { position: fixed; bottom: 0; width: 100%; max-width: 480px; height: 70px; background: #0a0e14; border-top: 1px solid var(--border); display: flex; }
-        .nbi { flex: 1; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron'; font-size: 10px; color: var(--t3); cursor: pointer; }
-        .nbi.active { color: var(--p); }
+        /* 상단 상태 바 */
+        .status-header { background: #0c1117; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--p); font-size: 16px; }
+        .indicator { font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--t3); }
+        .dot.active { background: var(--p); box-shadow: 0 0 8px var(--p); }
+        .dot.error { background: var(--red); }
+
+        /* 메인 경기 목록 */
+        .content { padding: 15px; }
+        .match-card { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.03); }
+        .league-info { font-size: 10px; color: var(--t3); margin-bottom: 12px; font-family: 'Orbitron'; }
+        .match-flex { display: flex; align-items: center; justify-content: space-between; }
+        .team-box { flex: 1; text-align: center; }
+        .team-name { font-size: 14px; font-weight: 700; display: block; margin-top: 8px; }
+        .score-center { flex: 0 0 100px; text-align: center; font-family: 'Orbitron'; font-size: 24px; font-weight: 900; color: var(--p); }
 
         /* 설정 모달 */
-        #set-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; padding: 20px; z-index: 1000; }
-        .modal-in { background: #161b22; width: 100%; border-radius: 20px; padding: 25px; border: 1px solid var(--p); }
-        input { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 10px; color: #fff; margin: 15px 0; outline: none; }
-        .btn { width: 100%; background: var(--p); border: none; padding: 12px; border-radius: 10px; font-weight: 900; cursor: pointer; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-body { background: #161b22; width: 100%; border-radius: 20px; padding: 30px; border: 1px solid var(--p); }
+        input { width: 100%; background: #000; border: 1px solid #333; padding: 15px; border-radius: 12px; color: #fff; margin: 20px 0; outline: none; }
+        .btn-save { width: 100%; background: var(--p); color: #000; border: none; padding: 15px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <header class="hdr">
-        <div class="hdr-logo">PITCH PRO</div>
-        <div onclick="document.getElementById('set-modal').style.display='flex'" style="cursor:pointer;">⚙️</div>
-    </header>
-
-    <div class="status-bar">
-        <span id="conn-status">📡 API 연결 대기 중...</span>
-        <span id="api-indicator">OFFLINE</span>
+    <div class="status-header">
+        <div class="logo">PITCH PRO</div>
+        <div class="indicator" id="stat-info">
+            <span id="stat-text">DISCONNECTED</span>
+            <div class="dot" id="stat-dot"></div>
+            <span onclick="showModal()" style="margin-left:10px; cursor:pointer; opacity:0.6;">⚙️</span>
+        </div>
     </div>
 
-    <main class="page">
-        <div id="live-list">
-            <div class="mc">
-                <div style="font-size:10px; color:var(--t3); margin-bottom:8px;">Premier League · Matchday 32</div>
-                <div class="match-row">
-                    <div class="team">Arsenal</div>
-                    <div class="score-box">VS</div>
-                    <div class="team">Liverpool</div>
-                </div>
-                <p style="text-align:center; font-size:10px; margin-top:10px; color:var(--t3);">API 키 입력 시 실시간 정보로 전환됩니다.</p>
+    <div class="content" id="match-list">
+        <div class="match-card">
+            <div class="league-info">PREMIER LEAGUE</div>
+            <div class="match-flex">
+                <div class="team-box"><span class="team-name">HOME TEAM</span></div>
+                <div class="score-center">VS</div>
+                <div class="team-box"><span class="team-name">AWAY TEAM</span></div>
             </div>
-        </div>
-    </main>
-
-    <div id="set-modal">
-        <div class="modal-in">
-            <h2 style="font-family:'Orbitron'; color:var(--p); font-size:18px;">API KEY SETTING</h2>
-            <input type="password" id="api-key-input" placeholder="Football-Data.org API 토큰 입력">
-            <button class="btn" onclick="saveApiKey()">적용 및 동기화</button>
+            <p style="text-align:center; font-size:11px; color:var(--t3); margin-top:15px;">API 키를 설정하면 실시간 데이터가 로드됩니다.</p>
         </div>
     </div>
 
-    <nav class="bnav">
-        <div class="nbi active">LIVE</div>
-        <div class="nbi" onclick="alert('API 연동 후 활성화됩니다.')">SCHED</div>
-        <div class="nbi" onclick="alert('API 연동 후 활성화됩니다.')">RANK</div>
-    </nav>
+    <div class="modal" id="modal">
+        <div class="modal-body">
+            <h2 style="font-family:'Orbitron'; color:var(--p); font-size:18px;">API TOKEN</h2>
+            <input type="password" id="key-input" placeholder="Football-Data.org API Key 입력">
+            <button class="btn-save" onclick="saveKey()">CONNECT SYSTEM</button>
+        </div>
+    </div>
 
     <script>
-        let API_KEY = localStorage.getItem('pitch_pro_token') || '';
+        let API_KEY = localStorage.getItem('pitch_token') || '';
 
-        // API 연동 최우선 로직
-        async function syncFootballData() {
-            if (!API_KEY) return;
+        function showModal() { document.getElementById('modal').style.display = 'flex'; }
+        function hideModal() { document.getElementById('modal').style.display = 'none'; }
 
-            const indicator = document.getElementById('api-indicator');
-            const statusText = document.getElementById('conn-status');
+        // 데이터 동기화 핵심 함수
+        async function syncData() {
+            if (!API_KEY) { showModal(); return; }
+
+            const text = document.getElementById('stat-text');
+            const dot = document.getElementById('stat-dot');
             
-            // 브라우저 CORS 우회를 위한 프록시 서비스 활용 (allorigins)
-            const target = "https://api.football-data.org/v4/competitions/PL/matches?status=SCHEDULED&limit=5";
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
-
             try {
-                statusText.innerText = "📡 데이터 동기화 중...";
-                const response = await fetch(proxyUrl, {
-                    headers: {
-                        // AllOrigins 사용 시 헤더 전달 방식 유의
-                    }
-                });
-                
-                const wrappedData = await response.json();
-                // AllOrigins는 결과를 strings 형태로 감싸서 보낼 수 있으므로 파싱 확인
-                const data = JSON.parse(wrappedData.contents);
+                text.innerText = "SYNCING...";
+                dot.className = "dot";
 
-                if (data && data.matches) {
-                    renderMatches(data.matches);
-                    indicator.innerText = "ONLINE";
-                    indicator.style.color = "var(--p)";
-                    statusText.innerText = "✅ 실시간 데이터 수신 중";
-                }
+                // 프록시 서버 없이 직접 호출 시도 (가장 권장되는 V4 API)
+                const response = await fetch('https://api.football-data.org/v4/competitions/PL/matches?status=SCHEDULED&limit=6', {
+                    method: 'GET',
+                    headers: { 'X-Auth-Token': API_KEY }
+                });
+
+                if (!response.ok) throw new Error('API_DENIED');
+
+                const data = await response.json();
+                renderMatches(data.matches);
+                
+                text.innerText = "LIVE SYNCED";
+                dot.className = "dot active";
             } catch (err) {
-                console.error("API Error:", err);
-                statusText.innerText = "❌ 연결 실패 (키 또는 권한 확인)";
+                console.error(err);
+                text.innerText = "CONNECTION ERROR";
+                dot.className = "dot error";
+                // 403 에러 등의 경우를 위해 알림
+                if(err.message === 'API_DENIED') alert('API 키 권한이 없거나 만료되었습니다.');
             }
         }
 
         function renderMatches(matches) {
-            const list = document.getElementById('live-list');
+            const list = document.getElementById('match-list');
+            if(matches.length === 0) {
+                list.innerHTML = '<div class="match-card" style="text-align:center; color:var(--t3);">진행 예정인 경기가 없습니다.</div>';
+                return;
+            }
+
             list.innerHTML = matches.map(m => `
-                <div class="mc">
-                    <div style="font-size:10px; color:var(--t3); margin-bottom:8px;">
-                        ${new Date(m.utcDate).toLocaleString('ko-KR')}
-                    </div>
-                    <div class="match-row">
-                        <div class="team">${m.homeTeam.shortName || m.homeTeam.name}</div>
-                        <div class="score-box">
-                            ${m.score.fullTime.home !== null ? m.score.fullTime.home + ' : ' + m.score.fullTime.away : 'VS'}
+                <div class="match-card">
+                    <div class="league-info">${new Date(m.utcDate).toLocaleString('ko-KR')}</div>
+                    <div class="match-flex">
+                        <div class="team-box">
+                            <img src="${m.homeTeam.crest}" style="width:30px; height:30px; object-fit:contain;">
+                            <span class="team-name">${m.homeTeam.shortName || m.homeTeam.name}</span>
                         </div>
-                        <div class="team">${m.awayTeam.shortName || m.awayTeam.name}</div>
+                        <div class="score-center">VS</div>
+                        <div class="team-box">
+                            <img src="${m.awayTeam.crest}" style="width:30px; height:30px; object-fit:contain;">
+                            <span class="team-name">${m.awayTeam.shortName || m.awayTeam.name}</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function saveApiKey() {
-            const val = document.getElementById('api-key-input').value.trim();
+        function saveKey() {
+            const val = document.getElementById('key-input').value.trim();
             if (val) {
-                localStorage.setItem('pitch_pro_token', val);
+                localStorage.setItem('pitch_token', val);
                 API_KEY = val;
-                document.getElementById('set-modal').style.display = 'none';
-                syncFootballData();
+                hideModal();
+                syncData();
             }
         }
 
-        // 초기 실행
-        if (API_KEY) {
-            syncFootballData();
-        } else {
-            document.getElementById('set-modal').style.display = 'flex';
-        }
+        // 앱 시작 시 실행
+        if (API_KEY) syncData();
+        else showModal();
     </script>
 </body>
 </html>
