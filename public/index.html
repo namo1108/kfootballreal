@@ -2,39 +2,34 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>PitchPro LIVE</title>
+<title>PitchPro 2.0</title>
 
 <style>
-body {
-  margin:0;
-  background:#0b0f14;
-  color:white;
-  font-family:sans-serif;
-}
+body { margin:0; background:#0b0f14; color:white; font-family:sans-serif; }
+header { padding:15px; color:#00ff9f; font-weight:bold; }
 
-header {
-  padding:15px;
-  color:#00ff9f;
-  font-size:20px;
-  font-weight:bold;
-}
-
-#content {
-  padding:15px;
-}
+#content { padding:15px; margin-bottom:70px; }
 
 .match {
   background:#111;
   padding:12px;
   border-radius:10px;
-  margin-bottom:12px;
-  cursor:pointer;
+  margin-bottom:10px;
 }
 
-.league {
-  color:#00ff9f;
-  font-size:13px;
+.nav {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#111;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
 }
+
+.nav div { color:#888; cursor:pointer; }
+.active { color:#00ff9f; }
 
 .goal-banner {
   position:fixed;
@@ -43,191 +38,152 @@ header {
   transform:translateX(-50%);
   background:#00ff9f;
   color:black;
-  padding:15px 25px;
-  border-radius:15px;
-  font-weight:bold;
-  animation:fadeOut 3s forwards;
-}
-
-@keyframes fadeOut {
-  0% {opacity:1;}
-  80% {opacity:1;}
-  100% {opacity:0;}
-}
-
-.popup {
-  position:fixed;
-  bottom:0;
-  width:100%;
-  height:60%;
-  background:#111;
-  border-top:2px solid #00ff9f;
   padding:15px;
-  overflow:auto;
+  border-radius:15px;
 }
+
 </style>
 </head>
 
 <body>
 
-<header id="today"></header>
-<div id="content">로딩중...</div>
+<header id="header"></header>
+<div id="content"></div>
+
+<div class="nav">
+  <div onclick="loadLive(this)" class="active">LIVE</div>
+  <div onclick="loadAI(this)">AI</div>
+  <div onclick="loadFan(this)">집관</div>
+</div>
 
 <script>
 const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
 const BASE = "https://cors-anywhere.herokuapp.com/https://v3.football.api-sports.io";
 
+document.getElementById("header").innerText =
+  "PITCH PRO - " + new Date().toLocaleDateString();
+
 let lastScores = {};
+let userXP = 0;
 
-// 오늘 날짜 표시
-const today = new Date().toLocaleDateString();
-document.getElementById("today").innerText = "PITCH PRO - " + today;
-
-// 골 사운드
-function playGoal() {
+// 🔊 골 알림
+function goalAlert(text){
   new Audio("https://www.soundjay.com/human/goal-cheer-01.mp3").play();
-}
 
-// 골 배너
-function showGoal(text) {
-  const el = document.createElement("div");
-  el.className = "goal-banner";
-  el.innerText = text;
+  const el=document.createElement("div");
+  el.className="goal-banner";
+  el.innerText=text;
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 3000);
+  setTimeout(()=>el.remove(),3000);
 }
 
-// LIVE 불러오기
-async function loadLive() {
-  const content = document.getElementById("content");
-
-  try {
-    const res = await fetch(BASE + "/fixtures?live=all", {
-      headers: { "x-apisports-key": API_KEY }
-    });
-
-    const data = await res.json();
-    const matches = data.response;
-
-    if (!matches || matches.length === 0) {
-      content.innerHTML = "오늘 진행중인 경기 없음";
-      return;
-    }
-
-    // 리그별 그룹
-    const leagues = {};
-
-    matches.forEach(m => {
-      const league = m.league.name;
-      if (!leagues[league]) leagues[league] = [];
-      leagues[league].push(m);
-    });
-
-    content.innerHTML = "";
-
-    for (let league in leagues) {
-      content.innerHTML += `<h3 class="league">${league}</h3>`;
-
-      leagues[league].forEach(m => {
-        const id = m.fixture.id;
-        const home = m.teams.home.name;
-        const away = m.teams.away.name;
-        const score = (m.goals.home || 0) + "-" + (m.goals.away || 0);
-
-        // 골 감지
-        if (lastScores[id] && lastScores[id] !== score) {
-          playGoal();
-          showGoal(`⚽ GOAL! ${home} ${score} ${away}`);
-        }
-        lastScores[id] = score;
-
-        const minute = m.fixture.status.elapsed || "-";
-
-        content.innerHTML += `
-          <div class="match" onclick="openMatch(${id})">
-            ${home} vs ${away}<br>
-            ⏱ ${minute}분 | 🔴 ${score}
-          </div>
-        `;
-      });
-    }
-
-  } catch(e) {
-    console.error(e);
-    content.innerHTML = "에러 발생";
-  }
+// 🧠 AI 승부예측
+function aiPredict(home, away){
+  if(home > away) return "홈팀이 흐름을 주도 중입니다";
+  if(away > home) return "원정팀 역습이 효과적입니다";
+  return "양 팀 팽팽한 경기입니다";
 }
 
-// 상세 팝업
-async function openMatch(id) {
-  const popup = document.createElement("div");
-  popup.className = "popup";
-  popup.innerHTML = "불러오는중...";
-  document.body.appendChild(popup);
+// 🔴 LIVE
+async function loadLive(el){
+  setActive(el);
+  const content=document.getElementById("content");
 
-  try {
-    // 이벤트
-    const eRes = await fetch(BASE + `/fixtures/events?fixture=${id}`, {
-      headers: { "x-apisports-key": API_KEY }
-    });
-    const eData = await eRes.json();
+  const res=await fetch(BASE+"/fixtures?live=all",{headers:{'x-apisports-key':API_KEY}});
+  const data=await res.json();
 
-    // 배당
-    const oRes = await fetch(BASE + `/odds?fixture=${id}`, {
-      headers: { "x-apisports-key": API_KEY }
-    });
-    const oData = await oRes.json();
+  content.innerHTML="";
 
-    // AI 예측 (간단)
-    let homeGoals = 0;
-    let awayGoals = 0;
+  data.response.forEach(m=>{
+    const id=m.fixture.id;
+    const score=(m.goals.home||0)+"-"+(m.goals.away||0);
 
-    eData.response.forEach(e => {
-      if (e.type === "Goal") {
-        if (e.team.name) {
-          if (e.team.name === e.fixture?.teams?.home?.name) homeGoals++;
-          else awayGoals++;
-        }
-      }
-    });
+    if(lastScores[id] && lastScores[id]!==score){
+      goalAlert(`⚽ ${m.teams.home.name} ${score} ${m.teams.away.name}`);
+    }
 
-    let ai = "비등";
-    if (homeGoals > awayGoals) ai = "홈 우세";
-    if (awayGoals > homeGoals) ai = "원정 우세";
+    lastScores[id]=score;
 
-    // 골 리스트
-    let goals = "";
-    eData.response.forEach(e => {
-      if (e.type === "Goal") {
-        goals += `⚽ ${e.player.name} (${e.team.name})<br>`;
-      }
-    });
-
-    popup.innerHTML = `
-      <button onclick="this.parentElement.remove()">닫기</button>
-      <h3>경기 상세</h3>
-
-      <b>득점</b><br>
-      ${goals || "없음"}
-
-      <hr>
-      <b>AI 예측</b><br>
-      ${ai}
-
-      <hr>
-      <b>배당률</b><br>
-      ${JSON.stringify(oData.response?.[0] || "없음")}
+    content.innerHTML+=`
+      <div class="match" onclick="openMatch(${id})">
+        ${m.league.name}<br>
+        ${m.teams.home.name} vs ${m.teams.away.name}<br>
+        ${score}
+      </div>
     `;
-
-  } catch(e) {
-    popup.innerHTML = "데이터 불러오기 실패";
-  }
+  });
 }
 
-// 자동 새로고침
-setInterval(loadLive, 10000);
+// 🤖 AI HUB
+function loadAI(el){
+  setActive(el);
 
-// 최초 실행
+  document.getElementById("content").innerHTML = `
+    <h3>🤖 AI 분석</h3>
+    경기 데이터를 기반으로 자동 분석됩니다<br><br>
+    - 경기 요약<br>
+    - 승부 예측 이유<br>
+    - 흐름 분석<br>
+  `;
+}
+
+// 📸 집관 인증
+function loadFan(el){
+  setActive(el);
+
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude;
+
+    userXP += 10;
+
+    document.getElementById("content").innerHTML = `
+      📍 위치 확인됨 (${lat.toFixed(2)})<br><br>
+      ✅ 집관 인증 완료!<br><br>
+      현재 경험치: ${userXP}<br>
+      레벨: ${getLevel(userXP)}
+    `;
+  });
+}
+
+// 레벨 계산
+function getLevel(xp){
+  if(xp<20) return "⚽ 초보";
+  if(xp<50) return "📺 라이트팬";
+  if(xp<100) return "🧠 축잘알";
+  if(xp<200) return "🎮 FM유저";
+  return "🧠 방구석 퍼거슨";
+}
+
+// 상세
+async function openMatch(id){
+  const pop=document.createElement("div");
+  pop.style="position:fixed;bottom:0;background:#111;width:100%;height:50%;padding:15px;";
+  document.body.appendChild(pop);
+
+  const res=await fetch(BASE+`/fixtures?live=all`,{headers:{'x-apisports-key':API_KEY}});
+  const data=await res.json();
+
+  const match=data.response.find(m=>m.fixture.id===id);
+
+  const ai=aiPredict(match.goals.home, match.goals.away);
+
+  pop.innerHTML=`
+    <button onclick="this.parentElement.remove()">닫기</button>
+    <h3>${match.teams.home.name} vs ${match.teams.away.name}</h3>
+    🤖 AI 분석: ${ai}
+  `;
+}
+
+// 탭
+function setActive(el){
+  document.querySelectorAll(".nav div").forEach(d=>d.classList.remove("active"));
+  el.classList.add("active");
+}
+
+// 자동 갱신
+setInterval(loadLive,10000);
+
+// 실행
 loadLive();
 </script>
 
