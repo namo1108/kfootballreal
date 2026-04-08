@@ -2,48 +2,66 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>PitchPro Test</title>
+  <title>PitchPro API Test</title>
 </head>
 <body style="background:#0b0f14; color:white; font-family:sans-serif;">
 
   <h1 style="color:#00ff9f;">PITCH PRO</h1>
-  
-  <p id="status">상태: 확인중...</p>
-  <button onclick="testAPI()">API 테스트</button>
+  <p id="status">상태: 대기중</p>
+  <button onclick="loadMatches()">경기 불러오기</button>
 
-  <pre id="result" style="margin-top:20px; font-size:12px;"></pre>
+  <div id="matches" style="margin-top:20px;"></div>
 
   <script>
-    console.log("스크립트 실행됨");
+    const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
 
-    async function testAPI() {
-      const statusEl = document.getElementById("status");
-      const resultEl = document.getElementById("result");
+    async function loadMatches() {
+      const status = document.getElementById("status");
+      const container = document.getElementById("matches");
 
-      statusEl.innerText = "상태: 요청중...";
+      status.innerText = "요청중...";
+      container.innerHTML = "";
 
       try {
-        const res = await fetch("https://v3.football.api-sports.io/fixtures?live=all", {
-          method: "GET",
-          headers: {
-            "x-apisports-key": "여기에_API_KEY"
+        const res = await fetch(
+          "https://cors-anywhere.herokuapp.com/https://v3.football.api-sports.io/fixtures?league=39&season=2024",
+          {
+            method: "GET",
+            headers: {
+              "x-apisports-key": API_KEY
+            }
           }
-        });
-
-        console.log("응답:", res);
+        );
 
         if (!res.ok) {
           throw new Error("응답 실패: " + res.status);
         }
 
         const data = await res.json();
+        console.log(data);
 
-        statusEl.innerText = "✅ 연결 성공!";
-        resultEl.innerText = JSON.stringify(data, null, 2);
+        status.innerText = "✅ 성공!";
+
+        const matches = data.response;
+
+        matches.slice(0, 10).forEach(match => {
+          const home = match.teams.home.name;
+          const away = match.teams.away.name;
+          const date = match.fixture.date;
+
+          const div = document.createElement("div");
+          div.style.marginBottom = "10px";
+          div.innerHTML = `
+            <b>${home}</b> vs <b>${away}</b><br/>
+            <span style="color:gray">${date}</span>
+          `;
+
+          container.appendChild(div);
+        });
 
       } catch (e) {
         console.error(e);
-        statusEl.innerText = "❌ 실패: " + e.message;
+        status.innerText = "❌ 실패: " + e.message;
       }
     }
   </script>
