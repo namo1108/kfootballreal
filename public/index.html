@@ -2,365 +2,72 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>PitchPro Ultimate</title>
+<title>PitchPro Stable</title>
 
 <style>
-/* ===== 기본 ===== */
-body {
-  margin:0;
-  background:#0b0f14;
-  color:white;
-  font-family:Arial;
-}
-
-header {
-  padding:15px;
-  font-size:20px;
-  font-weight:bold;
-  color:#00ff9f;
-  border-bottom:1px solid #222;
-}
-
-#content {
-  padding:15px;
-  margin-bottom:80px;
-}
-
-/* ===== 카드 ===== */
-.card {
-  background:#111;
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:12px;
-  box-shadow:0 0 10px rgba(0,0,0,0.3);
-}
-
-/* ===== 팀 ===== */
-.team {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.team img {
-  width:20px;
-  height:20px;
-  margin-right:6px;
-}
-
-/* ===== AI 바 ===== */
-.ai-bar {
-  height:6px;
-  background:#222;
-  border-radius:10px;
-  margin-top:6px;
-}
-.ai-fill {
-  height:6px;
-  background:#00ff9f;
-  border-radius:10px;
-}
-
-/* ===== 네비 ===== */
-.nav {
-  position:fixed;
-  bottom:0;
-  width:100%;
-  height:65px;
-  background:#111;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  border-top:1px solid #222;
-}
-
-.nav div {
-  color:#888;
-  cursor:pointer;
-  font-size:13px;
-}
-
-.active { color:#00ff9f; }
-
-/* ===== 골 알림 ===== */
-.goal-banner {
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#00ff9f;
-  color:black;
-  padding:15px;
-  border-radius:20px;
-  font-weight:bold;
-  animation:fade 3s forwards;
-}
-
-@keyframes fade {
-  0%{opacity:1;}
-  100%{opacity:0;}
-}
-
-/* ===== 팝업 ===== */
-.popup {
-  position:fixed;
-  bottom:0;
-  width:100%;
-  height:70%;
-  background:#111;
-  border-top:2px solid #00ff9f;
-  padding:15px;
-  overflow:auto;
-}
-
-/* ===== 버튼 ===== */
-.button {
-  background:#00ff9f;
-  color:black;
-  padding:10px;
-  border-radius:8px;
-  text-align:center;
-  margin-top:10px;
-  cursor:pointer;
-}
+body { background:#0b0f14; color:white; font-family:sans-serif; }
+.card { background:#111; padding:10px; margin:10px; border-radius:10px; }
 </style>
 </head>
 
 <body>
 
-<header id="header"></header>
-<div id="content"></div>
+<h2>PITCH PRO (안정버전)</h2>
+<button onclick="loadLive()">LIVE 불러오기</button>
 
-<div class="nav">
-  <div onclick="loadLive(this)" class="active">LIVE</div>
-  <div onclick="loadFixtures(this)">FIXTURES</div>
-  <div onclick="loadRank(this)">RANK</div>
-  <div onclick="loadAI(this)">AI HUB</div>
-  <div onclick="loadFan(this)">집관</div>
-</div>
+<div id="content"></div>
 
 <script>
 const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
-const BASE = "https://cors-anywhere.herokuapp.com/https://v3.football.api-sports.io";
 
-let lastScores = {};
-let userXP = 0;
-let favoriteTeam = "Arsenal";
+// 🔥 핵심: 프록시 함수
+async function fetchAPI(url) {
+  const proxy = "https://api.allorigins.win/raw?url=";
+  const fullUrl = proxy + encodeURIComponent(url);
 
-/* ===== 초기 ===== */
-document.getElementById("header").innerText =
-  "PITCH PRO - " + new Date().toLocaleDateString();
+  const res = await fetch(fullUrl, {
+    headers: {
+      "x-apisports-key": API_KEY
+    }
+  });
 
-/* ===== 공통 ===== */
-function setActive(el){
-  document.querySelectorAll(".nav div").forEach(d=>d.classList.remove("active"));
-  el.classList.add("active");
+  return await res.json();
 }
 
-function goalSound(){
-  new Audio("https://www.soundjay.com/human/goal-cheer-01.mp3").play();
-}
-
-function goalBanner(text){
-  const el=document.createElement("div");
-  el.className="goal-banner";
-  el.innerText=text;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),3000);
-}
-
-/* ===== AI ===== */
-function calcAI(home, away){
-  const total = home + away + 2;
-  const homeRate = Math.round(((home+1)/total)*100);
-  return {homeRate, awayRate:100-homeRate};
-}
-
-function aiComment(home, away){
-  if(home > away) return "홈팀이 경기 주도";
-  if(away > home) return "원정팀 역습 우세";
-  return "팽팽한 경기 흐름";
-}
-
-/* ===== LIVE ===== */
-async function loadLive(el){
-  if(el) setActive(el);
+// 🔴 LIVE
+async function loadLive() {
   const content = document.getElementById("content");
+  content.innerHTML = "불러오는중...";
 
-  try{
-    const res = await fetch(BASE+"/fixtures?live=all",{headers:{'x-apisports-key':API_KEY}});
-    const data = await res.json();
+  try {
+    const data = await fetchAPI(
+      "https://v3.football.api-sports.io/fixtures?live=all"
+    );
 
-    if(!data.response.length){
-      content.innerHTML="현재 경기 없음";
+    console.log(data);
+
+    if (!data.response || data.response.length === 0) {
+      content.innerHTML = "경기 없음";
       return;
     }
 
-    content.innerHTML="";
+    content.innerHTML = "";
 
-    data.response.forEach(m=>{
-      const id = m.fixture.id;
-      const home = m.goals.home||0;
-      const away = m.goals.away||0;
-      const score = home+"-"+away;
-
-      if(lastScores[id] && lastScores[id]!==score){
-        goalSound();
-        goalBanner(`⚽ GOAL ${m.teams.home.name} ${score} ${m.teams.away.name}`);
-      }
-      lastScores[id]=score;
-
-      const ai = calcAI(home,away);
-
-      content.innerHTML+=`
-        <div class="card" onclick="openMatch(${id})">
-
-          <div>${m.league.name}</div>
-
-          <div class="team">
-            <div><img src="${m.teams.home.logo}">${m.teams.home.name}</div>
-            <div>${home}</div>
-          </div>
-
-          <div class="team">
-            <div><img src="${m.teams.away.logo}">${m.teams.away.name}</div>
-            <div>${away}</div>
-          </div>
-
-          <div>⏱ ${m.fixture.status.elapsed||"-"}분</div>
-
-          <div class="ai-bar">
-            <div class="ai-fill" style="width:${ai.homeRate}%"></div>
-          </div>
-
-          <div style="font-size:12px">
-            AI ${ai.homeRate}% vs ${ai.awayRate}%
-          </div>
-
+    data.response.forEach(m => {
+      content.innerHTML += `
+        <div class="card">
+          ${m.league.name}<br>
+          ${m.teams.home.name} vs ${m.teams.away.name}<br>
+          ${m.goals.home} : ${m.goals.away}
         </div>
       `;
     });
 
-  }catch(e){
-    content.innerHTML="에러 발생";
+  } catch (e) {
+    console.error(e);
+    content.innerHTML = "❌ API 실패";
   }
 }
-
-/* ===== FIXTURES ===== */
-async function loadFixtures(el){
-  setActive(el);
-  const content = document.getElementById("content");
-
-  const res = await fetch(BASE+"/fixtures?league=39&season=2024",{headers:{'x-apisports-key':API_KEY}});
-  const data = await res.json();
-
-  content.innerHTML="<h3>📅 경기 일정</h3>";
-
-  data.response.slice(0,20).forEach(m=>{
-    content.innerHTML+=`
-      <div class="card">
-        ${m.teams.home.name} vs ${m.teams.away.name}<br>
-        ${m.fixture.date}
-      </div>
-    `;
-  });
-}
-
-/* ===== RANK ===== */
-async function loadRank(el){
-  setActive(el);
-  const content = document.getElementById("content");
-
-  const res = await fetch(BASE+"/standings?league=39&season=2024",{headers:{'x-apisports-key':API_KEY}});
-  const data = await res.json();
-
-  const table = data.response[0].league.standings[0];
-
-  content.innerHTML="<h3>📊 순위</h3>";
-
-  table.forEach(t=>{
-    content.innerHTML+=`
-      <div class="card">
-        ${t.rank}. ${t.team.name} (${t.points}점)
-      </div>
-    `;
-  });
-}
-
-/* ===== AI HUB ===== */
-function loadAI(el){
-  setActive(el);
-
-  document.getElementById("content").innerHTML=`
-    <h3>🤖 AI HUB</h3>
-    경기 데이터를 기반으로 분석<br><br>
-
-    ✔ 승부 예측<br>
-    ✔ 경기 요약<br>
-    ✔ 흐름 분석<br><br>
-
-    (GPT 연결하면 완성됨)
-  `;
-}
-
-/* ===== 집관 ===== */
-function loadFan(el){
-  setActive(el);
-
-  navigator.geolocation.getCurrentPosition(pos=>{
-    userXP += 10;
-
-    document.getElementById("content").innerHTML=`
-      📍 집관 인증 완료<br><br>
-
-      응원팀: ${favoriteTeam}<br>
-      경험치: ${userXP}<br>
-      레벨: ${getLevel(userXP)}<br><br>
-
-      <div class="button">팀 변경</div>
-    `;
-  });
-}
-
-function getLevel(xp){
-  if(xp<20) return "⚽ 초보";
-  if(xp<50) return "📺 라이트팬";
-  if(xp<100) return "🧠 축잘알";
-  if(xp<200) return "🎮 FM유저";
-  return "🧠 방구석 퍼거슨";
-}
-
-/* ===== 상세 ===== */
-async function openMatch(id){
-  const pop=document.createElement("div");
-  pop.className="popup";
-  pop.innerHTML="불러오는중...";
-  document.body.appendChild(pop);
-
-  try{
-    const res=await fetch(BASE+`/fixtures/events?fixture=${id}`,{headers:{'x-apisports-key':API_KEY}});
-    const data=await res.json();
-
-    let html="";
-    data.response.forEach(e=>{
-      if(e.type==="Goal"){
-        html+=`⚽ ${e.player.name}<br>`;
-      }
-    });
-
-    pop.innerHTML=`
-      <button onclick="this.parentElement.remove()">닫기</button>
-      <h3>경기 상세</h3>
-      ${html||"득점 없음"}
-    `;
-  }catch{
-    pop.innerHTML="에러";
-  }
-}
-
-/* ===== 자동 ===== */
-setInterval(loadLive,10000);
-loadLive();
 </script>
 
 </body>
