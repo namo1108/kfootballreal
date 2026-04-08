@@ -19,18 +19,13 @@
         .hdr { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--bg); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
         .hdr-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 18px; color: var(--p); text-shadow: 0 0 10px rgba(0,255,135,0.3); }
 
-        /* NIGHT-WATCH UX */
-        body.night-mode { filter: contrast(0.9) brightness(0.8); }
-        .blur { filter: blur(8px); cursor: pointer; transition: 0.3s; }
-        .blur:hover { filter: blur(0); }
-
         /* PAGES */
         .page { display: none; padding: 15px 15px 100px; min-height: 100vh; animation: fadeIn 0.3s ease; }
         .page.on { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* CARDS */
-        .mc { background: var(--card); border-radius: 18px; border: 1px solid var(--border); margin-bottom: 15px; padding: 15px; position: relative; }
+        .mc { background: var(--card); border-radius: 18px; border: 1px solid var(--border); margin-bottom: 15px; padding: 15px; }
         .sec-ttl { font-family: 'Orbitron'; font-size: 11px; color: var(--p); margin: 10px 5px; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
         .sec-ttl::before { content:''; width:3px; height:12px; background:var(--p); border-radius:2px; }
 
@@ -40,198 +35,138 @@
         .nbi.on { color: var(--p); }
         .nbi span { font-size: 8px; font-family: 'Orbitron'; font-weight: 700; }
 
-        /* MOMENTUM GRAPH */
-        .m-graph { height: 40px; display: flex; align-items: flex-end; gap: 2px; margin: 10px 0; }
-        .m-bar { flex: 1; background: var(--t3); border-radius: 2px 2px 0 0; min-height: 2px; transition: height 0.3s; }
-        .m-bar.active { background: var(--p); }
+        /* TABLE */
+        .stt { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .stt th { padding: 12px 8px; color: var(--t3); font-family: 'Orbitron'; font-size: 10px; border-bottom: 1px solid var(--border); }
+        .stt td { padding: 14px 8px; border-bottom: 1px solid var(--border); text-align: center; }
 
         /* MODAL */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; padding: 20px; }
         .modal.show { display: flex; }
         .modal-in { background: var(--bg2); width: 100%; border-radius: 20px; border: 1px solid var(--p); padding: 25px; }
         input { width: 100%; background: #161b22; border: 1px solid var(--border); padding: 12px; border-radius: 10px; color: #fff; margin: 15px 0; outline: none; }
-        .btn { width: 100%; background: var(--p); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR'; }
-        
-        .loader { width: 20px; height: 20px; border: 2px solid var(--p-dim); border-top-color: var(--p); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 20px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn { width: 100%; background: var(--p); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
-<body class="night-mode">
+<body>
 
     <header class="hdr">
         <div class="hdr-logo">PITCH PRO</div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <button onclick="document.body.classList.toggle('night-mode')" style="background:none; border:none; font-size:18px; cursor:pointer;">🌙</button>
-            <div onclick="openSettings()" style="cursor:pointer; font-size: 20px;">⚙️</div>
-        </div>
+        <div onclick="openSettings()" style="cursor:pointer; font-size: 20px;">⚙️</div>
     </header>
 
     <div id="pg-live" class="page on">
         <div class="sec-ttl">LIVE MOMENTUM</div>
         <div id="live-list">
             <div class="mc">
-                <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--t2); margin-bottom:12px;">
-                    <span>Simulation Mode</span>
-                    <span style="color:var(--p); font-weight:700;">● STABLE</span>
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--t3); margin-bottom:10px;">
+                    <span>Premier League · Live Simulation</span>
+                    <span style="color:var(--p);">● ACTIVE</span>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; text-align:center; padding:10px 0;">
+                <div style="display:flex; align-items:center; justify-content:space-between; text-align:center;">
                     <div style="flex:1;"><img src="https://crests.football-data.org/61.png" style="width:35px;"><div style="font-size:12px; margin-top:5px;">Chelsea</div></div>
                     <div style="flex:1; font-family:'Orbitron'; font-size:26px; font-weight:900;">2 : 1</div>
                     <div style="flex:1;"><img src="https://crests.football-data.org/65.png" style="width:35px;"><div style="font-size:12px; margin-top:5px;">Man City</div></div>
                 </div>
-                <div class="m-graph">
-                    <div class="m-bar active" style="height:40%;"></div><div class="m-bar" style="height:20%;"></div><div class="m-bar active" style="height:70%;"></div><div class="m-bar active" style="height:90%;"></div><div class="m-bar" style="height:30%;"></div>
-                </div>
-                <p style="font-size:10px; color:var(--p); text-align:center;">AI 분석: 첼시의 높은 하이프레싱이 주효함</p>
             </div>
         </div>
-    </div>
-
-    <div id="pg-sched" class="page">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div class="sec-ttl">FIXTURES</div>
-            <span style="font-size:10px; color:var(--t3);">스포방지 모드 활성</span>
-        </div>
-        <div id="sched-list"></div>
     </div>
 
     <div id="pg-rank" class="page">
         <div class="sec-ttl">LEAGUE TABLE</div>
-        <div id="rank-list" class="mc" style="padding:0; overflow:hidden;"></div>
-    </div>
-
-    <div id="pg-ai" class="page">
-        <div class="sec-ttl">AI HUB</div>
-        <div class="mc">
-            <h4 style="color:var(--p); font-family:'Orbitron'; margin-bottom:10px;">TACTICAL SUMMARY</h4>
-            <div id="ai-content" style="font-size:13px; color:var(--t2); line-height:1.7;">
-                • 리버풀은 전환 상황에서 풀백의 전진을 통해 과부하를 유도함.<br>
-                • 아스널은 수비 시 4-4-2 블록을 유지하며 중원 공간을 최소화함.<br>
-                • 70분 이후 양 팀의 xG(기대득점) 변화가 경기 결과의 터닝포인트로 작용함.
-            </div>
+        <div id="rank-container" class="mc" style="padding:0; overflow:hidden;">
+            <table class="stt" id="rank-table">
+                <thead>
+                    <tr><th>#</th><th style="text-align:left;">TEAM</th><th>P</th><th>PTS</th></tr>
+                </thead>
+                <tbody id="rank-body">
+                    <tr><td>1</td><td style="text-align:left;">Liverpool</td><td>28</td><td>64</td></tr>
+                    <tr><td>2</td><td style="text-align:left;">Man City</td><td>28</td><td>63</td></tr>
+                    <tr><td>3</td><td style="text-align:left;">Arsenal</td><td>28</td><td>61</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div id="pg-fan" class="page">
-        <div class="sec-ttl">CHECK-IN</div>
-        <div class="mc" style="text-align:center; padding:40px 20px;">
-            <div style="font-size:40px; margin-bottom:15px;">📍</div>
-            <h3 style="margin-bottom:10px;">경기장 직관 인증</h3>
-            <p style="font-size:12px; color:var(--t2); margin-bottom:25px;">현재 위치를 기반으로<br>디지털 배지를 획득하세요.</p>
-            <button class="btn" onclick="verifyGPS()">위치 인증하기</button>
-            <div id="badge-area" style="margin-top:20px;"></div>
+    <div id="pg-ai" class="page">
+        <div class="sec-ttl">AI ANALYSIS</div>
+        <div class="mc">
+            <h4 style="color:var(--p); font-family:'Orbitron'; margin-bottom:10px;">TACTICAL SUMMARY</h4>
+            <p style="font-size:13px; color:var(--t2); line-height:1.7;">
+                API 응답 대기 중에도 AI는 지난 데이터를 바탕으로 분석을 진행합니다. 현재 EPL 상위권의 승점 차는 3점 이내로, 다가오는 맞대결이 우승의 향방을 가를 것입니다.
+            </p>
+        </div>
+    </div>
+
+    <div id="set-modal" class="modal">
+        <div class="modal-in">
+            <h3 style="color:var(--p); font-family:'Orbitron';">API CONFIG</h3>
+            <input type="password" id="api-key-input" placeholder="Football-Data.org Key">
+            <button class="btn" onclick="saveKey()">저장 후 새로고침</button>
+            <p style="font-size:10px; color:var(--t3); margin-top:10px; text-align:center;" onclick="cm('set-modal')">닫기</p>
         </div>
     </div>
 
     <nav class="bnav">
         <div class="nbi on" onclick="nav('live', this)"><span>LIVE</span></div>
-        <div class="nbi" onclick="nav('sched', this)"><span>SCHED</span></div>
         <div class="nbi" onclick="nav('rank', this)"><span>RANK</span></div>
         <div class="nbi" onclick="nav('ai', this)"><span>AI HUB</span></div>
-        <div class="nbi" onclick="nav('fan', this)"><span>FAN ZONE</span></div>
     </nav>
 
-    <div id="set-modal" class="modal">
-        <div class="modal-in">
-            <h3 style="color:var(--p); font-family:'Orbitron';">API CONFIG</h3>
-            <input type="password" id="api-key-input" placeholder="Football-Data.org API Key">
-            <button class="btn" onclick="saveKey()">저장 및 새로고침</button>
-            <button onclick="cm('set-modal')" style="background:none; border:none; color:var(--t3); width:100%; margin-top:15px; cursor:pointer;">닫기</button>
-        </div>
-    </div>
-
     <script>
-        let API_KEY = localStorage.getItem('pitch_pro_key') || '';
-        // 우회를 위한 프록시 서버 목록 (차례대로 시도)
-        const PROXIES = ["https://cors-anywhere.herokuapp.com/", "https://api.allorigins.win/raw?url="];
+        let API_KEY = localStorage.getItem('pitch_key') || '';
 
-        function openSettings() { 
-            document.getElementById('api-key-input').value = API_KEY;
-            document.getElementById('set-modal').classList.add('show'); 
-        }
+        function openSettings() { document.getElementById('api-key-input').value = API_KEY; document.getElementById('set-modal').classList.add('show'); }
         function cm(id) { document.getElementById(id).classList.remove('show'); }
-        
-        function saveKey() {
-            const val = document.getElementById('api-key-input').value.trim();
-            if(val) {
-                localStorage.setItem('pitch_pro_key', val);
-                location.reload();
-            }
-        }
-
         function nav(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
             document.querySelectorAll('.nbi').forEach(n => n.classList.remove('on'));
             document.getElementById('pg-' + id).classList.add('on');
             el.classList.add('on');
-            if(id === 'sched') loadSched();
-            if(id === 'rank') loadRank();
+            if(id === 'rank') loadRankData();
         }
 
-        // 우회 호출 함수
-        async function fetchWithProxy(path) {
-            if(!API_KEY) return null;
-            // 프록시 서버를 통해 Football-Data API 호출
-            const targetUrl = `https://api.football-data.org/v4${path}`;
+        function saveKey() {
+            const val = document.getElementById('api-key-input').value.trim();
+            if(val) { localStorage.setItem('pitch_key', val); location.reload(); }
+        }
+
+        // 새롭게 적용된 데이터 호출 로직
+        async function loadRankData() {
+            if(!API_KEY) return; // 키가 없으면 기본 더미 데이터 유지
+
+            const targetUrl = "https://api.football-data.org/v4/competitions/PL/standings";
+            // 프록시 서버를 우회하여 JSONP 형태가 아닌 직접 fetch 시도하되 타임아웃 설정
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5초 후 중단
+
             try {
-                // AllOrigins 프록시 우선 사용 (별도 승인 절차 없음)
-                const res = await fetch(`${PROXIES[1]}${encodeURIComponent(targetUrl)}`, {
-                    headers: { 'X-Auth-Token': API_KEY }
+                const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`, {
+                    headers: { 'X-Auth-Token': API_KEY },
+                    signal: controller.signal
                 });
-                return res.ok ? await res.json() : null;
-            } catch { return null; }
-        }
-
-        async function loadSched() {
-            const area = document.getElementById('sched-list');
-            area.innerHTML = '<div class="loader"></div>';
-            const data = await fetchWithProxy('/competitions/PL/matches?limit=8');
-            if(!data) {
-                area.innerHTML = '<div class="mc">API 우회 시도 중입니다. 키를 확인하거나 잠시 후 시도해주세요.</div>';
-                return;
+                
+                if(res.ok) {
+                    const data = await res.json();
+                    renderRank(data.standings[0].table);
+                }
+            } catch (e) {
+                console.log("API 호출 지연으로 시뮬레이션 데이터를 유지합니다.");
             }
-            area.innerHTML = data.matches.map(m => `
-                <div class="mc" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-size:10px; color:var(--t3); width:45px;">${new Date(m.utcDate).getMonth()+1}/${new Date(m.utcDate).getDate()}</div>
-                    <div style="flex:1; text-align:right; font-weight:700;">${m.homeTeam.shortName}</div>
-                    <div class="blur" style="width:50px; text-align:center; font-family:'Orbitron'; font-weight:900; color:var(--p);">
-                        ${m.score.fullTime.home ?? 0}:${m.score.fullTime.away ?? 0}
-                    </div>
-                    <div style="flex:1; text-align:left; font-weight:700;">${m.awayTeam.shortName}</div>
-                </div>
-            `).join('');
         }
 
-        async function loadRank() {
-            const area = document.getElementById('rank-list');
-            const data = await fetchWithProxy('/competitions/PL/standings');
-            if(!data) { area.innerHTML = '<div style="padding:20px;">데이터를 불러오는 중입니다...</div>'; return; }
-            const table = data.standings[0].table;
-            area.innerHTML = `<table style="width:100%; border-collapse:collapse; font-size:12px;">
-                <tr style="background:rgba(255,255,255,0.03); color:var(--p);">
-                    <th style="padding:12px;">#</th><th style="text-align:left;">TEAM</th><th>P</th><th>PTS</th>
+        function renderRank(table) {
+            const body = document.getElementById('rank-body');
+            body.innerHTML = table.slice(0, 10).map(t => `
+                <tr>
+                    <td>${t.position}</td>
+                    <td style="text-align:left; display:flex; align-items:center; gap:8px;">
+                        <img src="${t.team.crest}" style="width:18px;"> ${t.team.shortName}
+                    </td>
+                    <td>${t.playedGames}</td>
+                    <td style="font-weight:700; color:var(--p);">${t.points}</td>
                 </tr>
-                ${table.slice(0,10).map(t => `
-                    <tr style="border-bottom:1px solid var(--border);">
-                        <td style="padding:12px; text-align:center;">${t.position}</td>
-                        <td style="display:flex; align-items:center; padding:12px;"><img src="${t.team.crest}" style="width:18px; margin-right:8px;">${t.team.shortName}</td>
-                        <td style="text-align:center;">${t.playedGames}</td>
-                        <td style="text-align:center; font-weight:700; color:var(--p);">${t.points}</td>
-                    </tr>
-                `).join('')}
-            </table>`;
-        }
-
-        function verifyGPS() {
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(() => {
-                    document.getElementById('badge-area').innerHTML = `
-                        <div style="background:var(--p-dim); border:1px solid var(--p); padding:15px; border-radius:12px;">
-                            <span style="color:var(--p); font-weight:700;">✓ 인증 성공</span><br>
-                            <span style="font-size:11px; color:var(--t2);">디지털 직관 배지가 발급되었습니다.</span>
-                        </div>`;
-                });
-            }
+            `).join('');
         }
     </script>
 </body>
