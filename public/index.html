@@ -1,182 +1,267 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PITCH PRO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>PITCH Pro | Tactical Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e12;
+            --card: #161b22;
+            --p: #00ff87; /* 포인트 컬러 */
+            --p-dim: rgba(0, 255, 135, 0.1);
+            --t-main: #ffffff;
+            --t-sub: #8b949e;
+            --t-dim: #484f58;
+            --red: #ff3b5c;
+            --border: rgba(255, 255, 255, 0.08);
+        }
 
-<style>
-body{margin:0;background:#010508;color:#fff;font-family:sans-serif}
-#app{display:none;flex-direction:column;height:100vh}
-#app.show{display:flex}
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            background: var(--bg);
+            color: var(--t-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
 
-.pages{flex:1;position:relative;height:100%}
-.page{
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  overflow:auto;
-  display:none;
-  padding:20px;
-}
-.page.on{display:block}
+        /* 공통 헤더 */
+        .hdr {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            background: rgba(10, 14, 18, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        .hdr-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 18px; color: var(--p); letter-spacing: 2px; }
 
-.bnav{
-  height:60px;
-  display:flex;
-  background:#000;
-  border-top:1px solid #333;
-  position:relative;
-  z-index:200;
-}
-.nbi{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
-.nbi.on{
-  background:#00ff87;
-  color:#000;
-}
-.card{
-  background:#111;
-  margin-bottom:10px;
-  padding:15px;
-  border-radius:10px;
-}
-</style>
+        /* 섹션 타이틀 */
+        .sec-ttl {
+            padding: 20px 20px 10px;
+            font-family: 'Orbitron';
+            font-size: 11px;
+            color: var(--p);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sec-ttl::before { content: ''; width: 3px; height: 12px; background: var(--p); border-radius: 2px; }
+
+        /* 매치 카드 스타일 개선 */
+        .mc {
+            background: var(--card);
+            margin: 0 16px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .mc:active { transform: scale(0.98); }
+        
+        .mc-hd {
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--t-sub);
+        }
+        
+        .mc-body {
+            padding: 20px 16px;
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .tm-info img { width: 40px; height: 40px; margin-bottom: 8px; }
+        .tm-nm { font-size: 13px; font-weight: 700; color: var(--t-main); display: block; }
+        
+        .mc-score { font-family: 'Orbitron'; font-size: 28px; font-weight: 900; color: #fff; }
+        .mc-status { font-size: 10px; color: var(--p); margin-top: 4px; font-weight: 700; }
+
+        /* 순위표 가독성 강화 */
+        .std-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .std-table th { 
+            background: rgba(255,255,255,0.02);
+            padding: 12px 8px; 
+            color: var(--t-dim); 
+            font-size: 10px; 
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .std-table td { padding: 14px 8px; border-bottom: 1px solid var(--border); text-align: center; }
+        .std-table .tm-cell { text-align: left; display: flex; align-items: center; gap: 10px; }
+        .std-table .tm-cell img { width: 20px; height: 20px; }
+        .std-table .pos { font-family: 'Orbitron'; font-weight: 700; color: var(--t-sub); width: 20px; }
+        .std-table tr.highlight { background: var(--p-dim); }
+        .std-table tr.highlight .pos { color: var(--p); }
+
+        /* 하단 네비게이션 */
+        .bnav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            height: 70px;
+            background: rgba(22, 27, 34, 0.98);
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .nbi {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--t-dim);
+            gap: 4px;
+        }
+        .nbi.on { color: var(--p); }
+        .nbi svg { width: 22px; height: 22px; }
+        .nbi span { font-size: 9px; font-family: 'Orbitron'; font-weight: 700; }
+
+        /* 필터 버튼 (Pills) */
+        .pills {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 10px 20px;
+            scrollbar-width: none;
+        }
+        .pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--t-sub);
+            font-size: 11px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .pill.on { background: var(--p); color: #000; border-color: var(--p); font-weight: 700; }
+
+    </style>
 </head>
-
 <body>
 
-<div id="app" class="show">
+    <header class="hdr">
+        <div class="hdr-logo">PITCH PRO</div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <div id="live-indicator" style="display: flex; align-items: center; gap: 5px; color: var(--red); font-size: 10px; font-weight: 700; font-family: 'Orbitron';">
+                <span style="width: 6px; height: 6px; background: var(--red); border-radius: 50%; display: inline-block;"></span> LIVE
+            </div>
+            <div style="font-size: 10px; background: var(--p-dim); color: var(--p); padding: 4px 8px; border-radius: 6px; font-family: 'Orbitron';">LV.1</div>
+        </div>
+    </header>
 
-  <div class="pages">
-    <div class="page on" id="pg-home"></div>
-    <div class="page" id="pg-sched"></div>
-    <div class="page" id="pg-std"></div>
-    <div class="page" id="pg-player"></div>
-    <div class="page" id="pg-fan"></div>
-  </div>
+    <main id="app-content" style="padding-bottom: 100px;">
+        <div class="pills">
+            <button class="pill on">PREMIER LEAGUE</button>
+            <button class="pill">LA LIGA</button>
+            <button class="pill">SERIE A</button>
+            <button class="pill">BUNDESLIGA</button>
+        </div>
 
-  <div class="bnav">
-    <div class="nbi on" onclick="swP('home',this)">홈</div>
-    <div class="nbi" onclick="swP('sched',this)">일정</div>
-    <div class="nbi" onclick="swP('std',this)">순위</div>
-    <div class="nbi" onclick="swP('player',this)">선수</div>
-    <div class="nbi" onclick="swP('fan',this)">팬존</div>
-  </div>
+        <section>
+            <div class="sec-ttl">LIVE MATCHES</div>
+            <div class="mc">
+                <div class="mc-hd">
+                    <span>Premier League · 74'</span>
+                    <span style="color: var(--red);">LIVE</span>
+                </div>
+                <div class="mc-body">
+                    <div class="tm-info">
+                        <img src="https://crests.football-data.org/61.png" alt="Chelsea">
+                        <span class="tm-nm">Chelsea</span>
+                    </div>
+                    <div>
+                        <div class="mc-score">2 : 1</div>
+                        <div class="mc-status">In Play</div>
+                    </div>
+                    <div class="tm-info">
+                        <img src="https://crests.football-data.org/65.png" alt="Man City">
+                        <span class="tm-nm">Man City</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-</div>
+        <section>
+            <div class="sec-ttl">LEAGUE TABLE</div>
+            <div style="margin: 0 16px; background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border);">
+                <table class="std-table">
+                    <thead>
+                        <tr>
+                            <th>POS</th>
+                            <th style="text-align: left;">TEAM</th>
+                            <th>P</th>
+                            <th>GD</th>
+                            <th>PTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td class="pos">1</td>
+                            <td class="tm-cell"><img src="https://crests.football-data.org/61.png">Chelsea</td>
+                            <td>24</td>
+                            <td>+18</td>
+                            <td>52</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">2</td>
+                            <td class="tm-cell"><img src="https://crests.football-data.org/65.png">Man City</td>
+                            <td>24</td>
+                            <td>+22</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">3</td>
+                            <td class="tm-cell"><img src="https://crests.football-data.org/64.png">Liverpool</td>
+                            <td>23</td>
+                            <td>+15</td>
+                            <td>48</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-<script>
-// 🔑 API KEY
-const API_KEY = "b00e3059f51741b7add3fcaab7eaadf0";
-const BASE_URL = "https://api.football-data.org/v4";
-
-// 🧭 페이지 전환
-function swP(name,el){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('pg-'+name).classList.add('on');
-
-  document.querySelectorAll('.nbi').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-
-  if(name==='home') loadHome();
-  if(name==='sched') loadSched();
-  if(name==='std') loadStandings();
-  if(name==='player') loadPlayers();
-  if(name==='fan') loadFan();
-}
-
-// 📡 API 호출
-async function api(path){
-  const res = await fetch(BASE_URL + path,{
-    headers: { "X-Auth-Token": API_KEY }
-  });
-  return res.json();
-}
-
-// 🟢 HOME (라이브 경기)
-async function loadHome(){
-  const el = document.getElementById('pg-home');
-  el.innerHTML = "Loading...";
-
-  try{
-    const data = await api("/matches");
-    const matches = data.matches.slice(0,10);
-
-    el.innerHTML = matches.map(m=>`
-      <div class="card">
-        <b>${m.homeTeam.name}</b> vs <b>${m.awayTeam.name}</b><br>
-        ${m.score.fullTime.home ?? '-'} : ${m.score.fullTime.away ?? '-'}<br>
-        <small>${m.status}</small>
-      </div>
-    `).join("");
-  }catch(e){
-    el.innerHTML = "에러 발생";
-  }
-}
-
-// 📅 일정
-async function loadSched(){
-  const el = document.getElementById('pg-sched');
-  el.innerHTML = "Loading...";
-
-  const data = await api("/matches");
-
-  el.innerHTML = data.matches.slice(0,10).map(m=>`
-    <div class="card">
-      ${m.homeTeam.name} vs ${m.awayTeam.name}<br>
-      ${new Date(m.utcDate).toLocaleString()}
-    </div>
-  `).join("");
-}
-
-// 🏆 순위
-async function loadStandings(){
-  const el = document.getElementById('pg-std');
-  el.innerHTML = "Loading...";
-
-  const data = await api("/competitions/PL/standings");
-
-  el.innerHTML = data.standings[0].table.map(t=>`
-    <div class="card">
-      ${t.position}. ${t.team.name} (${t.points}점)
-    </div>
-  `).join("");
-}
-
-// 👟 선수
-async function loadPlayers(){
-  const el = document.getElementById('pg-player');
-  el.innerHTML = "Loading...";
-
-  const data = await api("/competitions/PL/scorers");
-
-  el.innerHTML = data.scorers.map(s=>`
-    <div class="card">
-      ${s.player.name} - ${s.goals}골
-    </div>
-  `).join("");
-}
-
-// 🔥 팬존
-function loadFan(){
-  const el = document.getElementById('pg-fan');
-  el.innerHTML = `
-    <div class="card">
-      ⚽ 축알못 입문자<br>
-      집관 0경기
-    </div>
-  `;
-}
-
-// 최초 로딩
-loadHome();
-</script>
+    <nav class="bnav">
+        <div class="nbi on">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span>HOME</span>
+        </div>
+        <div class="nbi">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg>
+            <span>SCHED</span>
+        </div>
+        <div class="nbi">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <span>STATS</span>
+        </div>
+        <div class="nbi">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span>FAN</span>
+        </div>
+    </nav>
 
 </body>
-</html> 
+</html>
