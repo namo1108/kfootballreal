@@ -3,290 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <title>PITCH Pro | Ultimate Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>PITCH Pro | Ultimate Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 기본 테마: Night-Watch (초저조도) */
             --bg: #05070a; --bg2: #0a0e14; --card: #11151c;
             --p: #00ff87; --p-dim: rgba(0, 255, 135, 0.1);
             --t: #e1e1e1; --t2: #8b949e; --t3: #485058;
             --red: #ff3b5c; --border: rgba(255, 255, 255, 0.05);
-            --night-glow: 0 0 15px rgba(0, 255, 135, 0.3);
         }
-
-        /* 1. Night-Watch 모드 (UX) */
-        body.night-mode {
-            --bg: #020305; --card: #080a0f; --t: #a1a1a1;
-            filter: contrast(0.9) brightness(0.8);
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif; max-width: 480px; margin: 0 auto; transition: all 0.5s ease; }
+        body { background: var(--bg); color: var(--t); font-family: 'Noto Sans KR', sans-serif; max-width: 480px; margin: 0 auto; overflow-x: hidden; }
 
-        /* HEADER */
-        .hdr {
-            height: 60px; display: flex; align-items: center; justify-content: space-between;
-            padding: 0 20px; background: var(--bg); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border);
-        }
-        .hdr-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 18px; color: var(--p); text-shadow: var(--night-glow); }
+        /* 공통 헤더 */
+        .hdr { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--bg); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        .hdr-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 18px; color: var(--p); text-shadow: 0 0 10px rgba(0,255,135,0.3); }
 
-        /* 3. K-Legionnaire Tracker (로컬 맞춤형 위젯) */
-        .k-tracker {
-            background: linear-gradient(135deg, #1a1f2e, #0a0e14);
-            margin: 15px; padding: 15px; border-radius: 20px; border: 1px solid rgba(0, 255, 135, 0.2);
-        }
-        .k-player { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .k-status { font-size: 10px; color: var(--p); font-family: 'Orbitron'; background: var(--p-dim); padding: 2px 6px; border-radius: 4px; }
-
-        /* 2. 전술 흐름 시각화 (Tactical Momentum) */
-        .momentum-box { padding: 10px 0; }
-        .m-graph { height: 40px; display: flex; align-items: flex-end; gap: 2px; margin: 10px 0; }
-        .m-bar { flex: 1; background: var(--t3); border-radius: 2px 2px 0 0; min-height: 2px; transition: height 0.3s; }
-        .m-bar.danger { background: var(--red); }
-        .m-bar.active { background: var(--p); }
-
-        /* 5. AI Summary (3줄 요약) */
-        .ai-summary { background: rgba(255, 255, 255, 0.03); padding: 12px; border-radius: 12px; font-size: 12px; line-height: 1.6; border-left: 3px solid var(--p); margin: 10px 0; }
-
-        /* UI ELEMENTS */
-        .page { display: none; padding: 10px 15px 100px; min-height: 100vh; }
-        .page.on { display: block; animation: fadeIn 0.4s ease; }
+        /* 페이지 시스템 */
+        .page { display: none; padding: 15px 15px 100px; min-height: 100vh; }
+        .page.on { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* 카드 컴포넌트 */
         .mc { background: var(--card); border-radius: 18px; border: 1px solid var(--border); margin-bottom: 15px; padding: 15px; }
-        .spoiler-blur { filter: blur(8px); cursor: pointer; transition: 0.3s; }
-        .spoiler-blur:hover { filter: blur(0); }
+        .sec-ttl { font-family: 'Orbitron'; font-size: 11px; color: var(--p); margin: 10px 5px; letter-spacing: 1px; }
 
-        /* NAV */
-        .bnav { position: fixed; bottom: 0; width: 100%; max-width: 480px; height: 75px; background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; }
-        .nbi { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--t3); gap: 5px; }
+        /* 모멘텀 그래프 */
+        .m-graph { height: 40px; display: flex; align-items: flex-end; gap: 2px; margin: 10px 0; }
+        .m-bar { flex: 1; background: var(--t3); border-radius: 2px 2px 0 0; min-height: 2px; }
+        .m-bar.active { background: var(--p); }
+
+        /* 하단 네비게이터 (5개 탭) */
+        .bnav { position: fixed; bottom: 0; width: 100%; max-width: 480px; height: 75px; background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; z-index: 1000; }
+        .nbi { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--t3); gap: 4px; cursor: pointer; transition: 0.2s; }
         .nbi.on { color: var(--p); }
-        .nbi span { font-size: 9px; font-family: 'Orbitron'; font-weight: 700; }
+        .nbi span { font-size: 8px; font-family: 'Orbitron'; font-weight: 700; text-align: center; }
 
-        /* SETTINGS MODAL */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: none; align-items: center; padding: 20px; }
+        /* 설정 모달 */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; padding: 20px; }
         .modal.show { display: flex; }
-        .modal-in { background: var(--bg2); width: 100%; border-radius: 25px; border: 1px solid var(--p); padding: 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 11px; color: var(--p); margin-bottom: 8px; font-family: 'Orbitron'; }
-        input { width: 100%; background: #161b22; border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: #fff; }
+        .modal-in { background: var(--bg2); width: 100%; border-radius: 20px; border: 1px solid var(--p); padding: 20px; }
+        input { width: 100%; background: #161b22; border: 1px solid var(--border); padding: 12px; border-radius: 10px; color: #fff; margin: 10px 0; }
+        button { width: 100%; background: var(--p); border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
-        .badge-verified { display: inline-flex; align-items: center; gap: 4px; background: gold; color: #000; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 800; }
+        .blur { filter: blur(5px); transition: 0.3s; }
+        .blur:hover { filter: blur(0); }
     </style>
 </head>
-<body class="night-mode">
+<body>
 
     <header class="hdr">
         <div class="hdr-logo">PITCH PRO</div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <button onclick="toggleNightMode()" style="background:none; border:none; color:var(--p); font-size:18px;">🌙</button>
-            <div onclick="openSettings()" style="cursor:pointer; font-size: 20px;">⚙️</div>
-        </div>
+        <div onclick="openSettings()" style="cursor:pointer; font-size: 20px;">⚙️</div>
     </header>
 
-    <div id="k-tracker" class="k-tracker">
-        <div class="k-player">
-            <div style="width:45px; height:45px; background:#222; border-radius:50%; overflow:hidden; border:2px solid var(--p);">
-                <img src="https://img.a.transfermarkt.technology/portrait/header/91845-1661331215.jpg?lm=1" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <div style="flex:1;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span style="font-weight:700;">Son Heung-min</span>
-                    <span class="k-status">LIVE (72')</span>
+    <div id="pg-live" class="page on">
+        <div class="sec-ttl">LIVE TRACKER</div>
+        <div id="live-container">
+            <div class="mc">
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--t2); margin-bottom:10px;">
+                    <span>Premier League · 72'</span>
+                    <span style="color:var(--red); font-weight:700;">● LIVE</span>
                 </div>
-                <div style="font-size:11px; color:var(--t2); margin-top:2px;">Tottenham vs Everton · 2:1</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; text-align:center;">
+                    <div style="flex:1;"><img src="https://crests.football-data.org/61.png" style="width:30px;"><div style="font-size:12px;">Chelsea</div></div>
+                    <div style="flex:1; font-family:'Orbitron'; font-size:24px; font-weight:900;">2 : 1</div>
+                    <div style="flex:1;"><img src="https://crests.football-data.org/65.png" style="width:30px;"><div style="font-size:12px;">Man City</div></div>
+                </div>
+                <div class="m-graph">
+                    <div class="m-bar" style="height:30%;"></div><div class="m-bar active" style="height:60%;"></div><div class="m-bar active" style="height:80%;"></div><div class="m-bar" style="height:40%;"></div><div class="m-bar active" style="height:90%;"></div>
+                </div>
+                <div style="font-size:10px; color:var(--p); font-style:italic;">AI: 첼시의 높은 하이프레싱이 맨시티의 빌드업을 차단 중</div>
             </div>
-            <div style="text-align:right;">
-                <div style="font-family:'Orbitron'; color:var(--p); font-size:18px; font-weight:900;">8.4</div>
-                <div style="font-size:9px; color:var(--t3);">RATING</div>
-            </div>
-        </div>
-        <div class="momentum-box">
-            <div style="font-size:10px; color:var(--t3); font-family:'Share Tech Mono';">TACTICAL MOMENTUM (RISK-ZONE ENTRY)</div>
-            <div class="m-graph">
-                <div class="m-bar" style="height:30%;"></div>
-                <div class="m-bar active" style="height:65%;"></div>
-                <div class="m-bar active" style="height:80%;"></div>
-                <div class="m-bar danger" style="height:95%;"></div>
-                <div class="m-bar" style="height:40%;"></div>
-                <div class="m-bar active" style="height:70%;"></div>
-                <div class="m-bar danger" style="height:85%;"></div>
-                <div class="m-bar" style="height:50%;"></div>
-            </div>
-            <div style="font-size:11px; color:var(--p-dim); font-style:italic;">AI Turning Point: 토트넘의 높은 라인 설정이 배후 공간 노출 초래</div>
         </div>
     </div>
 
-    <main>
-        <div id="pg-home" class="page on">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <span style="font-family:'Orbitron'; font-size:12px; color:var(--p);">UPCOMING MATCHES</span>
-                <label style="font-size:10px; color:var(--t2); display:flex; align-items:center; gap:5px;">
-                    <input type="checkbox" id="spoiler-toggle" onchange="toggleSpoiler()" checked> 스포방지 모드
-                </label>
-            </div>
-            <div id="match-list">
-                <div class="loader" id="loader"></div>
-            </div>
-        </div>
+    <div id="pg-sched" class="page">
+        <div class="sec-ttl">UPCOMING FIXTURES</div>
+        <div id="sched-container"></div>
+    </div>
 
-        <div id="pg-ai" class="page">
-            <h2 style="font-family:'Orbitron'; color:var(--p); margin-bottom:20px;">AI TACTICAL SUMMARY</h2>
-            <div class="mc">
-                <div style="font-weight:700; margin-bottom:10px;">Tottenham 2 : 1 Everton (FT)</div>
-                <div class="ai-summary">
-                    • 손흥민의 하프스페이스 공략이 에버튼의 5백을 무너뜨리는 핵심 역할 수행<br>
-                    • 에버튼은 70분 이후 롱볼 위주의 전술 변화를 꾀했으나 유효슈팅 연결 실패<br>
-                    • 토트넘의 기대득점(xG)은 2.45로 압도적인 경기력을 수치로 증명함
-                </div>
-            </div>
-        </div>
+    <div id="pg-rank" class="page">
+        <div class="sec-ttl">LEAGUE TABLE</div>
+        <div id="rank-container" class="mc" style="padding:0; overflow:hidden;"></div>
+    </div>
 
-        <div id="pg-fan" class="page">
-            <div class="mc" style="text-align:center; padding:30px;">
-                <div style="font-size:40px; margin-bottom:10px;">📍</div>
-                <h3>경기장 직관 인증</h3>
-                <p style="font-size:12px; color:var(--t2); margin:10px 0 20px;">GPS 정보를 확인하여 현재 경기장에 계신지 확인합니다.</p>
-                <button onclick="verifyLocation()" style="width:100%; background:var(--p); border:none; padding:15px; border-radius:15px; font-family:'Orbitron'; font-weight:800; cursor:pointer;">인증하기</button>
-            </div>
-            <div id="badge-container" style="margin-top:20px;"></div>
+    <div id="pg-ai" class="page">
+        <div class="sec-ttl">AI TACTICAL HUB</div>
+        <div class="mc">
+            <h4 style="color:var(--p); margin-bottom:10px;">오늘의 전술적 승부처</h4>
+            <p style="font-size:13px; line-height:1.6; color:var(--t2);">
+                • 아스널 vs 리버풀: 아스널의 측면 과부하 전술이 리버풀의 풀백 전진을 억제할 것으로 예측됨 (승률 52%)<br><br>
+                • AI 추천: '새벽 4시 경기' - 전반전 아스널의 강한 압박 이후 후반 저조도 흐름 예상.
+            </p>
         </div>
-    </nav>
+    </div>
 
-    <div id="set-modal" class="modal">
-        <div class="modal-in">
-            <div class="input-group">
-                <label>FOOTBALL-DATA API KEY</label>
-                <input type="password" id="api-key" placeholder="발급받은 키를 입력하세요">
-            </div>
-            <div class="input-group">
-                <label>CLAUDE AI API KEY (Optional)</label>
-                <input type="password" id="ai-key" placeholder="AI 요약을 위한 키 입력">
-            </div>
-            <button onclick="saveSettings()" style="width:100%; background:var(--p); border:none; padding:15px; border-radius:12px; font-weight:900; cursor:pointer;">설정 저장 및 새로고침</button>
-            <button onclick="cm('set-modal')" style="width:100%; background:none; border:1px solid var(--t3); color:var(--t2); padding:10px; border-radius:12px; margin-top:10px; cursor:pointer;">닫기</button>
+    <div id="pg-fan" class="page">
+        <div class="sec-ttl">STADIUM CHECK-IN</div>
+        <div class="mc" style="text-align:center;">
+            <div style="font-size:40px; margin-bottom:15px;">📍</div>
+            <p style="margin-bottom:20px;">경기장 GPS 인증을 통해<br>고유 '디지털 배지'를 획득하세요.</p>
+            <button onclick="verifyLocation()">인증하기</button>
         </div>
     </div>
 
     <nav class="bnav">
-        <div class="nbi on" onclick="swP('home', this)"><span>HOME</span></div>
+        <div class="nbi on" onclick="swP('live', this)"><span>LIVE</span></div>
+        <div class="nbi" onclick="swP('sched', this)"><span>SCHED</span></div>
+        <div class="nbi" onclick="swP('rank', this)"><span>RANK</span></div>
         <div class="nbi" onclick="swP('ai', this)"><span>AI HUB</span></div>
         <div class="nbi" onclick="swP('fan', this)"><span>FAN ZONE</span></div>
     </nav>
 
+    <div id="set-modal" class="modal">
+        <div class="modal-in">
+            <h3 style="color:var(--p); font-family:'Orbitron';">SETTINGS</h3>
+            <input type="password" id="api-key" placeholder="Football-Data API Key 입력">
+            <button onclick="saveKey()">저장 및 새로고침</button>
+            <p style="font-size:10px; color:var(--t3); margin-top:10px;">키가 없을 경우 시뮬레이션 데이터가 표시됩니다.</p>
+        </div>
+    </div>
+
     <script>
-        // --- 상태 관리 ---
-        let API_KEY = localStorage.getItem('pitch_api_key') || '';
-        let AI_KEY = localStorage.getItem('pitch_ai_key') || '';
-        let spoilerMode = true;
-
-        // --- 1. Night-Watch 모드 토글 ---
-        function toggleNightMode() {
-            document.body.classList.toggle('night-mode');
+        let API_KEY = localStorage.getItem('pp_api_key') || '';
+        
+        function openSettings() { document.getElementById('set-modal').classList.add('show'); }
+        function saveKey() {
+            const val = document.getElementById('api-key').value.trim();
+            if(val) { localStorage.setItem('pp_api_key', val); location.reload(); }
         }
 
-        // --- 1-1. 스포일러 방지 모드 ---
-        function toggleSpoiler() {
-            spoilerMode = document.getElementById('spoiler-toggle').checked;
-            loadMatches();
-        }
-
-        // --- 2. 페이지 전환 ---
         function swP(p, el) {
             document.querySelectorAll('.page').forEach(x => x.classList.remove('on'));
             document.querySelectorAll('.nbi').forEach(x => x.classList.remove('on'));
             document.getElementById('pg-'+p).classList.add('on');
             el.classList.add('on');
+            if(p === 'sched') loadSched();
+            if(p === 'rank') loadRank();
         }
 
-        // --- 3. 설정 관리 ---
-        function openSettings() { document.getElementById('set-modal').classList.add('show'); }
-        function cm(id) { document.getElementById(id).classList.remove('show'); }
-        function saveSettings() {
-            localStorage.setItem('pitch_api_key', document.getElementById('api-key').value);
-            localStorage.setItem('pitch_ai_key', document.getElementById('ai-key').value);
-            location.reload();
-        }
-
-        // --- 4. 데이터 로드 (API 호출) ---
-        async function loadMatches() {
-            const list = document.getElementById('match-list');
-            if(!API_KEY) {
-                list.innerHTML = `<div class="empty" style="text-align:center; padding:40px; color:var(--t3);">⚙️ 설정에서 API Key를 입력해주세요.</div>`;
-                return;
-            }
-
+        async function fetchData(path) {
+            if(!API_KEY) return null;
             try {
-                // 프리미어리그(PL) 데이터 요청
-                const r = await fetch(`https://api.football-data.org/v4/competitions/PL/matches?limit=5`, {
+                const r = await fetch(`https://api.football-data.org/v4${path}`, {
                     headers: { 'X-Auth-Token': API_KEY }
                 });
-                const data = await r.json();
-                
-                list.innerHTML = data.matches.map(m => {
-                    const hScore = m.score.fullTime.home ?? '-';
-                    const aScore = m.score.fullTime.away ?? '-';
-                    const isFinished = m.status === 'FINISHED';
-                    
-                    return `
-                        <div class="mc">
-                            <div style="font-size:10px; color:var(--t3); margin-bottom:10px;">${new Date(m.utcDate).toLocaleString()}</div>
-                            <div style="display:flex; align-items:center; justify-content:space-between;">
-                                <div style="text-align:center; flex:1;">
-                                    <img src="${m.homeTeam.crest}" style="width:30px; margin-bottom:5px;">
-                                    <div style="font-size:12px; font-weight:700;">${m.homeTeam.shortName}</div>
-                                </div>
-                                <div style="flex:1; text-align:center;">
-                                    <div class="${spoilerMode && isFinished ? 'spoiler-blur' : ''}" style="font-family:'Orbitron'; font-size:22px; font-weight:900;">
-                                        ${hScore} : ${aScore}
-                                    </div>
-                                    <div style="font-size:10px; color:var(--p); margin-top:5px;">${m.status}</div>
-                                </div>
-                                <div style="text-align:center; flex:1;">
-                                    <img src="${m.awayTeam.crest}" style="width:30px; margin-bottom:5px;">
-                                    <div style="font-size:12px; font-weight:700;">${m.awayTeam.shortName}</div>
-                                </div>
-                            </div>
-                            <div style="margin-top:15px; border-top:1px solid var(--border); padding-top:10px;">
-                                <div style="font-size:10px; color:var(--t2); margin-bottom:8px;">QUIK POLL: 다음 골의 주인공은?</div>
-                                <div style="display:flex; gap:5px;">
-                                    <button onclick="this.style.background='var(--p)'; this.style.color='#000';" style="flex:1; background:var(--bg2); border:1px solid var(--border); color:var(--t); padding:5px; border-radius:8px; font-size:10px;">${m.homeTeam.shortName}</button>
-                                    <button onclick="this.style.background='var(--p)'; this.style.color='#000';" style="flex:1; background:var(--bg2); border:1px solid var(--border); color:var(--t); padding:5px; border-radius:8px; font-size:10px;">${m.awayTeam.shortName}</button>
-                                    <button onclick="this.style.background='var(--p)'; this.style.color='#000';" style="flex:1; background:var(--bg2); border:1px solid var(--border); color:var(--t); padding:5px; border-radius:8px; font-size:10px;">NO MORE GOAL</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            } catch (e) {
-                list.innerHTML = `<div class="empty">데이터를 불러올 수 없습니다. API 할당량을 확인하세요.</div>`;
-            }
+                return r.ok ? await r.json() : null;
+            } catch { return null; }
         }
 
-        // --- 6. 직관 인증 (GPS) ---
+        async function loadSched() {
+            const cont = document.getElementById('sched-container');
+            cont.innerHTML = 'Loading...';
+            const data = await fetchData('/competitions/PL/matches?limit=10');
+            if(!data) { cont.innerHTML = '<div class="mc">API 제한 또는 키 미설정. 시뮬레이션 데이터를 표시합니다.</div>'; return; }
+            cont.innerHTML = data.matches.map(m => `
+                <div class="mc" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:11px; width:60px;">${new Date(m.utcDate).toLocaleDateString()}</span>
+                    <span style="flex:1; text-align:right; font-weight:700;">${m.homeTeam.shortName}</span>
+                    <span style="margin:0 10px; color:var(--p);">VS</span>
+                    <span style="flex:1; text-align:left; font-weight:700;">${m.awayTeam.shortName}</span>
+                </div>
+            `).join('');
+        }
+
+        async function loadRank() {
+            const cont = document.getElementById('rank-container');
+            const data = await fetchData('/competitions/PL/standings');
+            if(!data) { cont.innerHTML = '<div style="padding:20px;">순위 데이터 불러오기 실패</div>'; return; }
+            const table = data.standings[0].table;
+            cont.innerHTML = `<table style="width:100%; border-collapse:collapse; font-size:12px; text-align:center;">
+                <tr style="background:rgba(255,255,255,0.05); color:var(--p); font-family:'Orbitron';">
+                    <th style="padding:10px;">#</th><th>TEAM</th><th>P</th><th>PTS</th>
+                </tr>
+                ${table.map(t => `<tr>
+                    <td style="padding:10px;">${t.position}</td>
+                    <td style="text-align:left;"><img src="${t.team.crest}" style="width:15px; margin-right:5px;">${t.team.shortName}</td>
+                    <td>${t.playedGames}</td>
+                    <td style="font-weight:700; color:var(--p);">${t.points}</td>
+                </tr>`).join('')}
+            </table>`;
+        }
+
         function verifyLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    // 실제 구현 시 경기장 좌표와 비교 로직 추가
-                    const lat = pos.coords.latitude;
-                    const lon = pos.coords.longitude;
-                    
-                    const container = document.getElementById('badge-container');
-                    container.innerHTML = `
-                        <div class="mc" style="background:rgba(255,215,0,0.1); border-color:gold;">
-                            <div class="badge-verified">VERIFIED ✓</div>
-                            <div style="margin-top:10px; font-weight:700;">토트넘 홋스퍼 스타디움 직관 팬</div>
-                            <div style="font-size:11px; color:var(--t2);">인증 시간: ${new Date().toLocaleString()}</div>
-                        </div>
-                    `;
-                    alert("경기장 위치가 확인되었습니다! 인증 배지가 부여되었습니다.");
-                });
-            }
+            alert("GPS 신호를 스캔 중입니다... (시뮬레이션: 런던 에미레이츠 스타디움 확인됨!) \n\n'직관 고수' 배지가 발급되었습니다.");
         }
-
-        // 초기화
-        loadMatches();
     </script>
 </body>
 </html>
