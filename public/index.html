@@ -110,6 +110,17 @@ body {
 .ob-team img { width: 36px; height: 36px; object-fit: contain; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto; }
 .ob-team-nm { font-size: 11px; color: var(--t2); font-weight: 500; }
 .ob-team.sel .ob-team-nm { color: var(--p); font-weight: 700; }
+
+/* 리그 헤더 */
+.ob-lg-hdr {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px; margin-top: 4px;
+}
+.ob-lg-hdr img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+.ob-lg-hdr span { font-size: 15px; font-weight: 700; color: #fff; }
+.ob-lg-season { font-size: 10px !important; font-weight: 400 !important; opacity: .75; margin-left: auto; }
 .ob-start {
   display: block;
   margin: 8px 16px 36px;
@@ -478,122 +489,436 @@ body {
     <div class="ob-hint">응원하는 팀을 선택하면<br>팀 컬러로 앱 전체가 바뀌고 팬존이 활성화됩니다</div>
 
   </div>
-  <div class="ob-section">
-
-    <div class="ob-lg-ttl">🏴󠁧󠁢󠁥󠁮󠁧󠁿 프리미어리그</div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','Arsenal')"><img src="https://crests.football-data.org/57.png" onerror="this.src='https://crests.football-data.org/57.svg'"><div class="ob-team-nm">Arsenal</div></div>
-      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','Man City')"><img src="https://crests.football-data.org/65.png" onerror="this.src='https://crests.football-data.org/65.svg'"><div class="ob-team-nm">Man City</div></div>
-      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','Liverpool')"><img src="https://crests.football-data.org/64.png" onerror="this.src='https://crests.football-data.org/64.svg'"><div class="ob-team-nm">Liverpool</div></div>
-      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','Man United')"><img src="https://crests.football-data.org/66.png" onerror="this.src='https://crests.football-data.org/66.svg'"><div class="ob-team-nm">Man United</div></div>
-      <div class="ob-team" onclick="op(this,61,'PL','#034694','Chelsea')"><img src="https://crests.football-data.org/61.png" onerror="this.src='https://crests.football-data.org/61.svg'"><div class="ob-team-nm">Chelsea</div></div>
-      <div class="ob-team" onclick="op(this,73,'PL','#132257','Tottenham')"><img src="https://crests.football-data.org/73.png" onerror="this.src='https://crests.football-data.org/73.svg'"><div class="ob-team-nm">Tottenham</div></div>
-      <div class="ob-team" onclick="op(this,67,'PL','#241F20','Newcastle')"><img src="https://crests.football-data.org/67.png" onerror="this.src='https://crests.football-data.org/67.svg'"><div class="ob-team-nm">Newcastle</div></div>
-      <div class="ob-team" onclick="op(this,58,'PL','#670E36','Aston Villa')"><img src="https://crests.football-data.org/58.png" onerror="this.src='https://crests.football-data.org/58.svg'"><div class="ob-team-nm">Aston Villa</div></div>
-      <div class="ob-team" onclick="op(this,563,'PL','#7A263A','West Ham')"><img src="https://crests.football-data.org/563.png" onerror="this.src='https://crests.football-data.org/563.svg'"><div class="ob-team-nm">West Ham</div></div>
-      <div class="ob-team" onclick="op(this,354,'PL','#1B458F','Crystal Palace')"><img src="https://crests.football-data.org/354.png" onerror="this.src='https://crests.football-data.org/354.svg'"><div class="ob-team-nm">Crystal Palace</div></div>
-      <div class="ob-team" onclick="op(this,397,'PL','#0057B8','Brighton')"><img src="https://crests.football-data.org/397.png" onerror="this.src='https://crests.football-data.org/397.svg'"><div class="ob-team-nm">Brighton</div></div>
-      <div class="ob-team" onclick="op(this,402,'PL','#E30613','Brentford')"><img src="https://crests.football-data.org/402.png" onerror="this.src='https://crests.football-data.org/402.svg'"><div class="ob-team-nm">Brentford</div></div>
-      <div class="ob-team" onclick="op(this,76,'PL','#FDB913','Wolves')"><img src="https://crests.football-data.org/76.png" onerror="this.src='https://crests.football-data.org/76.svg'"><div class="ob-team-nm">Wolves</div></div>
-      <div class="ob-team" onclick="op(this,74,'PL','#003399','Everton')"><img src="https://crests.football-data.org/74.png" onerror="this.src='https://crests.football-data.org/74.svg'"><div class="ob-team-nm">Everton</div></div>
-      <div class="ob-team" onclick="op(this,1044,'PL','#CC0000','Nottm Forest')"><img src="https://crests.football-data.org/1044.png" onerror="this.src='https://crests.football-data.org/1044.svg'"><div class="ob-team-nm">Nottm Forest</div></div>
-      <div class="ob-team" onclick="op(this,340,'PL','#D71920','Southampton')"><img src="https://crests.football-data.org/340.png" onerror="this.src='https://crests.football-data.org/340.svg'"><div class="ob-team-nm">Southampton</div></div>
-      <div class="ob-team" onclick="op(this,72,'PL','#CC0000','Fulham')"><img src="https://crests.football-data.org/72.png" onerror="this.src='https://crests.football-data.org/72.svg'"><div class="ob-team-nm">Fulham</div></div>
-      <div class="ob-team" onclick="op(this,715,'PL','#DA291C','Bournemouth')"><img src="https://crests.football-data.org/715.png" onerror="this.src='https://crests.football-data.org/715.svg'"><div class="ob-team-nm">Bournemouth</div></div>
-      <div class="ob-team" onclick="op(this,68,'PL','#0033A0','Ipswich')"><img src="https://crests.football-data.org/68.png" onerror="this.src='https://crests.football-data.org/68.svg'"><div class="ob-team-nm">Ipswich</div></div>
-      <div class="ob-team" onclick="op(this,75,'PL','#003090','Leicester')"><img src="https://crests.football-data.org/75.png" onerror="this.src='https://crests.football-data.org/75.svg'"><div class="ob-team-nm">Leicester</div></div>
+    <div class="ob-section">
+    <div class="ob-lg-hdr" style="background:#3D195B;">
+      <img src="https://crests.football-data.org/PL.png" onerror="this.style.display='none'">
+      <span>프리미어리그</span>
+      <span class="ob-lg-season">2025-26 시즌</span>
     </div>
-
-    <div class="ob-lg-ttl">🇪🇸 라리가</div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','Real Madrid')"><img src="https://crests.football-data.org/86.png" onerror="this.src='https://crests.football-data.org/86.svg'"><div class="ob-team-nm">Real Madrid</div></div>
-      <div class="ob-team" onclick="op(this,81,'PD','#A50044','Barcelona')"><img src="https://crests.football-data.org/81.png" onerror="this.src='https://crests.football-data.org/81.svg'"><div class="ob-team-nm">Barcelona</div></div>
-      <div class="ob-team" onclick="op(this,78,'PD','#CC0000','Atletico')"><img src="https://crests.football-data.org/78.png" onerror="this.src='https://crests.football-data.org/78.svg'"><div class="ob-team-nm">Atletico</div></div>
-      <div class="ob-team" onclick="op(this,94,'PD','#FFD700','Villarreal')"><img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'"><div class="ob-team-nm">Villarreal</div></div>
-      <div class="ob-team" onclick="op(this,82,'PD','#D40511','Sevilla')"><img src="https://crests.football-data.org/82.png" onerror="this.src='https://crests.football-data.org/82.svg'"><div class="ob-team-nm">Sevilla</div></div>
-      <div class="ob-team" onclick="op(this,90,'PD','#00954C','Real Betis')"><img src="https://crests.football-data.org/90.png" onerror="this.src='https://crests.football-data.org/90.svg'"><div class="ob-team-nm">Real Betis</div></div>
-      <div class="ob-team" onclick="op(this,92,'PD','#0067B1','R.Sociedad')"><img src="https://crests.football-data.org/92.png" onerror="this.src='https://crests.football-data.org/92.svg'"><div class="ob-team-nm">R.Sociedad</div></div>
-      <div class="ob-team" onclick="op(this,87,'PD','#EE2523','Athletic')"><img src="https://crests.football-data.org/87.png" onerror="this.src='https://crests.football-data.org/87.svg'"><div class="ob-team-nm">Athletic</div></div>
-      <div class="ob-team" onclick="op(this,95,'PD','#FF7F00','Valencia')"><img src="https://crests.football-data.org/95.png" onerror="this.src='https://crests.football-data.org/95.svg'"><div class="ob-team-nm">Valencia</div></div>
-      <div class="ob-team" onclick="op(this,558,'PD','#CC0000','Girona')"><img src="https://crests.football-data.org/558.png" onerror="this.src='https://crests.football-data.org/558.svg'"><div class="ob-team-nm">Girona</div></div>
-      <div class="ob-team" onclick="op(this,94,'PD','#CC0000','Osasuna')"><img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'"><div class="ob-team-nm">Osasuna</div></div>
-      <div class="ob-team" onclick="op(this,80,'PD','#6BB5E0','Celta Vigo')"><img src="https://crests.football-data.org/80.png" onerror="this.src='https://crests.football-data.org/80.svg'"><div class="ob-team-nm">Celta Vigo</div></div>
-      <div class="ob-team" onclick="op(this,264,'PD','#0064C8','Alaves')"><img src="https://crests.football-data.org/264.png" onerror="this.src='https://crests.football-data.org/264.svg'"><div class="ob-team-nm">Alaves</div></div>
-      <div class="ob-team" onclick="op(this,279,'PD','#CC0000','Mallorca')"><img src="https://crests.football-data.org/279.png" onerror="this.src='https://crests.football-data.org/279.svg'"><div class="ob-team-nm">Mallorca</div></div>
-      <div class="ob-team" onclick="op(this,745,'PD','#FFDD00','Rayo Vallecano')"><img src="https://crests.football-data.org/745.png" onerror="this.src='https://crests.football-data.org/745.svg'"><div class="ob-team-nm">Rayo Vallecano</div></div>
-      <div class="ob-team" onclick="op(this,263,'PD','#003DA5','Espanyol')"><img src="https://crests.football-data.org/263.png" onerror="this.src='https://crests.football-data.org/263.svg'"><div class="ob-team-nm">Espanyol</div></div>
-      <div class="ob-team" onclick="op(this,250,'PD','#FFDD00','Las Palmas')"><img src="https://crests.football-data.org/250.png" onerror="this.src='https://crests.football-data.org/250.svg'"><div class="ob-team-nm">Las Palmas</div></div>
-      <div class="ob-team" onclick="op(this,277,'PD','#7B2C8B','Valladolid')"><img src="https://crests.football-data.org/277.png" onerror="this.src='https://crests.football-data.org/277.svg'"><div class="ob-team-nm">Valladolid</div></div>
+      <div class="ob-team" onclick="op(this,1044,'PL','#CC0000','노팅엄')">
+        <img src="https://crests.football-data.org/1044.png" onerror="this.src='https://crests.football-data.org/1044.svg'">
+        <div class="ob-team-nm">노팅엄</div>
+      </div>
+      <div class="ob-team" onclick="op(this,67,'PL','#241F20','뉴캐슬')">
+        <img src="https://crests.football-data.org/67.png" onerror="this.src='https://crests.football-data.org/67.svg'">
+        <div class="ob-team-nm">뉴캐슬</div>
+      </div>
+      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','리버풀')">
+        <img src="https://crests.football-data.org/64.png" onerror="this.src='https://crests.football-data.org/64.svg'">
+        <div class="ob-team-nm">리버풀</div>
+      </div>
+      <div class="ob-team" onclick="op(this,341,'PL','#FFCD00','리즈')">
+        <img src="https://crests.football-data.org/341.png" onerror="this.src='https://crests.football-data.org/341.svg'">
+        <div class="ob-team-nm">리즈</div>
+      </div>
+      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','맨시티')">
+        <img src="https://crests.football-data.org/65.png" onerror="this.src='https://crests.football-data.org/65.svg'">
+        <div class="ob-team-nm">맨시티</div>
+      </div>
+      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','맨유')">
+        <img src="https://crests.football-data.org/66.png" onerror="this.src='https://crests.football-data.org/66.svg'">
+        <div class="ob-team-nm">맨유</div>
+      </div>
+      <div class="ob-team" onclick="op(this,715,'PL','#DA291C','본머스')">
+        <img src="https://crests.football-data.org/715.png" onerror="this.src='https://crests.football-data.org/715.svg'">
+        <div class="ob-team-nm">본머스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,402,'PL','#E30613','브렌트포드')">
+        <img src="https://crests.football-data.org/402.png" onerror="this.src='https://crests.football-data.org/402.svg'">
+        <div class="ob-team-nm">브렌트포드</div>
+      </div>
+      <div class="ob-team" onclick="op(this,397,'PL','#0057B8','브라이턴')">
+        <img src="https://crests.football-data.org/397.png" onerror="this.src='https://crests.football-data.org/397.svg'">
+        <div class="ob-team-nm">브라이턴</div>
+      </div>
+      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','아스날')">
+        <img src="https://crests.football-data.org/57.png" onerror="this.src='https://crests.football-data.org/57.svg'">
+        <div class="ob-team-nm">아스날</div>
+      </div>
+      <div class="ob-team" onclick="op(this,58,'PL','#670E36','아스톤 빌라')">
+        <img src="https://crests.football-data.org/58.png" onerror="this.src='https://crests.football-data.org/58.svg'">
+        <div class="ob-team-nm">아스톤 빌라</div>
+      </div>
+      <div class="ob-team" onclick="op(this,74,'PL','#003399','에버턴')">
+        <img src="https://crests.football-data.org/74.png" onerror="this.src='https://crests.football-data.org/74.svg'">
+        <div class="ob-team-nm">에버턴</div>
+      </div>
+      <div class="ob-team" onclick="op(this,76,'PL','#FDB913','울버햄튼')">
+        <img src="https://crests.football-data.org/76.png" onerror="this.src='https://crests.football-data.org/76.svg'">
+        <div class="ob-team-nm">울버햄튼</div>
+      </div>
+      <div class="ob-team" onclick="op(this,563,'PL','#7A263A','웨스트햄')">
+        <img src="https://crests.football-data.org/563.png" onerror="this.src='https://crests.football-data.org/563.svg'">
+        <div class="ob-team-nm">웨스트햄</div>
+      </div>
+      <div class="ob-team" onclick="op(this,61,'PL','#034694','첼시')">
+        <img src="https://crests.football-data.org/61.png" onerror="this.src='https://crests.football-data.org/61.svg'">
+        <div class="ob-team-nm">첼시</div>
+      </div>
+      <div class="ob-team" onclick="op(this,73,'PL','#132257','토트넘')">
+        <img src="https://crests.football-data.org/73.png" onerror="this.src='https://crests.football-data.org/73.svg'">
+        <div class="ob-team-nm">토트넘</div>
+      </div>
+      <div class="ob-team" onclick="op(this,354,'PL','#1B458F','크리스탈 팰리스')">
+        <img src="https://crests.football-data.org/354.png" onerror="this.src='https://crests.football-data.org/354.svg'">
+        <div class="ob-team-nm">크리스탈 팰리스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,72,'PL','#CC0000','풀럼')">
+        <img src="https://crests.football-data.org/72.png" onerror="this.src='https://crests.football-data.org/72.svg'">
+        <div class="ob-team-nm">풀럼</div>
+      </div>
+      <div class="ob-team" onclick="op(this,340,'PL','#D71920','사우스햄튼')">
+        <img src="https://crests.football-data.org/340.png" onerror="this.src='https://crests.football-data.org/340.svg'">
+        <div class="ob-team-nm">사우스햄튼</div>
+      </div>
+      <div class="ob-team" onclick="op(this,75,'PL','#003090','레스터')">
+        <img src="https://crests.football-data.org/75.png" onerror="this.src='https://crests.football-data.org/75.svg'">
+        <div class="ob-team-nm">레스터</div>
+      </div>
     </div>
-
-    <div class="ob-lg-ttl">🇩🇪 분데스리가</div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,5,'BL1','#DC052D','Bayern')"><img src="https://crests.football-data.org/5.png" onerror="this.src='https://crests.football-data.org/5.svg'"><div class="ob-team-nm">Bayern</div></div>
-      <div class="ob-team" onclick="op(this,4,'BL1','#FDE100','Dortmund')"><img src="https://crests.football-data.org/4.png" onerror="this.src='https://crests.football-data.org/4.svg'"><div class="ob-team-nm">Dortmund</div></div>
-      <div class="ob-team" onclick="op(this,3,'BL1','#E32221','Leverkusen')"><img src="https://crests.football-data.org/3.png" onerror="this.src='https://crests.football-data.org/3.svg'"><div class="ob-team-nm">Leverkusen</div></div>
-      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','Union Berlin')"><img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'"><div class="ob-team-nm">Union Berlin</div></div>
-      <div class="ob-team" onclick="op(this,13,'BL1','#E2001A','Eintracht')"><img src="https://crests.football-data.org/13.png" onerror="this.src='https://crests.football-data.org/13.svg'"><div class="ob-team-nm">Eintracht</div></div>
-      <div class="ob-team" onclick="op(this,18,'BL1','#65B32E','Wolfsburg')"><img src="https://crests.football-data.org/18.png" onerror="this.src='https://crests.football-data.org/18.svg'"><div class="ob-team-nm">Wolfsburg</div></div>
-      <div class="ob-team" onclick="op(this,11,'BL1','#CC0000','Stuttgart')"><img src="https://crests.football-data.org/11.png" onerror="this.src='https://crests.football-data.org/11.svg'"><div class="ob-team-nm">Stuttgart</div></div>
-      <div class="ob-team" onclick="op(this,10,'BL1','#CC0000','Freiburg')"><img src="https://crests.football-data.org/10.png" onerror="this.src='https://crests.football-data.org/10.svg'"><div class="ob-team-nm">Freiburg</div></div>
-      <div class="ob-team" onclick="op(this,6,'BL1','#1873B8','Hoffenheim')"><img src="https://crests.football-data.org/6.png" onerror="this.src='https://crests.football-data.org/6.svg'"><div class="ob-team-nm">Hoffenheim</div></div>
-      <div class="ob-team" onclick="op(this,9,'BL1','#CC0000','Augsburg')"><img src="https://crests.football-data.org/9.png" onerror="this.src='https://crests.football-data.org/9.svg'"><div class="ob-team-nm">Augsburg</div></div>
-      <div class="ob-team" onclick="op(this,39,'BL1','#CC0000','Mainz')"><img src="https://crests.football-data.org/39.png" onerror="this.src='https://crests.football-data.org/39.svg'"><div class="ob-team-nm">Mainz</div></div>
-      <div class="ob-team" onclick="op(this,43,'BL1','#1D9B43','Werder')"><img src="https://crests.football-data.org/43.png" onerror="this.src='https://crests.football-data.org/43.svg'"><div class="ob-team-nm">Werder</div></div>
-      <div class="ob-team" onclick="op(this,16,'BL1','#FC4444','Köln')"><img src="https://crests.football-data.org/16.png" onerror="this.src='https://crests.football-data.org/16.svg'"><div class="ob-team-nm">Köln</div></div>
-      <div class="ob-team" onclick="op(this,15,'BL1','#003DA5','Bochum')"><img src="https://crests.football-data.org/15.png" onerror="this.src='https://crests.football-data.org/15.svg'"><div class="ob-team-nm">Bochum</div></div>
-      <div class="ob-team" onclick="op(this,7,'BL1','#CC0000','Heidenheim')"><img src="https://crests.football-data.org/7.png" onerror="this.src='https://crests.football-data.org/7.svg'"><div class="ob-team-nm">Heidenheim</div></div>
-      <div class="ob-team" onclick="op(this,38,'BL1','#000000','Mgladbach')"><img src="https://crests.football-data.org/38.png" onerror="this.src='https://crests.football-data.org/38.svg'"><div class="ob-team-nm">M'gladbach</div></div>
-      <div class="ob-team" onclick="op(this,28,'BL1','#C8102E','St Pauli')"><img src="https://crests.football-data.org/28.png" onerror="this.src='https://crests.football-data.org/28.svg'"><div class="ob-team-nm">St Pauli</div></div>
-      <div class="ob-team" onclick="op(this,23,'BL1','#003DA5','Kiel')"><img src="https://crests.football-data.org/23.png" onerror="this.src='https://crests.football-data.org/23.svg'"><div class="ob-team-nm">Kiel</div></div>
+    <div class="ob-lg-hdr" style="background:#EE8100;">
+      <img src="https://crests.football-data.org/PD.png" onerror="this.style.display='none'">
+      <span>라리가</span>
+      <span class="ob-lg-season">2025-26 시즌</span>
     </div>
-
-    <div class="ob-lg-ttl">🇮🇹 세리에A</div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,108,'SA','#0068A8','Inter')"><img src="https://crests.football-data.org/108.png" onerror="this.src='https://crests.football-data.org/108.svg'"><div class="ob-team-nm">Inter</div></div>
-      <div class="ob-team" onclick="op(this,98,'SA','#FB090B','AC Milan')"><img src="https://crests.football-data.org/98.png" onerror="this.src='https://crests.football-data.org/98.svg'"><div class="ob-team-nm">AC Milan</div></div>
-      <div class="ob-team" onclick="op(this,113,'SA','#12A0D7','Napoli')"><img src="https://crests.football-data.org/113.png" onerror="this.src='https://crests.football-data.org/113.svg'"><div class="ob-team-nm">Napoli</div></div>
-      <div class="ob-team" onclick="op(this,109,'SA','#000000','Juventus')"><img src="https://crests.football-data.org/109.png" onerror="this.src='https://crests.football-data.org/109.svg'"><div class="ob-team-nm">Juventus</div></div>
-      <div class="ob-team" onclick="op(this,100,'SA','#8E1F2F','AS Roma')"><img src="https://crests.football-data.org/100.png" onerror="this.src='https://crests.football-data.org/100.svg'"><div class="ob-team-nm">AS Roma</div></div>
-      <div class="ob-team" onclick="op(this,102,'SA','#87D8F7','Lazio')"><img src="https://crests.football-data.org/102.png" onerror="this.src='https://crests.football-data.org/102.svg'"><div class="ob-team-nm">Lazio</div></div>
-      <div class="ob-team" onclick="op(this,107,'SA','#4C2D8C','Fiorentina')"><img src="https://crests.football-data.org/107.png" onerror="this.src='https://crests.football-data.org/107.svg'"><div class="ob-team-nm">Fiorentina</div></div>
-      <div class="ob-team" onclick="op(this,110,'SA','#1E3F6D','Atalanta')"><img src="https://crests.football-data.org/110.png" onerror="this.src='https://crests.football-data.org/110.svg'"><div class="ob-team-nm">Atalanta</div></div>
-      <div class="ob-team" onclick="op(this,103,'SA','#CC0000','Bologna')"><img src="https://crests.football-data.org/103.png" onerror="this.src='https://crests.football-data.org/103.svg'"><div class="ob-team-nm">Bologna</div></div>
-      <div class="ob-team" onclick="op(this,114,'SA','#8B1A1A','Torino')"><img src="https://crests.football-data.org/114.png" onerror="this.src='https://crests.football-data.org/114.svg'"><div class="ob-team-nm">Torino</div></div>
-      <div class="ob-team" onclick="op(this,104,'SA','#CC0000','Genoa')"><img src="https://crests.football-data.org/104.png" onerror="this.src='https://crests.football-data.org/104.svg'"><div class="ob-team-nm">Genoa</div></div>
-      <div class="ob-team" onclick="op(this,115,'SA','#CC0000','Cagliari')"><img src="https://crests.football-data.org/115.png" onerror="this.src='https://crests.football-data.org/115.svg'"><div class="ob-team-nm">Cagliari</div></div>
-      <div class="ob-team" onclick="op(this,105,'SA','#FFD700','Hellas Verona')"><img src="https://crests.football-data.org/105.png" onerror="this.src='https://crests.football-data.org/105.svg'"><div class="ob-team-nm">Hellas Verona</div></div>
-      <div class="ob-team" onclick="op(this,586,'SA','#FFD700','Lecce')"><img src="https://crests.football-data.org/586.png" onerror="this.src='https://crests.football-data.org/586.svg'"><div class="ob-team-nm">Lecce</div></div>
-      <div class="ob-team" onclick="op(this,1107,'SA','#004B8D','Empoli')"><img src="https://crests.football-data.org/1107.png" onerror="this.src='https://crests.football-data.org/1107.svg'"><div class="ob-team-nm">Empoli</div></div>
-      <div class="ob-team" onclick="op(this,445,'SA','#CC0000','Monza')"><img src="https://crests.football-data.org/445.png" onerror="this.src='https://crests.football-data.org/445.svg'"><div class="ob-team-nm">Monza</div></div>
-      <div class="ob-team" onclick="op(this,106,'SA','#FFD700','Parma')"><img src="https://crests.football-data.org/106.png" onerror="this.src='https://crests.football-data.org/106.svg'"><div class="ob-team-nm">Parma</div></div>
-      <div class="ob-team" onclick="op(this,118,'SA','#000000','Udinese')"><img src="https://crests.football-data.org/118.png" onerror="this.src='https://crests.football-data.org/118.svg'"><div class="ob-team-nm">Udinese</div></div>
-      <div class="ob-team" onclick="op(this,116,'SA','#003DA5','Venezia')"><img src="https://crests.football-data.org/116.png" onerror="this.src='https://crests.football-data.org/116.svg'"><div class="ob-team-nm">Venezia</div></div>
-      <div class="ob-team" onclick="op(this,470,'SA','#003DA5','Como')"><img src="https://crests.football-data.org/470.png" onerror="this.src='https://crests.football-data.org/470.svg'"><div class="ob-team-nm">Como</div></div>
+      <div class="ob-team" onclick="op(this,558,'PD','#CC0000','히로나')">
+        <img src="https://crests.football-data.org/558.png" onerror="this.src='https://crests.football-data.org/558.svg'">
+        <div class="ob-team-nm">히로나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,745,'PD','#063EA5','레반테')">
+        <img src="https://crests.football-data.org/745.png" onerror="this.src='https://crests.football-data.org/745.svg'">
+        <div class="ob-team-nm">레반테</div>
+      </div>
+      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','레알 마드리드')">
+        <img src="https://crests.football-data.org/86.png" onerror="this.src='https://crests.football-data.org/86.svg'">
+        <div class="ob-team-nm">레알 마드리드</div>
+      </div>
+      <div class="ob-team" onclick="op(this,279,'PD','#CC0000','마요르카')">
+        <img src="https://crests.football-data.org/279.png" onerror="this.src='https://crests.football-data.org/279.svg'">
+        <div class="ob-team-nm">마요르카</div>
+      </div>
+      <div class="ob-team" onclick="op(this,81,'PD','#A50044','바르셀로나')">
+        <img src="https://crests.football-data.org/81.png" onerror="this.src='https://crests.football-data.org/81.svg'">
+        <div class="ob-team-nm">바르셀로나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,95,'PD','#FF7F00','발렌시아')">
+        <img src="https://crests.football-data.org/95.png" onerror="this.src='https://crests.football-data.org/95.svg'">
+        <div class="ob-team-nm">발렌시아</div>
+      </div>
+      <div class="ob-team" onclick="op(this,90,'PD','#00954C','베티스')">
+        <img src="https://crests.football-data.org/90.png" onerror="this.src='https://crests.football-data.org/90.svg'">
+        <div class="ob-team-nm">베티스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,94,'PD','#FFD700','비야레알')">
+        <img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'">
+        <div class="ob-team-nm">비야레알</div>
+      </div>
+      <div class="ob-team" onclick="op(this,82,'PD','#D40511','세비야')">
+        <img src="https://crests.football-data.org/82.png" onerror="this.src='https://crests.football-data.org/82.svg'">
+        <div class="ob-team-nm">세비야</div>
+      </div>
+      <div class="ob-team" onclick="op(this,80,'PD','#6BB5E0','셀타 비고')">
+        <img src="https://crests.football-data.org/80.png" onerror="this.src='https://crests.football-data.org/80.svg'">
+        <div class="ob-team-nm">셀타 비고</div>
+      </div>
+      <div class="ob-team" onclick="op(this,92,'PD','#0067B1','소시에다드')">
+        <img src="https://crests.football-data.org/92.png" onerror="this.src='https://crests.football-data.org/92.svg'">
+        <div class="ob-team-nm">소시에다드</div>
+      </div>
+      <div class="ob-team" onclick="op(this,78,'PD','#CC0000','아틀레티코')">
+        <img src="https://crests.football-data.org/78.png" onerror="this.src='https://crests.football-data.org/78.svg'">
+        <div class="ob-team-nm">아틀레티코</div>
+      </div>
+      <div class="ob-team" onclick="op(this,87,'PD','#EE2523','아틀레틱')">
+        <img src="https://crests.football-data.org/87.png" onerror="this.src='https://crests.football-data.org/87.svg'">
+        <div class="ob-team-nm">아틀레틱</div>
+      </div>
+      <div class="ob-team" onclick="op(this,264,'PD','#0064C8','알라베스')">
+        <img src="https://crests.football-data.org/264.png" onerror="this.src='https://crests.football-data.org/264.svg'">
+        <div class="ob-team-nm">알라베스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,263,'PD','#003DA5','에스파뇰')">
+        <img src="https://crests.football-data.org/263.png" onerror="this.src='https://crests.football-data.org/263.svg'">
+        <div class="ob-team-nm">에스파뇰</div>
+      </div>
+      <div class="ob-team" onclick="op(this,559,'PD','#0066CC','헤타페')">
+        <img src="https://crests.football-data.org/559.png" onerror="this.src='https://crests.football-data.org/559.svg'">
+        <div class="ob-team-nm">헤타페</div>
+      </div>
+      <div class="ob-team" onclick="op(this,289,'PD','#003DA5','오비에도')">
+        <img src="https://crests.football-data.org/289.png" onerror="this.src='https://crests.football-data.org/289.svg'">
+        <div class="ob-team-nm">오비에도</div>
+      </div>
+      <div class="ob-team" onclick="op(this,94,'PD','#CC0000','오사수나')">
+        <img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'">
+        <div class="ob-team-nm">오사수나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,277,'PD','#CC0000','지로나')">
+        <img src="https://crests.football-data.org/277.png" onerror="this.src='https://crests.football-data.org/277.svg'">
+        <div class="ob-team-nm">지로나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,285,'PD','#0066CC','헤타페')">
+        <img src="https://crests.football-data.org/285.png" onerror="this.src='https://crests.football-data.org/285.svg'">
+        <div class="ob-team-nm">헤타페</div>
+      </div>
     </div>
-
-    <div class="ob-lg-ttl">🇫🇷 리그앙</div>
+    <div class="ob-lg-hdr" style="background:#D3010C;">
+      <img src="https://crests.football-data.org/BL1.png" onerror="this.style.display='none'">
+      <span>분데스리가</span>
+      <span class="ob-lg-season">2025-26 시즌</span>
+    </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,524,'FL1','#003F8B','PSG')"><img src="https://crests.football-data.org/524.png" onerror="this.src='https://crests.football-data.org/524.svg'"><div class="ob-team-nm">PSG</div></div>
-      <div class="ob-team" onclick="op(this,548,'FL1','#DA291C','Monaco')"><img src="https://crests.football-data.org/548.png" onerror="this.src='https://crests.football-data.org/548.svg'"><div class="ob-team-nm">Monaco</div></div>
-      <div class="ob-team" onclick="op(this,516,'FL1','#009AC7','Marseille')"><img src="https://crests.football-data.org/516.png" onerror="this.src='https://crests.football-data.org/516.svg'"><div class="ob-team-nm">Marseille</div></div>
-      <div class="ob-team" onclick="op(this,518,'FL1','#0055A4','Lyon')"><img src="https://crests.football-data.org/518.png" onerror="this.src='https://crests.football-data.org/518.svg'"><div class="ob-team-nm">Lyon</div></div>
-      <div class="ob-team" onclick="op(this,512,'FL1','#BE2127','Lille')"><img src="https://crests.football-data.org/512.png" onerror="this.src='https://crests.football-data.org/512.svg'"><div class="ob-team-nm">Lille</div></div>
-      <div class="ob-team" onclick="op(this,511,'FL1','#FFD700','Lens')"><img src="https://crests.football-data.org/511.png" onerror="this.src='https://crests.football-data.org/511.svg'"><div class="ob-team-nm">Lens</div></div>
-      <div class="ob-team" onclick="op(this,546,'FL1','#CC0000','Rennes')"><img src="https://crests.football-data.org/546.png" onerror="this.src='https://crests.football-data.org/546.svg'"><div class="ob-team-nm">Rennes</div></div>
-      <div class="ob-team" onclick="op(this,514,'FL1','#CC0000','Nice')"><img src="https://crests.football-data.org/514.png" onerror="this.src='https://crests.football-data.org/514.svg'"><div class="ob-team-nm">Nice</div></div>
-      <div class="ob-team" onclick="op(this,543,'FL1','#7B2C8B','Toulouse')"><img src="https://crests.football-data.org/543.png" onerror="this.src='https://crests.football-data.org/543.svg'"><div class="ob-team-nm">Toulouse</div></div>
-      <div class="ob-team" onclick="op(this,549,'FL1','#FFD700','Nantes')"><img src="https://crests.football-data.org/549.png" onerror="this.src='https://crests.football-data.org/549.svg'"><div class="ob-team-nm">Nantes</div></div>
-      <div class="ob-team" onclick="op(this,521,'FL1','#003DA5','Montpellier')"><img src="https://crests.football-data.org/521.png" onerror="this.src='https://crests.football-data.org/521.svg'"><div class="ob-team-nm">Montpellier</div></div>
-      <div class="ob-team" onclick="op(this,547,'FL1','#003DA5','Strasbourg')"><img src="https://crests.football-data.org/547.png" onerror="this.src='https://crests.football-data.org/547.svg'"><div class="ob-team-nm">Strasbourg</div></div>
-      <div class="ob-team" onclick="op(this,541,'FL1','#003DA5','Brest')"><img src="https://crests.football-data.org/541.png" onerror="this.src='https://crests.football-data.org/541.svg'"><div class="ob-team-nm">Brest</div></div>
-      <div class="ob-team" onclick="op(this,544,'FL1','#0055A4','Le Havre')"><img src="https://crests.football-data.org/544.png" onerror="this.src='https://crests.football-data.org/544.svg'"><div class="ob-team-nm">Le Havre</div></div>
-      <div class="ob-team" onclick="op(this,545,'FL1','#CC0000','Reims')"><img src="https://crests.football-data.org/545.png" onerror="this.src='https://crests.football-data.org/545.svg'"><div class="ob-team-nm">Reims</div></div>
-      <div class="ob-team" onclick="op(this,522,'FL1','#000000','Angers')"><img src="https://crests.football-data.org/522.png" onerror="this.src='https://crests.football-data.org/522.svg'"><div class="ob-team-nm">Angers</div></div>
-      <div class="ob-team" onclick="op(this,519,'FL1','#CC0000','Auxerre')"><img src="https://crests.football-data.org/519.png" onerror="this.src='https://crests.football-data.org/519.svg'"><div class="ob-team-nm">Auxerre</div></div>
-      <div class="ob-team" onclick="op(this,520,'FL1','#003DA5','Saint-Etienne')"><img src="https://crests.football-data.org/520.png" onerror="this.src='https://crests.football-data.org/520.svg'"><div class="ob-team-nm">Saint-Etienne</div></div>
+      <div class="ob-team" onclick="op(this,4,'BL1','#FDE100','도르트문트')">
+        <img src="https://crests.football-data.org/4.png" onerror="this.src='https://crests.football-data.org/4.svg'">
+        <div class="ob-team-nm">도르트문트</div>
+      </div>
+      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','라이프치히')">
+        <img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'">
+        <div class="ob-team-nm">라이프치히</div>
+      </div>
+      <div class="ob-team" onclick="op(this,3,'BL1','#E32221','레버쿠젠')">
+        <img src="https://crests.football-data.org/3.png" onerror="this.src='https://crests.football-data.org/3.svg'">
+        <div class="ob-team-nm">레버쿠젠</div>
+      </div>
+      <div class="ob-team" onclick="op(this,39,'BL1','#CC0000','마인츠')">
+        <img src="https://crests.football-data.org/39.png" onerror="this.src='https://crests.football-data.org/39.svg'">
+        <div class="ob-team-nm">마인츠</div>
+      </div>
+      <div class="ob-team" onclick="op(this,38,'BL1','#000000','묀헨글라드바흐')">
+        <img src="https://crests.football-data.org/38.png" onerror="this.src='https://crests.football-data.org/38.svg'">
+        <div class="ob-team-nm">묀헨글라드바흐</div>
+      </div>
+      <div class="ob-team" onclick="op(this,5,'BL1','#DC052D','바이에른 뮌헨')">
+        <img src="https://crests.football-data.org/5.png" onerror="this.src='https://crests.football-data.org/5.svg'">
+        <div class="ob-team-nm">바이에른 뮌헨</div>
+      </div>
+      <div class="ob-team" onclick="op(this,43,'BL1','#1D9B43','베르더 브레멘')">
+        <img src="https://crests.football-data.org/43.png" onerror="this.src='https://crests.football-data.org/43.svg'">
+        <div class="ob-team-nm">베르더 브레멘</div>
+      </div>
+      <div class="ob-team" onclick="op(this,18,'BL1','#65B32E','볼프스부르크')">
+        <img src="https://crests.football-data.org/18.png" onerror="this.src='https://crests.football-data.org/18.svg'">
+        <div class="ob-team-nm">볼프스부르크</div>
+      </div>
+      <div class="ob-team" onclick="op(this,11,'BL1','#CC0000','슈투트가르트')">
+        <img src="https://crests.football-data.org/11.png" onerror="this.src='https://crests.football-data.org/11.svg'">
+        <div class="ob-team-nm">슈투트가르트</div>
+      </div>
+      <div class="ob-team" onclick="op(this,9,'BL1','#CC0000','아욱스부르크')">
+        <img src="https://crests.football-data.org/9.png" onerror="this.src='https://crests.football-data.org/9.svg'">
+        <div class="ob-team-nm">아욱스부르크</div>
+      </div>
+      <div class="ob-team" onclick="op(this,28,'BL1','#C8102E','장크트파울리')">
+        <img src="https://crests.football-data.org/28.png" onerror="this.src='https://crests.football-data.org/28.svg'">
+        <div class="ob-team-nm">장크트파울리</div>
+      </div>
+      <div class="ob-team" onclick="op(this,16,'BL1','#FC4444','쾰른')">
+        <img src="https://crests.football-data.org/16.png" onerror="this.src='https://crests.football-data.org/16.svg'">
+        <div class="ob-team-nm">쾰른</div>
+      </div>
+      <div class="ob-team" onclick="op(this,10,'BL1','#CC0000','프라이부르크')">
+        <img src="https://crests.football-data.org/10.png" onerror="this.src='https://crests.football-data.org/10.svg'">
+        <div class="ob-team-nm">프라이부르크</div>
+      </div>
+      <div class="ob-team" onclick="op(this,13,'BL1','#E2001A','프랑크푸르트')">
+        <img src="https://crests.football-data.org/13.png" onerror="this.src='https://crests.football-data.org/13.svg'">
+        <div class="ob-team-nm">프랑크푸르트</div>
+      </div>
+      <div class="ob-team" onclick="op(this,7,'BL1','#CC0000','하이덴하임')">
+        <img src="https://crests.football-data.org/7.png" onerror="this.src='https://crests.football-data.org/7.svg'">
+        <div class="ob-team-nm">하이덴하임</div>
+      </div>
+      <div class="ob-team" onclick="op(this,735,'BL1','#003DA5','함부르크')">
+        <img src="https://crests.football-data.org/735.png" onerror="this.src='https://crests.football-data.org/735.svg'">
+        <div class="ob-team-nm">함부르크</div>
+      </div>
+      <div class="ob-team" onclick="op(this,6,'BL1','#1873B8','호펜하임')">
+        <img src="https://crests.football-data.org/6.png" onerror="this.src='https://crests.football-data.org/6.svg'">
+        <div class="ob-team-nm">호펜하임</div>
+      </div>
+      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','우니온 베를린')">
+        <img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'">
+        <div class="ob-team-nm">우니온 베를린</div>
+      </div>
+    </div>
+    <div class="ob-lg-hdr" style="background:#003B8E;">
+      <img src="https://crests.football-data.org/SA.png" onerror="this.style.display='none'">
+      <span>세리에A</span>
+      <span class="ob-lg-season">2025-26 시즌</span>
+    </div>
+    <div class="ob-grid">
+      <div class="ob-team" onclick="op(this,113,'SA','#12A0D7','나폴리')">
+        <img src="https://crests.football-data.org/113.png" onerror="this.src='https://crests.football-data.org/113.svg'">
+        <div class="ob-team-nm">나폴리</div>
+      </div>
+      <div class="ob-team" onclick="op(this,102,'SA','#87D8F7','라치오')">
+        <img src="https://crests.football-data.org/102.png" onerror="this.src='https://crests.football-data.org/102.svg'">
+        <div class="ob-team-nm">라치오</div>
+      </div>
+      <div class="ob-team" onclick="op(this,586,'SA','#FFD700','레체')">
+        <img src="https://crests.football-data.org/586.png" onerror="this.src='https://crests.football-data.org/586.svg'">
+        <div class="ob-team-nm">레체</div>
+      </div>
+      <div class="ob-team" onclick="op(this,100,'SA','#8E1F2F','로마')">
+        <img src="https://crests.football-data.org/100.png" onerror="this.src='https://crests.football-data.org/100.svg'">
+        <div class="ob-team-nm">로마</div>
+      </div>
+      <div class="ob-team" onclick="op(this,98,'SA','#FB090B','밀란')">
+        <img src="https://crests.football-data.org/98.png" onerror="this.src='https://crests.football-data.org/98.svg'">
+        <div class="ob-team-nm">밀란</div>
+      </div>
+      <div class="ob-team" onclick="op(this,105,'SA','#FFD700','베로나')">
+        <img src="https://crests.football-data.org/105.png" onerror="this.src='https://crests.football-data.org/105.svg'">
+        <div class="ob-team-nm">베로나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,103,'SA','#CC0000','볼로냐')">
+        <img src="https://crests.football-data.org/103.png" onerror="this.src='https://crests.football-data.org/103.svg'">
+        <div class="ob-team-nm">볼로냐</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1185,'SA','#00A551','사수올로')">
+        <img src="https://crests.football-data.org/1185.png" onerror="this.src='https://crests.football-data.org/1185.svg'">
+        <div class="ob-team-nm">사수올로</div>
+      </div>
+      <div class="ob-team" onclick="op(this,110,'SA','#1E3F6D','아탈란타')">
+        <img src="https://crests.football-data.org/110.png" onerror="this.src='https://crests.football-data.org/110.svg'">
+        <div class="ob-team-nm">아탈란타</div>
+      </div>
+      <div class="ob-team" onclick="op(this,118,'SA','#000000','우디네세')">
+        <img src="https://crests.football-data.org/118.png" onerror="this.src='https://crests.football-data.org/118.svg'">
+        <div class="ob-team-nm">우디네세</div>
+      </div>
+      <div class="ob-team" onclick="op(this,109,'SA','#000000','유벤투스')">
+        <img src="https://crests.football-data.org/109.png" onerror="this.src='https://crests.football-data.org/109.svg'">
+        <div class="ob-team-nm">유벤투스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,108,'SA','#0068A8','인터')">
+        <img src="https://crests.football-data.org/108.png" onerror="this.src='https://crests.football-data.org/108.svg'">
+        <div class="ob-team-nm">인터</div>
+      </div>
+      <div class="ob-team" onclick="op(this,104,'SA','#CC0000','제노아')">
+        <img src="https://crests.football-data.org/104.png" onerror="this.src='https://crests.football-data.org/104.svg'">
+        <div class="ob-team-nm">제노아</div>
+      </div>
+      <div class="ob-team" onclick="op(this,115,'SA','#CC0000','칼리아리')">
+        <img src="https://crests.football-data.org/115.png" onerror="this.src='https://crests.football-data.org/115.svg'">
+        <div class="ob-team-nm">칼리아리</div>
+      </div>
+      <div class="ob-team" onclick="op(this,470,'SA','#003DA5','코모')">
+        <img src="https://crests.football-data.org/470.png" onerror="this.src='https://crests.football-data.org/470.svg'">
+        <div class="ob-team-nm">코모</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1197,'SA','#CC0000','크레모네세')">
+        <img src="https://crests.football-data.org/1197.png" onerror="this.src='https://crests.football-data.org/1197.svg'">
+        <div class="ob-team-nm">크레모네세</div>
+      </div>
+      <div class="ob-team" onclick="op(this,114,'SA','#8B1A1A','토리노')">
+        <img src="https://crests.football-data.org/114.png" onerror="this.src='https://crests.football-data.org/114.svg'">
+        <div class="ob-team-nm">토리노</div>
+      </div>
+      <div class="ob-team" onclick="op(this,106,'SA','#FFD700','파르마')">
+        <img src="https://crests.football-data.org/106.png" onerror="this.src='https://crests.football-data.org/106.svg'">
+        <div class="ob-team-nm">파르마</div>
+      </div>
+      <div class="ob-team" onclick="op(this,107,'SA','#4C2D8C','피오렌티나')">
+        <img src="https://crests.football-data.org/107.png" onerror="this.src='https://crests.football-data.org/107.svg'">
+        <div class="ob-team-nm">피오렌티나</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1107,'SA','#004B8D','피사')">
+        <img src="https://crests.football-data.org/1107.png" onerror="this.src='https://crests.football-data.org/1107.svg'">
+        <div class="ob-team-nm">피사</div>
+      </div>
+    </div>
+    <div class="ob-lg-hdr" style="background:#052B5A;">
+      <img src="https://crests.football-data.org/FL1.png" onerror="this.style.display='none'">
+      <span>리그앙</span>
+      <span class="ob-lg-season">2025-26 시즌</span>
+    </div>
+    <div class="ob-grid">
+      <div class="ob-team" onclick="op(this,549,'FL1','#FFD700','낭트')">
+        <img src="https://crests.football-data.org/549.png" onerror="this.src='https://crests.football-data.org/549.svg'">
+        <div class="ob-team-nm">낭트</div>
+      </div>
+      <div class="ob-team" onclick="op(this,514,'FL1','#CC0000','니스')">
+        <img src="https://crests.football-data.org/514.png" onerror="this.src='https://crests.football-data.org/514.svg'">
+        <div class="ob-team-nm">니스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,531,'FL1','#CC0000','랭스')">
+        <img src="https://crests.football-data.org/531.png" onerror="this.src='https://crests.football-data.org/531.svg'">
+        <div class="ob-team-nm">랭스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,546,'FL1','#CC0000','렌')">
+        <img src="https://crests.football-data.org/546.png" onerror="this.src='https://crests.football-data.org/546.svg'">
+        <div class="ob-team-nm">렌</div>
+      </div>
+      <div class="ob-team" onclick="op(this,518,'FL1','#0055A4','리옹')">
+        <img src="https://crests.football-data.org/518.png" onerror="this.src='https://crests.football-data.org/518.svg'">
+        <div class="ob-team-nm">리옹</div>
+      </div>
+      <div class="ob-team" onclick="op(this,512,'FL1','#BE2127','릴')">
+        <img src="https://crests.football-data.org/512.png" onerror="this.src='https://crests.football-data.org/512.svg'">
+        <div class="ob-team-nm">릴</div>
+      </div>
+      <div class="ob-team" onclick="op(this,519,'FL1','#009AC7','마르세유')">
+        <img src="https://crests.football-data.org/519.png" onerror="this.src='https://crests.football-data.org/519.svg'">
+        <div class="ob-team-nm">마르세유</div>
+      </div>
+      <div class="ob-team" onclick="op(this,548,'FL1','#DA291C','모나코')">
+        <img src="https://crests.football-data.org/548.png" onerror="this.src='https://crests.football-data.org/548.svg'">
+        <div class="ob-team-nm">모나코</div>
+      </div>
+      <div class="ob-team" onclick="op(this,541,'FL1','#003DA5','브레스트')">
+        <img src="https://crests.football-data.org/541.png" onerror="this.src='https://crests.football-data.org/541.svg'">
+        <div class="ob-team-nm">브레스트</div>
+      </div>
+      <div class="ob-team" onclick="op(this,547,'FL1','#003DA5','스트라스부르')">
+        <img src="https://crests.football-data.org/547.png" onerror="this.src='https://crests.football-data.org/547.svg'">
+        <div class="ob-team-nm">스트라스부르</div>
+      </div>
+      <div class="ob-team" onclick="op(this,524,'FL1','#003F8B','파리 SG')">
+        <img src="https://crests.football-data.org/524.png" onerror="this.src='https://crests.football-data.org/524.svg'">
+        <div class="ob-team-nm">파리 SG</div>
+      </div>
+      <div class="ob-team" onclick="op(this,543,'FL1','#7B2C8B','툴루즈')">
+        <img src="https://crests.football-data.org/543.png" onerror="this.src='https://crests.football-data.org/543.svg'">
+        <div class="ob-team-nm">툴루즈</div>
+      </div>
+      <div class="ob-team" onclick="op(this,544,'FL1','#0055A4','르아브르')">
+        <img src="https://crests.football-data.org/544.png" onerror="this.src='https://crests.football-data.org/544.svg'">
+        <div class="ob-team-nm">르아브르</div>
+      </div>
+      <div class="ob-team" onclick="op(this,553,'FL1','#CC0000','로리앙')">
+        <img src="https://crests.football-data.org/553.png" onerror="this.src='https://crests.football-data.org/553.svg'">
+        <div class="ob-team-nm">로리앙</div>
+      </div>
+      <div class="ob-team" onclick="op(this,545,'FL1','#CC0000','랭스')">
+        <img src="https://crests.football-data.org/545.png" onerror="this.src='https://crests.football-data.org/545.svg'">
+        <div class="ob-team-nm">랭스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,520,'FL1','#003DA5','생테티엔')">
+        <img src="https://crests.football-data.org/520.png" onerror="this.src='https://crests.football-data.org/520.svg'">
+        <div class="ob-team-nm">생테티엔</div>
+      </div>
+      <div class="ob-team" onclick="op(this,542,'FL1','#881B29','메스')">
+        <img src="https://crests.football-data.org/542.png" onerror="this.src='https://crests.football-data.org/542.svg'">
+        <div class="ob-team-nm">메스</div>
+      </div>
+      <div class="ob-team" onclick="op(this,550,'FL1','#000000','앙제')">
+        <img src="https://crests.football-data.org/550.png" onerror="this.src='https://crests.football-data.org/550.svg'">
+        <div class="ob-team-nm">앙제</div>
+      </div>
+      <div class="ob-team" onclick="op(this,52,'FL1','#003DA5','옥세르')">
+        <img src="https://crests.football-data.org/52.png" onerror="this.src='https://crests.football-data.org/52.svg'">
+        <div class="ob-team-nm">옥세르</div>
+      </div>
+      <div class="ob-team" onclick="op(this,522,'FL1','#000000','앙제')">
+        <img src="https://crests.football-data.org/522.png" onerror="this.src='https://crests.football-data.org/522.svg'">
+        <div class="ob-team-nm">앙제</div>
+      </div>
     </div>
   </div>
+
   <button class="ob-start" id="ob-btn" onclick="startApp()" disabled>팀을 선택해주세요</button>
 </div>
 
