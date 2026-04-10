@@ -1131,15 +1131,7 @@ function swP(name, el) {
   if(el) el.classList.add('on');
   if(name==='home') loadHome();
   if(name==='sched') loadSched();
-  if(name==='std') {
-    // pills 활성화 확인
-    const activePill = document.querySelector('#std-pills .pill.on');
-    if(!activePill) {
-      const firstPill = document.querySelector('#std-pills .pill');
-      if(firstPill) firstPill.classList.add('on');
-    }
-    loadStd(curStd);
-  }
+  if(name==='std') loadStd(curStd);
   if(name==='player') loadPlayers(curPLg, curPt);
   if(name==='fan') updateFan();
 }
@@ -1416,13 +1408,13 @@ function swStd(code,btn){curStd=code;document.querySelectorAll('#std-pills .pill
 async function loadStd(code) {
   const c = document.getElementById('std-bd');
   c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  const d = await fd(`/competitions/${code}/standings`);
+  const d = await fd(`/competitions/${code}/standings?season=2024`);
   if(!d?.standings){
+    console.error('standings data:', JSON.stringify(d));
     c.innerHTML=`<div class="empty">
-      📡 데이터를 불러오지 못했어요<br>
+      📡 순위 데이터를 불러오지 못했어요<br>
       <span style="font-size:12px;color:var(--t3);margin-top:6px;display:block;">
-        Worker URL이 올바른지 확인해주세요<br>
-        상단 PITCH PRO 탭하면 팀 변경 가능
+        잠시 후 다시 시도해주세요
       </span>
     </div>`;
     return;
@@ -1459,8 +1451,12 @@ function swPt(type,btn){curPt=type;document.querySelectorAll('#pg-player>.pills+
 async function loadPlayers(lg, type) {
   const c = document.getElementById('pl-bd');
   c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  const d = await fd(`/competitions/${lg}/scorers?limit=20`);
-  if(!d?.scorers){c.innerHTML=`<div class="empty">데이터 없음</div>`;return;}
+  const d = await fd(`/competitions/${lg}/scorers?limit=20&season=2024`);
+  if(!d?.scorers){
+    console.error('scorers data:', JSON.stringify(d));
+    c.innerHTML=`<div class="empty">선수 데이터를 불러오지 못했어요</div>`;
+    return;
+  }
   let sc = [...d.scorers];
   if(type==='assists') sc.sort((a,b)=>(b.assists||0)-(a.assists||0));
   c.innerHTML = sc.map((s,i)=>{
