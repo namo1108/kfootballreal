@@ -2,1055 +2,863 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#080f14">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PITCH Pro</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080f14'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23111f2c' stroke='%2322c55e' stroke-width='1.5'/%3E%3Cpath d='M32 14 L38 24 L50 24 L41 31 L44 43 L32 36 L20 43 L23 31 L14 24 L26 24 Z' fill='%2322c55e' opacity='.8'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-family='Arial Black' font-weight='900' font-size='16' fill='%23080f14'%3EP%3C/text%3E%3C/svg%3E">
-<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080f14'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23111f2c' stroke='%2322c55e' stroke-width='1.5'/%3E%3Cpath d='M32 14 L38 24 L50 24 L41 31 L44 43 L32 36 L20 43 L23 31 L14 24 L26 24 Z' fill='%2322c55e' opacity='.8'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-family='Arial Black' font-weight='900' font-size='16' fill='%23080f14'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080f14'/%3E%3Ccircle cx='32' cy='32' r='20' fill='%23111f2c' stroke='%2322c55e' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial Black' font-weight='900' font-size='24' fill='%2322c55e'%3EP%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Share+Tech+Mono&display=swap');
-
-:root {
-  --bg: #080f14;
-  --bg2: #0d1820;
-  --bg3: #111f2c;
-  --card: #111f2c;
-  --card2: #162535;
-  --p: #22c55e;        /* 초록 - 깔끔한 emerald */
-  --p2: #16a34a;
-  --pg: rgba(34,197,94,.15);
-  --ps: rgba(34,197,94,.08);
-  --amber: #f59e0b;
-  --red: #ef4444;
-  --blue: #3b82f6;
-  --t: #f1f5f9;        /* 거의 흰색 - 가독성 최우선 */
-  --t2: #94a3b8;       /* 중간 회색 */
-  --t3: #475569;       /* 어두운 회색 */
-  --b: rgba(255,255,255,.08);
-  --b2: rgba(34,197,94,.3);
-  --radius: 14px;
+/* ── RESET & VARS ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#080f14; --bg2:#0d1820; --bg3:#111f2c; --card:#111f2c; --card2:#162535;
+  --p:#22c55e; --p2:#16a34a; --pg:rgba(34,197,94,.15); --ps:rgba(34,197,94,.08);
+  --amber:#f59e0b; --red:#ef4444; --blue:#3b82f6;
+  --t:#f1f5f9; --t2:#94a3b8; --t3:#475569;
+  --b:rgba(255,255,255,.08); --b2:rgba(34,197,94,.3);
+  --radius:14px; --nav-h:64px; --hdr-h:58px;
+  --sidebar:260px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { height: 100%; }
-body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--t);
-  font-family: 'Noto Sans KR', -apple-system, sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-  max-width: 480px;
-  margin: 0 auto;
-  overflow: hidden;
-}
+html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Noto Sans KR',-apple-system,sans-serif;font-size:16px;line-height:1.5;}
 
 /* ── ONBOARDING ── */
-#ob {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 9000;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  max-width: 480px;
-  margin: 0 auto;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-}
-.ob-hero {
-  padding: 36px 20px 24px;
-  text-align: center;
-}
-.ob-logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  color: var(--p);
-  margin-bottom: 4px;
-}
-.ob-sub {
-  font-size: 10px;
-  color: var(--t3);
-  letter-spacing: 3px;
-  font-family: 'Share Tech Mono';
-  margin-bottom: 12px;
-}
-.ob-hint {
-  font-size: 14px;
-  color: var(--t2);
-  line-height: 1.7;
-}
-.ob-section { padding: 0 16px 8px; }
-.ob-lg-ttl {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--p);
-  letter-spacing: 1px;
-  padding: 12px 2px 8px;
-  border-bottom: 1px solid var(--b);
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.ob-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 14px;
-  width: 100%;
-}
-.ob-team {
-  background: var(--card);
-  border: 1.5px solid var(--b);
-  border-radius: 12px;
-  padding: 12px 6px;
-  text-align: center;
-  cursor: pointer;
-  transition: all .15s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 80px;
-  justify-content: center;
-}
-.ob-team:active { transform: scale(.94); }
-.ob-team.sel {
-  border-color: var(--p);
-  background: var(--ps);
-  box-shadow: 0 0 0 1px var(--p);
-}
-.ob-team img { width: 36px; height: 36px; object-fit: contain; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto; flex-shrink: 0; }
-.ob-team-nm { font-size: 11px; color: var(--t2); font-weight: 500; }
-.ob-team.sel .ob-team-nm { color: var(--p); font-weight: 700; }
+#ob{position:fixed;inset:0;background:var(--bg);z-index:9000;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.ob-inner{max-width:900px;margin:0 auto;padding-bottom:40px;}
+.ob-hero{text-align:center;padding:48px 24px 28px;}
+.ob-logo{font-family:'Orbitron';font-size:32px;font-weight:900;letter-spacing:5px;color:var(--p);margin-bottom:6px;}
+.ob-tagline{font-size:11px;color:var(--t3);letter-spacing:3px;font-family:'Share Tech Mono';}
+.ob-hint{font-size:15px;color:var(--t2);margin-top:14px;line-height:1.8;}
+.ob-body{padding:0 16px;}
+.ob-lg-hdr{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;margin-bottom:10px;margin-top:6px;}
+.ob-lg-hdr img{width:30px;height:30px;object-fit:contain;}
+.ob-lg-hdr span{font-size:16px;font-weight:700;color:#fff;}
+.ob-lg-season{font-size:11px!important;font-weight:400!important;opacity:.7;margin-left:auto;}
+.ob-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+@media(max-width:480px){.ob-grid{grid-template-columns:repeat(3,1fr);}}
+.ob-team{background:var(--card);border:1.5px solid var(--b);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:7px;}
+.ob-team:active{transform:scale(.95);}
+.ob-team.sel{border-color:var(--p);background:var(--ps);box-shadow:0 0 0 1px var(--p);}
+.ob-team img{width:38px;height:38px;object-fit:contain;}
+.ob-nm{font-size:12px;color:var(--t2);font-weight:500;}
+.ob-team.sel .ob-nm{color:var(--p);font-weight:700;}
+.ob-start{display:block;margin:8px 16px 40px;padding:16px;border-radius:12px;border:none;background:var(--card);color:var(--t3);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;width:calc(100% - 32px);max-width:868px;}
+.ob-start.ready{background:var(--p);color:#fff;box-shadow:0 4px 24px rgba(34,197,94,.3);}
 
-/* 리그 헤더 */
-.ob-lg-hdr {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  margin-bottom: 10px; margin-top: 4px;
+/* ── PC LAYOUT ── */
+#app{display:none;height:100vh;height:100dvh;}
+#app.show{display:flex;flex-direction:column;}
+
+/* 헤더 */
+.hdr{
+  height:var(--hdr-h);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;background:var(--bg);border-bottom:1px solid var(--b);
+  position:sticky;top:0;z-index:200;
 }
-.ob-lg-hdr img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
-.ob-lg-hdr span { font-size: 15px; font-weight: 700; color: #fff; }
-.ob-lg-season { font-size: 10px !important; font-weight: 400 !important; opacity: .75; margin-left: auto; }
-.ob-start {
-  display: block;
-  margin: 8px 16px 36px;
-  padding: 15px;
-  border-radius: 12px;
-  border: none;
-  background: var(--card);
-  color: var(--t3);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all .2s;
-  width: calc(100% - 32px);
-  font-family: 'Noto Sans KR';
-}
-.ob-start.ready {
-  background: var(--p);
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(34,197,94,.3);
+.hdr-left{display:flex;align-items:center;gap:16px;}
+.hdr-logo{font-family:'Orbitron';font-size:18px;font-weight:900;letter-spacing:3px;color:var(--p);cursor:pointer;}
+/* PC용 상단 탭 */
+.hdr-tabs{display:none;gap:4px;}
+@media(min-width:768px){.hdr-tabs{display:flex;}}
+.hdr-tab{padding:7px 16px;border-radius:8px;border:none;background:none;color:var(--t3);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+.hdr-tab.on{background:var(--ps);color:var(--p);}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.hdr-lv{font-size:12px;font-weight:700;color:var(--p);background:var(--ps);border:1px solid var(--b2);padding:4px 12px;border-radius:20px;}
+.hdr-cr{width:30px;height:30px;object-fit:contain;border-radius:6px;}
+.lpill{display:none;align-items:center;gap:5px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:4px 10px;}
+.lpill.show{display:flex;}
+.lpdot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.lpill span{font-size:11px;font-weight:700;color:var(--red);}
+
+/* 메인 컨텐츠 영역 */
+.main-body{
+  flex:1;overflow:hidden;display:flex;min-height:0;
 }
 
-/* ── HEADER ── */
-#app {
-  display: none;
-  position: fixed;
-  inset: 0;
-  max-width: 480px;
-  left: 50%;
-  transform: translateX(-50%);
-  flex-direction: column;
-  overflow: hidden;
+/* PC: 사이드바 */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  border-right:1px solid var(--b);
+  overflow-y:auto;padding:16px 12px;
+  display:none;
+  background:var(--bg);
 }
-#app.show { display: flex; }
-.hdr {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 56px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--b);
-  flex-shrink: 0;
-}
-.hdr-logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: var(--p);
-  cursor: pointer;
-}
-.hdr-r { display: flex; align-items: center; gap: 8px; }
-.hdr-cr { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
-.hdr-lv {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--p);
-  background: var(--ps);
-  border: 1px solid var(--b2);
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-.lpill {
-  display: none;
-  align-items: center;
-  gap: 5px;
-  background: rgba(239,68,68,.1);
-  border: 1px solid rgba(239,68,68,.3);
-  border-radius: 20px;
-  padding: 4px 10px;
-}
-.lpill.show { display: flex; }
-.lpdot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--red);
-  animation: pulse 1.2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
-.lpill span { font-size: 11px; font-weight: 700; color: var(--red); }
+@media(min-width:1024px){.sidebar{display:block;}}
+.sidebar-section{margin-bottom:20px;}
+.sidebar-title{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;padding:0 4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;transition:all .15s;}
+.sidebar-item:hover,.sidebar-item.on{background:var(--ps);}
+.sidebar-item.on .si-label{color:var(--p);font-weight:700;}
+.si-icon{width:20px;height:20px;color:var(--t3);flex-shrink:0;}
+.sidebar-item.on .si-icon{color:var(--p);}
+.si-label{font-size:14px;color:var(--t2);}
 
-/* ── PAGES ── */
-.pages {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  min-height: 0;
-  /* 명시적으로 남은 공간 차지 */
-  display: block;
-}
-.page {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 16px 14px 100px;
-  display: none;
-}
-.page.on { display: block; animation: fadeUp .2s ease; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:translateY(0) } }
+/* 페이지 컨텐츠 */
+.pages{flex:1;position:relative;overflow:hidden;min-height:0;}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:20px;display:none;}
+.page.on{display:block;animation:fadeUp .2s ease;}
+@media(max-width:767px){.page{padding:14px 12px 80px;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── BOTTOM NAV ── */
-.bnav {
-  display: flex;
-  flex-shrink: 0;
-  background: var(--bg);
-  border-top: 1px solid var(--b);
-  height: 64px;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  min-height: calc(64px + env(safe-area-inset-bottom, 0px));
+/* PC: 우측 패널 */
+.right-panel{
+  width:320px;flex-shrink:0;
+  border-left:1px solid var(--b);
+  overflow-y:auto;padding:16px;
+  display:none;
+  background:var(--bg);
 }
-.nbi {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: all .15s;
-  border: none;
-  background: none;
-  overflow: hidden;
-  padding: 0 4px;
-}
-.nbi:active { opacity: .7; transform: scale(.9); }
-.nbi svg {
-  width: 22px !important;
-  height: 22px !important;
-  max-width: 22px;
-  max-height: 22px;
-  flex-shrink: 0;
-  color: var(--t3);
-  transition: color .15s;
-}
-.nbi.on svg { color: var(--p); }
-.nbi-lb { font-size: 10px; font-weight: 600; color: var(--t3); }
-.nbi.on .nbi-lb { color: var(--p); }
+@media(min-width:1280px){.right-panel{display:block;}}
 
-/* ── SECTION HEADER ── */
-.sec {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px; margin-top: 8px;
-}
-.stl {
-  font-size: 13px; font-weight: 700; color: var(--t);
-  display: flex; align-items: center; gap: 8px;
-}
-.stl::before {
-  content: '';
-  width: 3px; height: 16px;
-  background: var(--p);
-  border-radius: 2px;
-}
-.sbd {
-  font-size: 11px; color: var(--t3);
-  background: var(--card);
-  border: 1px solid var(--b);
-  padding: 3px 10px; border-radius: 20px;
-}
+/* PC 2컬럼 그리드 (순위 탭 등) */
+.pc-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:900px){.pc-2col{grid-template-columns:1fr 1fr;}}
 
-/* ── MATCH CARD ── */
-.mc {
-  background: var(--card);
-  border: 1px solid var(--b);
-  border-radius: var(--radius);
-  margin-bottom: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color .15s, background .15s;
+/* 모바일 하단 네비 */
+.bnav{
+  display:flex;flex-shrink:0;background:var(--bg);border-top:1px solid var(--b);
+  padding-bottom:env(safe-area-inset-bottom,8px);
+  height:calc(58px + env(safe-area-inset-bottom,8px));
 }
-.mc:active { background: var(--card2); }
-.mc.live { border-color: rgba(239,68,68,.3); }
-.mc.mymatch { border-color: var(--p2); border-width: 1.5px; }
-.mc-hd {
-  padding: 8px 14px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,.03);
-  border-bottom: 1px solid var(--b);
-}
-.mc-lg { font-size: 11px; color: var(--t3); font-weight: 500; }
-.mc-st {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 10px; border-radius: 20px;
-}
-.mc-st.live { background: rgba(239,68,68,.12); color: var(--red); }
-.mc-st.fin { background: rgba(255,255,255,.05); color: var(--t3); }
-.mc-st.sch { background: var(--ps); color: var(--p); }
-.mc-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse .9s infinite; }
-.mc-body { padding: 14px; }
-.mc-row { display: flex; align-items: center; gap: 10px; }
-.mc-tm { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; }
-.mc-tm.aw { flex-direction: row-reverse; }
-.mc-cr { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
-.mc-nm { font-size: 14px; font-weight: 600; color: var(--t); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mc-tm.aw .mc-nm { text-align: right; }
-.mc-sc {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 28px; font-weight: 900;
-  color: var(--t); display: flex; align-items: center; gap: 6px; flex-shrink: 0;
-}
-.mc-sep { font-size: 18px; color: var(--t3); font-weight: 400; }
-.mc-sc.live-score .mc-sn { color: var(--p); }
-.mc-goals {
-  padding: 8px 14px 10px;
-  display: flex; justify-content: space-between;
-  border-top: 1px solid var(--b);
-}
-.mc-gside { display: flex; flex-direction: column; gap: 3px; flex: 1; }
-.mc-gside.aw { align-items: flex-end; }
-.mc-gi { font-size: 12px; color: var(--t2); display: flex; align-items: center; gap: 4px; }
-.mc-gi .gmin { font-size: 11px; color: var(--p); font-weight: 700; }
+@media(min-width:768px){.bnav{display:none;}} /* PC에서는 숨김 */
+.nbi{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:all .15s;border:none;background:none;overflow:hidden;padding:0;}
+.nbi:active{opacity:.7;transform:scale(.9);}
+.nbi svg{width:24px;height:24px;color:var(--t3);transition:color .15s;flex-shrink:0;}
+.nbi.on svg{color:var(--p);}
+.nbi-lb{font-size:11px;font-weight:600;color:var(--t3);}
+.nbi.on .nbi-lb{color:var(--p);}
 
-/* MOMENTUM */
-.mom { padding: 8px 14px 12px; border-top: 1px solid var(--b); }
-.mom-lbl { display: flex; justify-content: space-between; font-size: 11px; color: var(--t3); margin-bottom: 5px; }
-.mom-bar { height: 5px; background: var(--b); border-radius: 3px; display: flex; overflow: hidden; gap: 1px; }
-.ms { height: 100%; flex: 1; border-radius: 2px; }
-.ms.h { background: var(--p); }
-.ms.a { background: var(--red); }
-.ms.n { background: rgba(255,255,255,.12); }
+/* ── 공통 컴포넌트 ── */
+.sec{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;margin-top:6px;}
+.stl{font-size:16px;font-weight:700;color:var(--t);display:flex;align-items:center;gap:9px;}
+.stl::before{content:'';width:3px;height:20px;background:var(--p);border-radius:2px;}
+.sbd{font-size:11px;color:var(--t3);background:var(--card);border:1px solid var(--b);padding:4px 12px;border-radius:20px;}
 
-/* ODDS */
-.odds-row { display: flex; gap: 6px; padding: 10px 14px; border-top: 1px solid var(--b); }
-.obtn {
-  flex: 1; background: var(--bg3); border: 1px solid var(--b);
-  border-radius: 10px; padding: 8px 4px; text-align: center;
-}
-.olbl { font-size: 10px; color: var(--t3); margin-bottom: 4px; }
-.oval { font-size: 16px; font-weight: 700; color: var(--t); font-family: 'Orbitron', sans-serif; }
-.oval.fav { color: var(--p); }
+/* 매치 카드 */
+.mc{background:var(--card);border:1px solid var(--b);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color .15s;}
+.mc:hover{border-color:var(--b2);}
+.mc.live{border-color:rgba(239,68,68,.3);}
+.mc.mymatch{border-color:var(--p2);border-width:1.5px;}
+.mc-hd{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-bottom:1px solid var(--b);}
+.mc-lg{font-size:12px;color:var(--t3);font-weight:500;}
+.mc-st{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.mc-st.live{background:rgba(239,68,68,.12);color:var(--red);}
+.mc-st.fin{background:rgba(255,255,255,.06);color:var(--t3);}
+.mc-st.sch{background:var(--ps);color:var(--p);}
+.mc-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse .9s infinite;flex-shrink:0;}
+.mc-body{padding:16px;}
+.mc-row{display:flex;align-items:center;gap:10px;}
+.mc-tm{flex:1;display:flex;align-items:center;gap:10px;min-width:0;}
+.mc-tm.aw{flex-direction:row-reverse;}
+.mc-cr{width:36px;height:36px;object-fit:contain;flex-shrink:0;}
+.mc-nm{font-size:15px;font-weight:600;color:var(--t);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mc-tm.aw .mc-nm{text-align:right;}
+.mc-sc{font-family:'Orbitron';font-size:30px;font-weight:900;color:var(--t);display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.mc-sc.live-s .mc-n{color:var(--p);}
+.mc-sep{font-size:18px;color:var(--t3);font-weight:400;}
+.mc-goals{padding:8px 16px 10px;display:flex;justify-content:space-between;border-top:1px solid var(--b);}
+.mc-gside{display:flex;flex-direction:column;gap:3px;flex:1;}
+.mc-gside.aw{align-items:flex-end;}
+.mc-gi{font-size:12px;color:var(--t2);display:flex;align-items:center;gap:4px;}
+.mc-gi .gmin{font-size:11px;color:var(--p);font-weight:700;}
+.mom{padding:9px 16px 12px;border-top:1px solid var(--b);}
+.mom-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--t3);margin-bottom:6px;}
+.mom-bar{height:5px;background:var(--b);border-radius:3px;display:flex;overflow:hidden;gap:1px;}
+.ms{height:100%;flex:1;border-radius:2px;}
+.ms.h{background:var(--p);}
+.ms.a{background:var(--red);}
+.ms.n{background:rgba(255,255,255,.12);}
+.odds-row{display:flex;gap:6px;padding:10px 16px;border-top:1px solid var(--b);}
+.obtn{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:10px;padding:9px 4px;text-align:center;}
+.olbl{font-size:10px;color:var(--t3);margin-bottom:4px;}
+.oval{font-size:17px;font-weight:700;color:var(--t);font-family:'Orbitron';}
+.oval.fav{color:var(--p);}
 
-/* PILLS */
-.pills { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; margin-bottom: 12px; }
-.pills::-webkit-scrollbar { display: none; }
-.pill {
-  font-size: 12px; font-weight: 600;
-  padding: 6px 14px; border-radius: 20px;
-  border: 1px solid var(--b); background: transparent;
-  color: var(--t3); cursor: pointer; white-space: nowrap; flex-shrink: 0;
-  transition: all .15s;
-}
-.pill.on { background: var(--ps); color: var(--p); border-color: var(--b2); }
+/* Pills */
+.pills{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:14px;}
+.pills::-webkit-scrollbar{display:none;}
+.pill{font-size:13px;font-weight:600;padding:7px 16px;border-radius:20px;border:1px solid var(--b);background:transparent;color:var(--t3);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s;}
+.pill.on{background:var(--ps);color:var(--p);border-color:var(--b2);}
 
-/* STANDING */
-.std-scroll { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--b); }
-.stt { width: 100%; border-collapse: collapse; font-size: 13px; }
-.stt th {
-  font-size: 10px; font-weight: 700; color: var(--t3);
-  padding: 10px 8px; text-align: center;
-  background: var(--card2); border-bottom: 1px solid var(--b);
-  white-space: nowrap;
-}
-.stt th:nth-child(2) { text-align: left; }
-.stt td { padding: 10px 8px; border-bottom: 1px solid var(--b); text-align: center; color: var(--t2); }
-.stt td:nth-child(2) { text-align: left; color: var(--t); }
-.nm-cell { display: flex; align-items: center; gap: 7px; }
-.nm-cell img { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
-.pts { font-weight: 700 !important; color: var(--t) !important; font-size: 14px !important; }
-.stt tr.my td { background: var(--ps); color: var(--t) !important; }
-.stt tr.my .pts { color: var(--p) !important; }
-.sp { font-weight: 700; font-size: 13px; }
-.sp.top { color: var(--p); }
-.sp.rel { color: var(--amber); }
-.sp.bot { color: var(--red); }
-.sform { display: flex; gap: 3px; }
-.sfd { width: 9px; height: 9px; border-radius: 50%; }
-.cl-bar { border-left: 3px solid var(--p) !important; }
-.el-bar { border-left: 3px solid var(--amber) !important; }
-.drop-bar { border-left: 3px solid var(--red) !important; }
+/* 순위표 */
+.std-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--b);}
+.stt{width:100%;border-collapse:collapse;font-size:14px;}
+.stt th{font-size:11px;font-weight:700;color:var(--t3);padding:12px 8px;text-align:center;background:var(--card2);border-bottom:1px solid var(--b);}
+.stt th:nth-child(2){text-align:left;}
+.stt td{padding:12px 8px;border-bottom:1px solid var(--b);text-align:center;color:var(--t2);}
+.stt td:nth-child(2){text-align:left;color:var(--t);}
+.nm-cell{display:flex;align-items:center;gap:8px;}
+.nm-cell img{width:18px;height:18px;object-fit:contain;flex-shrink:0;}
+.pts{font-weight:700!important;color:var(--t)!important;font-size:15px!important;}
+.stt tr.my td{background:var(--ps);}
+.stt tr.my .pts{color:var(--p)!important;}
+.sp{font-weight:700;font-size:14px;}
+.sp.top{color:var(--p);}
+.sp.rel{color:var(--amber);}
+.sp.bot{color:var(--red);}
+.sform{display:flex;gap:3px;}
+.sfd{width:9px;height:9px;border-radius:50%;}
+.cl-bar{border-left:3px solid var(--p)!important;}
+.el-bar{border-left:3px solid var(--amber)!important;}
+.drop-bar{border-left:3px solid var(--red)!important;}
 
-/* SCHEDULE */
-.lg-grp { margin-bottom: 12px; }
-.lg-hdr {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px;
-  background: var(--card); border: 1px solid var(--b);
-  border-radius: 12px; cursor: pointer; margin-bottom: 6px;
-}
-.lg-hdr img { width: 20px; height: 20px; object-fit: contain; }
-.lg-hdr-nm { font-size: 13px; font-weight: 700; color: var(--t); flex: 1; }
-.lg-hdr-cnt { font-size: 11px; color: var(--t3); background: var(--bg3); padding: 2px 8px; border-radius: 20px; }
-.lg-arr { font-size: 12px; color: var(--t3); transition: transform .2s; }
-.lg-arr.closed { transform: rotate(-90deg); }
-.lg-matches { display: flex; flex-direction: column; overflow: hidden; transition: max-height .3s; border-radius: 10px; border: 1px solid var(--b); overflow: hidden; }
-.sm {
-  background: var(--card); padding: 12px 14px;
-  display: flex; align-items: center; gap: 10px;
-  cursor: pointer; border-bottom: 1px solid var(--b);
-  transition: background .15s;
-}
-.sm:last-child { border-bottom: none; }
-.sm:active { background: var(--card2); }
-.sm-time { font-size: 13px; font-weight: 700; width: 38px; text-align: center; flex-shrink: 0; }
-.sm-teams { flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-.sm-team { display: flex; align-items: center; gap: 7px; }
-.sm-cr { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }
-.sm-nm { font-size: 13px; font-weight: 500; color: var(--t2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-.sm-nm.win { color: var(--t); font-weight: 700; }
-.sm-sc { font-size: 14px; font-weight: 700; width: 16px; text-align: right; flex-shrink: 0; }
+/* 일정 */
+.lg-grp{margin-bottom:12px;}
+.lg-hdr{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--card);border:1px solid var(--b);border-radius:12px;cursor:pointer;margin-bottom:6px;}
+.lg-hdr img{width:20px;height:20px;object-fit:contain;}
+.lg-hdr-nm{font-size:14px;font-weight:700;color:var(--t);flex:1;}
+.lg-hdr-cnt{font-size:11px;color:var(--t3);background:var(--bg2);padding:3px 10px;border-radius:20px;}
+.lg-arr{font-size:12px;color:var(--t3);transition:transform .2s;}
+.lg-arr.closed{transform:rotate(-90deg);}
+.lg-matches{display:flex;flex-direction:column;overflow:hidden;transition:max-height .3s;border-radius:10px;border:1px solid var(--b);}
+.sm{background:var(--card);padding:13px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid var(--b);transition:background .15s;}
+.sm:last-child{border-bottom:none;}
+.sm:hover{background:var(--card2);}
+.sm-time{font-size:14px;font-weight:700;width:40px;text-align:center;flex-shrink:0;}
+.sm-teams{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
+.sm-team{display:flex;align-items:center;gap:8px;}
+.sm-cr{width:16px;height:16px;object-fit:contain;flex-shrink:0;}
+.sm-nm{font-size:14px;font-weight:500;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.sm-nm.win{color:var(--t);font-weight:700;}
+.sm-sc{font-size:14px;font-weight:700;width:16px;text-align:right;flex-shrink:0;}
+.myfix{background:var(--card);border:1.5px solid var(--p2);border-radius:var(--radius);padding:18px;margin-bottom:14px;}
+.myfix-tag{font-size:12px;font-weight:700;color:var(--p);margin-bottom:13px;}
+.myfix-teams{display:flex;align-items:center;justify-content:space-between;}
+.myfix-team{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.myfix-team img{width:44px;height:44px;object-fit:contain;}
+.myfix-nm{font-size:13px;font-weight:600;color:var(--t);text-align:center;}
+.myfix-vs{font-family:'Orbitron';font-size:20px;font-weight:900;color:var(--p);}
+.myfix-meta{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;}
+.myfix-meta span{font-size:11px;background:var(--bg2);border:1px solid var(--b);padding:4px 10px;border-radius:20px;color:var(--t2);}
 
-/* MY FIXTURE */
-.myfix {
-  background: var(--card); border: 1.5px solid var(--p2);
-  border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
-}
-.myfix-tag { font-size: 11px; font-weight: 700; color: var(--p); margin-bottom: 12px; }
-.myfix-teams { display: flex; align-items: center; justify-content: space-between; }
-.myfix-team { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.myfix-team img { width: 40px; height: 40px; object-fit: contain; }
-.myfix-nm { font-size: 13px; font-weight: 600; color: var(--t); text-align: center; }
-.myfix-vs { font-family: 'Orbitron'; font-size: 18px; font-weight: 900; color: var(--p); }
-.myfix-meta { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-.myfix-meta span { font-size: 11px; background: var(--bg3); border: 1px solid var(--b); padding: 4px 10px; border-radius: 20px; color: var(--t2); }
+/* 선수 */
+.pc{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:15px;margin-bottom:9px;display:flex;align-items:center;gap:13px;}
+.pc.me{border-color:var(--p2);background:var(--ps);}
+.pc-rank{font-family:'Orbitron';font-size:20px;font-weight:900;color:var(--t3);width:30px;text-align:center;flex-shrink:0;}
+.pc-rank.top{color:var(--p);}
+.pc-info{flex:1;min-width:0;}
+.pc-name{font-size:16px;font-weight:700;color:var(--t);margin-bottom:3px;}
+.pc-team{font-size:12px;color:var(--t2);}
+.pc-val{font-family:'Orbitron';font-size:26px;font-weight:900;color:var(--p);}
+.pc-lbl{font-size:10px;color:var(--t3);}
 
-/* PLAYER */
-.pc {
-  background: var(--card); border: 1px solid var(--b);
-  border-radius: 12px; padding: 14px; margin-bottom: 8px;
-  display: flex; align-items: center; gap: 12px;
-}
-.pc.me { border-color: var(--p2); background: var(--ps); }
-.pc-rank { font-family: 'Orbitron'; font-size: 18px; font-weight: 900; color: var(--t3); width: 28px; text-align: center; flex-shrink: 0; }
-.pc-rank.top { color: var(--p); }
-.pc-info { flex: 1; min-width: 0; }
-.pc-name { font-size: 15px; font-weight: 700; color: var(--t); margin-bottom: 3px; }
-.pc-team { font-size: 12px; color: var(--t2); }
-.pc-val { font-family: 'Orbitron'; font-size: 24px; font-weight: 900; color: var(--p); text-align: right; }
-.pc-lbl { font-size: 10px; color: var(--t3); text-align: right; }
+/* 팬존 */
+.lv-card{background:var(--card);border:1.5px solid var(--b2);border-radius:var(--radius);padding:22px;margin-bottom:16px;}
+.lv-em{font-size:48px;text-align:center;margin-bottom:10px;}
+.lv-name{font-size:20px;font-weight:700;color:var(--t);text-align:center;margin-bottom:5px;}
+.lv-sub{font-size:14px;color:var(--t2);text-align:center;margin-bottom:16px;}
+.lv-pw{height:7px;background:var(--b);border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.lv-pb{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p),var(--amber));transition:width .8s;}
+.lv-pl{display:flex;justify-content:space-between;font-size:12px;color:var(--t3);}
+.lv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+.lvs{background:var(--bg2);border:1px solid var(--b);border-radius:10px;padding:14px;text-align:center;}
+.lvs-v{font-size:22px;font-weight:700;color:var(--t);font-family:'Orbitron';}
+.lvs-l{font-size:11px;color:var(--t3);margin-top:4px;}
+.fz-match{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:15px;margin-bottom:9px;display:flex;align-items:center;gap:10px;}
+.fz-info{flex:1;}
+.fz-teams{font-size:14px;font-weight:600;color:var(--t);margin-bottom:3px;}
+.fz-time{font-size:12px;color:var(--t2);}
+.fz-btn{padding:9px 16px;border-radius:8px;border:1px solid var(--b2);background:var(--ps);color:var(--p);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.fz-btn.done{background:rgba(34,197,94,.2);}
+.ci{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:13px 16px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;}
+.ci-teams{font-size:13px;font-weight:600;color:var(--t);}
+.ci-dt{font-size:11px;color:var(--t3);margin-top:2px;}
+.ci-badge{font-size:11px;font-weight:700;color:var(--p);background:var(--ps);border:1px solid var(--b2);padding:4px 12px;border-radius:20px;}
 
-/* FANZONE */
-.lv-card {
-  background: var(--card); border: 1.5px solid var(--b2);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 14px;
-}
-.lv-em { font-size: 40px; text-align: center; margin-bottom: 10px; }
-.lv-name { font-size: 18px; font-weight: 700; color: var(--t); text-align: center; margin-bottom: 4px; }
-.lv-sub { font-size: 13px; color: var(--t2); text-align: center; margin-bottom: 14px; }
-.lv-pw { height: 6px; background: var(--b); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
-.lv-pb { height: 100%; border-radius: 3px; background: var(--p); transition: width .8s; }
-.lv-pl { display: flex; justify-content: space-between; font-size: 11px; color: var(--t3); }
-.lv-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 14px; }
-.lvs { background: var(--bg3); border: 1px solid var(--b); border-radius: 10px; padding: 12px; text-align: center; }
-.lvs-v { font-size: 20px; font-weight: 700; color: var(--t); font-family: 'Orbitron'; }
-.lvs-l { font-size: 11px; color: var(--t3); margin-top: 3px; }
-.fz-match { background: var(--card); border: 1px solid var(--b); border-radius: 12px; padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-.fz-info { flex: 1; }
-.fz-teams { font-size: 14px; font-weight: 600; color: var(--t); margin-bottom: 3px; }
-.fz-time { font-size: 12px; color: var(--t2); }
-.fz-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--b2); background: var(--ps); color: var(--p); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
-.fz-btn.done { background: rgba(34,197,94,.2); }
-.ci { background: var(--card); border: 1px solid var(--b); border-radius: 10px; padding: 12px 14px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
-.ci-teams { font-size: 13px; font-weight: 600; color: var(--t); }
-.ci-dt { font-size: 11px; color: var(--t3); margin-top: 2px; }
-.ci-badge { font-size: 11px; font-weight: 700; color: var(--p); background: var(--ps); border: 1px solid var(--b2); padding: 4px 10px; border-radius: 20px; }
+/* ── HUB 뉴스 ── */
+.hub-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.hub-tab{font-size:13px;font-weight:600;padding:7px 16px;border-radius:20px;border:1px solid var(--b);background:transparent;color:var(--t3);cursor:pointer;white-space:nowrap;transition:all .15s;}
+.hub-tab.on{background:var(--ps);color:var(--p);border-color:var(--b2);}
+.news-card{background:var(--card);border:1px solid var(--b);border-radius:var(--radius);padding:16px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;display:block;text-decoration:none;}
+.news-card:hover{border-color:var(--b2);}
+.news-source{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.news-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;background:var(--bg2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.news-author{font-size:12px;font-weight:700;color:var(--p);}
+.news-time{font-size:11px;color:var(--t3);margin-left:auto;}
+.news-title{font-size:15px;font-weight:700;color:var(--t);line-height:1.5;margin-bottom:8px;}
+.news-body{font-size:13px;color:var(--t2);line-height:1.7;}
+.news-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.news-tag{font-size:10px;background:var(--bg2);border:1px solid var(--b);color:var(--t3);padding:3px 9px;border-radius:20px;}
+.news-tag.team{color:var(--p);border-color:var(--b2);background:var(--ps);}
+.news-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:12px;color:var(--t3);font-size:13px;}
+.transfer-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.12);border:1px solid var(--b2);color:var(--p);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.transfer-badge.rumor{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--amber);}
+.transfer-badge.done{background:rgba(34,197,94,.15);border-color:var(--p);color:var(--p);}
 
-/* MODAL */
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,.8); z-index: 500; overflow-y: auto; padding: 16px; display: none; }
-.modal.show { display: block; }
-.modal-in { background: var(--card); border-radius: 18px; max-width: 440px; margin: 0 auto; border: 1px solid var(--b); overflow: hidden; }
-.modal-hd { padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--b); }
-.modal-ttl { font-size: 15px; font-weight: 700; color: var(--t); }
-.modal-x { background: none; border: none; color: var(--t3); font-size: 24px; cursor: pointer; line-height: 1; }
-.modal-body { padding: 16px; }
+/* 모달 */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;overflow-y:auto;padding:16px;display:none;}
+.modal.show{display:block;}
+.modal-in{background:var(--card);border-radius:18px;max-width:520px;margin:0 auto;border:1px solid var(--b);overflow:hidden;}
+.modal-hd{padding:17px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--b);}
+.modal-ttl{font-size:16px;font-weight:700;color:var(--t);}
+.modal-x{background:none;border:none;color:var(--t3);font-size:26px;cursor:pointer;line-height:1;}
+.modal-body{padding:20px;}
 
-/* GOAL TOAST */
-#gt { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 9999; text-align: center; pointer-events: none; display: none; }
-.gt-in { animation: gta 3.5s ease forwards; }
-@keyframes gta { 0%{opacity:0;transform:scale(.3)} 15%{opacity:1;transform:scale(1.08)} 25%{transform:scale(1)} 80%{opacity:1} 100%{opacity:0} }
-.gt-ball { font-size: 56px; display: block; animation: gspin .5s ease; }
-@keyframes gspin { from{transform:rotate(0)} to{transform:rotate(720deg)} }
-.gt-word { font-family: 'Orbitron'; font-size: 34px; font-weight: 900; color: var(--t); display: block; letter-spacing: 4px; margin-top: 4px; }
-.gt-scorer { font-size: 16px; color: var(--p); display: block; margin-top: 6px; font-weight: 700; }
-.gt-min { font-size: 13px; color: var(--t2); display: block; margin-top: 2px; }
+/* 골 토스트 */
+#gt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;text-align:center;pointer-events:none;display:none;}
+.gt-in{animation:gta 3.5s ease forwards;}
+@keyframes gta{0%{opacity:0;transform:scale(.3)}15%{opacity:1;transform:scale(1.08)}25%{transform:scale(1)}80%{opacity:1}100%{opacity:0}}
+.gt-ball{font-size:58px;display:block;animation:gspin .5s ease;}
+@keyframes gspin{from{transform:rotate(0)}to{transform:rotate(720deg)}}
+.gt-word{font-family:'Orbitron';font-size:36px;font-weight:900;color:var(--t);display:block;letter-spacing:4px;}
+.gt-scorer{font-size:16px;color:var(--p);display:block;margin-top:6px;font-weight:700;}
 
-/* LOADER / EMPTY */
-.ldr {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 20px;
-  gap: 12px;
-  min-height: 200px;
-}
-.spin { width: 28px; height: 28px; border: 2.5px solid var(--b); border-top-color: var(--p); border-radius: 50%; animation: spin .7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg) } }
-.spin-t { font-size: 12px; color: var(--t3); }
-.empty { text-align: center; padding: 48px 20px; font-size: 13px; color: var(--t3); line-height: 1.8; }
+/* 레벨업 오버레이 */
+#lvup{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
+#lvup.show{display:flex;animation:gta 4s ease forwards;}
+.lvup-em{font-size:72px;}
+.lvup-txt{font-family:'Orbitron';font-size:28px;font-weight:900;color:var(--p);}
+.lvup-sub{font-size:16px;color:var(--t2);}
 
-/* LEVEL UP OVERLAY */
-#lvup { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 9998; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
-#lvup.show { display: flex; animation: gta 4s ease forwards; }
-.lvup-em { font-size: 72px; }
-.lvup-txt { font-family: 'Orbitron'; font-size: 26px; font-weight: 900; color: var(--p); letter-spacing: 3px; }
-.lvup-sub { font-size: 16px; color: var(--t2); }
+/* 로더/빈 */
+.ldr{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 20px;gap:14px;}
+.spin{width:30px;height:30px;border:2.5px solid var(--b);border-top-color:var(--p);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-t{font-size:13px;color:var(--t3);}
+.empty{text-align:center;padding:48px 20px;font-size:14px;color:var(--t3);line-height:1.9;}
 </style>
 </head>
 <body>
 
 <!-- ONBOARDING -->
 <div id="ob">
-  <div class="ob-hero">
-    <div class="ob-logo">PITCH PRO</div>
-    <div class="ob-sub">FOOTBALL TACTICAL HUB v1.0</div>
-    <div class="ob-hint">응원하는 팀을 선택하면<br>팀 컬러로 앱 전체가 바뀌고 팬존이 활성화됩니다</div>
+  <div class="ob-inner">
+    <div class="ob-hero">
+      <div class="ob-logo">PITCH PRO</div>
+      <div class="ob-tagline">FOOTBALL TACTICAL HUB v1.0</div>
+      <div class="ob-hint">응원하는 팀을 선택하면<br>팀 컬러로 앱 전체가 바뀝니다</div>
+    </div>
+    <div class="ob-body">
 
-  </div>
-    <div class="ob-section">
-    <div class="ob-lg-hdr" style="background:#3D195B;">
+    <div class="ob-lg-hdr" style="background:#3D195B">
       <img src="https://crests.football-data.org/PL.png" onerror="this.style.display='none'">
       <span>프리미어리그</span>
-      <span class="ob-lg-season">2025-26 시즌</span>
+      <span class="ob-lg-season">2025-26</span>
     </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,1044,'PL','#CC0000','노팅엄')">
-        <img src="https://crests.football-data.org/1044.png" onerror="this.src='https://crests.football-data.org/1044.svg'">
-        <div class="ob-team-nm">노팅엄</div>
-      </div>
-      <div class="ob-team" onclick="op(this,67,'PL','#241F20','뉴캐슬')">
-        <img src="https://crests.football-data.org/67.png" onerror="this.src='https://crests.football-data.org/67.svg'">
-        <div class="ob-team-nm">뉴캐슬</div>
-      </div>
-      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','리버풀')">
-        <img src="https://crests.football-data.org/64.png" onerror="this.src='https://crests.football-data.org/64.svg'">
-        <div class="ob-team-nm">리버풀</div>
-      </div>
-      <div class="ob-team" onclick="op(this,341,'PL','#FFCD00','리즈')">
-        <img src="https://crests.football-data.org/341.png" onerror="this.src='https://crests.football-data.org/341.svg'">
-        <div class="ob-team-nm">리즈</div>
-      </div>
-      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','맨시티')">
-        <img src="https://crests.football-data.org/65.png" onerror="this.src='https://crests.football-data.org/65.svg'">
-        <div class="ob-team-nm">맨시티</div>
-      </div>
-      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','맨유')">
-        <img src="https://crests.football-data.org/66.png" onerror="this.src='https://crests.football-data.org/66.svg'">
-        <div class="ob-team-nm">맨유</div>
-      </div>
-      <div class="ob-team" onclick="op(this,715,'PL','#DA291C','본머스')">
-        <img src="https://crests.football-data.org/715.png" onerror="this.src='https://crests.football-data.org/715.svg'">
-        <div class="ob-team-nm">본머스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,402,'PL','#E30613','브렌트포드')">
-        <img src="https://crests.football-data.org/402.png" onerror="this.src='https://crests.football-data.org/402.svg'">
-        <div class="ob-team-nm">브렌트포드</div>
-      </div>
-      <div class="ob-team" onclick="op(this,397,'PL','#0057B8','브라이턴')">
-        <img src="https://crests.football-data.org/397.png" onerror="this.src='https://crests.football-data.org/397.svg'">
-        <div class="ob-team-nm">브라이턴</div>
-      </div>
-      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','아스날')">
+      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','Arsenal')">
         <img src="https://crests.football-data.org/57.png" onerror="this.src='https://crests.football-data.org/57.svg'">
-        <div class="ob-team-nm">아스날</div>
+        <div class="ob-nm">Arsenal</div>
       </div>
-      <div class="ob-team" onclick="op(this,58,'PL','#670E36','아스톤 빌라')">
-        <img src="https://crests.football-data.org/58.png" onerror="this.src='https://crests.football-data.org/58.svg'">
-        <div class="ob-team-nm">아스톤 빌라</div>
+      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','Man City')">
+        <img src="https://crests.football-data.org/65.png" onerror="this.src='https://crests.football-data.org/65.svg'">
+        <div class="ob-nm">Man City</div>
       </div>
-      <div class="ob-team" onclick="op(this,74,'PL','#003399','에버턴')">
-        <img src="https://crests.football-data.org/74.png" onerror="this.src='https://crests.football-data.org/74.svg'">
-        <div class="ob-team-nm">에버턴</div>
+      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','Liverpool')">
+        <img src="https://crests.football-data.org/64.png" onerror="this.src='https://crests.football-data.org/64.svg'">
+        <div class="ob-nm">Liverpool</div>
       </div>
-      <div class="ob-team" onclick="op(this,76,'PL','#FDB913','울버햄튼')">
-        <img src="https://crests.football-data.org/76.png" onerror="this.src='https://crests.football-data.org/76.svg'">
-        <div class="ob-team-nm">울버햄튼</div>
+      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','Man United')">
+        <img src="https://crests.football-data.org/66.png" onerror="this.src='https://crests.football-data.org/66.svg'">
+        <div class="ob-nm">Man United</div>
       </div>
-      <div class="ob-team" onclick="op(this,563,'PL','#7A263A','웨스트햄')">
-        <img src="https://crests.football-data.org/563.png" onerror="this.src='https://crests.football-data.org/563.svg'">
-        <div class="ob-team-nm">웨스트햄</div>
-      </div>
-      <div class="ob-team" onclick="op(this,61,'PL','#034694','첼시')">
+      <div class="ob-team" onclick="op(this,61,'PL','#034694','Chelsea')">
         <img src="https://crests.football-data.org/61.png" onerror="this.src='https://crests.football-data.org/61.svg'">
-        <div class="ob-team-nm">첼시</div>
+        <div class="ob-nm">Chelsea</div>
       </div>
-      <div class="ob-team" onclick="op(this,73,'PL','#132257','토트넘')">
+      <div class="ob-team" onclick="op(this,73,'PL','#132257','Tottenham')">
         <img src="https://crests.football-data.org/73.png" onerror="this.src='https://crests.football-data.org/73.svg'">
-        <div class="ob-team-nm">토트넘</div>
+        <div class="ob-nm">Tottenham</div>
       </div>
-      <div class="ob-team" onclick="op(this,354,'PL','#1B458F','크리스탈 팰리스')">
+      <div class="ob-team" onclick="op(this,67,'PL','#241F20','Newcastle')">
+        <img src="https://crests.football-data.org/67.png" onerror="this.src='https://crests.football-data.org/67.svg'">
+        <div class="ob-nm">Newcastle</div>
+      </div>
+      <div class="ob-team" onclick="op(this,58,'PL','#670E36','Aston Villa')">
+        <img src="https://crests.football-data.org/58.png" onerror="this.src='https://crests.football-data.org/58.svg'">
+        <div class="ob-nm">Aston Villa</div>
+      </div>
+      <div class="ob-team" onclick="op(this,563,'PL','#7A263A','West Ham')">
+        <img src="https://crests.football-data.org/563.png" onerror="this.src='https://crests.football-data.org/563.svg'">
+        <div class="ob-nm">West Ham</div>
+      </div>
+      <div class="ob-team" onclick="op(this,354,'PL','#1B458F','Crystal Palace')">
         <img src="https://crests.football-data.org/354.png" onerror="this.src='https://crests.football-data.org/354.svg'">
-        <div class="ob-team-nm">크리스탈 팰리스</div>
+        <div class="ob-nm">Crystal Palace</div>
       </div>
-      <div class="ob-team" onclick="op(this,72,'PL','#CC0000','풀럼')">
-        <img src="https://crests.football-data.org/72.png" onerror="this.src='https://crests.football-data.org/72.svg'">
-        <div class="ob-team-nm">풀럼</div>
+      <div class="ob-team" onclick="op(this,397,'PL','#0057B8','Brighton')">
+        <img src="https://crests.football-data.org/397.png" onerror="this.src='https://crests.football-data.org/397.svg'">
+        <div class="ob-nm">Brighton</div>
       </div>
-      <div class="ob-team" onclick="op(this,340,'PL','#D71920','사우스햄튼')">
+      <div class="ob-team" onclick="op(this,402,'PL','#E30613','Brentford')">
+        <img src="https://crests.football-data.org/402.png" onerror="this.src='https://crests.football-data.org/402.svg'">
+        <div class="ob-nm">Brentford</div>
+      </div>
+      <div class="ob-team" onclick="op(this,76,'PL','#FDB913','Wolves')">
+        <img src="https://crests.football-data.org/76.png" onerror="this.src='https://crests.football-data.org/76.svg'">
+        <div class="ob-nm">Wolves</div>
+      </div>
+      <div class="ob-team" onclick="op(this,74,'PL','#003399','Everton')">
+        <img src="https://crests.football-data.org/74.png" onerror="this.src='https://crests.football-data.org/74.svg'">
+        <div class="ob-nm">Everton</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1044,'PL','#CC0000','Nottm Forest')">
+        <img src="https://crests.football-data.org/1044.png" onerror="this.src='https://crests.football-data.org/1044.svg'">
+        <div class="ob-nm">Nottm Forest</div>
+      </div>
+      <div class="ob-team" onclick="op(this,340,'PL','#D71920','Southampton')">
         <img src="https://crests.football-data.org/340.png" onerror="this.src='https://crests.football-data.org/340.svg'">
-        <div class="ob-team-nm">사우스햄튼</div>
+        <div class="ob-nm">Southampton</div>
       </div>
-      <div class="ob-team" onclick="op(this,75,'PL','#003090','레스터')">
+      <div class="ob-team" onclick="op(this,72,'PL','#CC0000','Fulham')">
+        <img src="https://crests.football-data.org/72.png" onerror="this.src='https://crests.football-data.org/72.svg'">
+        <div class="ob-nm">Fulham</div>
+      </div>
+      <div class="ob-team" onclick="op(this,715,'PL','#DA291C','Bournemouth')">
+        <img src="https://crests.football-data.org/715.png" onerror="this.src='https://crests.football-data.org/715.svg'">
+        <div class="ob-nm">Bournemouth</div>
+      </div>
+      <div class="ob-team" onclick="op(this,68,'PL','#0033A0','Ipswich')">
+        <img src="https://crests.football-data.org/68.png" onerror="this.src='https://crests.football-data.org/68.svg'">
+        <div class="ob-nm">Ipswich</div>
+      </div>
+      <div class="ob-team" onclick="op(this,75,'PL','#003090','Leicester')">
         <img src="https://crests.football-data.org/75.png" onerror="this.src='https://crests.football-data.org/75.svg'">
-        <div class="ob-team-nm">레스터</div>
+        <div class="ob-nm">Leicester</div>
       </div>
     </div>
-    <div class="ob-lg-hdr" style="background:#EE8100;">
+
+    <div class="ob-lg-hdr" style="background:#FF4B1F">
       <img src="https://crests.football-data.org/PD.png" onerror="this.style.display='none'">
       <span>라리가</span>
-      <span class="ob-lg-season">2025-26 시즌</span>
+      <span class="ob-lg-season">2025-26</span>
     </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,558,'PD','#CC0000','히로나')">
-        <img src="https://crests.football-data.org/558.png" onerror="this.src='https://crests.football-data.org/558.svg'">
-        <div class="ob-team-nm">히로나</div>
-      </div>
-      <div class="ob-team" onclick="op(this,745,'PD','#063EA5','레반테')">
-        <img src="https://crests.football-data.org/745.png" onerror="this.src='https://crests.football-data.org/745.svg'">
-        <div class="ob-team-nm">레반테</div>
-      </div>
-      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','레알 마드리드')">
+      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','Real Madrid')">
         <img src="https://crests.football-data.org/86.png" onerror="this.src='https://crests.football-data.org/86.svg'">
-        <div class="ob-team-nm">레알 마드리드</div>
+        <div class="ob-nm">Real Madrid</div>
       </div>
-      <div class="ob-team" onclick="op(this,279,'PD','#CC0000','마요르카')">
-        <img src="https://crests.football-data.org/279.png" onerror="this.src='https://crests.football-data.org/279.svg'">
-        <div class="ob-team-nm">마요르카</div>
-      </div>
-      <div class="ob-team" onclick="op(this,81,'PD','#A50044','바르셀로나')">
+      <div class="ob-team" onclick="op(this,81,'PD','#A50044','Barcelona')">
         <img src="https://crests.football-data.org/81.png" onerror="this.src='https://crests.football-data.org/81.svg'">
-        <div class="ob-team-nm">바르셀로나</div>
+        <div class="ob-nm">Barcelona</div>
       </div>
-      <div class="ob-team" onclick="op(this,95,'PD','#FF7F00','발렌시아')">
-        <img src="https://crests.football-data.org/95.png" onerror="this.src='https://crests.football-data.org/95.svg'">
-        <div class="ob-team-nm">발렌시아</div>
-      </div>
-      <div class="ob-team" onclick="op(this,90,'PD','#00954C','베티스')">
-        <img src="https://crests.football-data.org/90.png" onerror="this.src='https://crests.football-data.org/90.svg'">
-        <div class="ob-team-nm">베티스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,94,'PD','#FFD700','비야레알')">
-        <img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'">
-        <div class="ob-team-nm">비야레알</div>
-      </div>
-      <div class="ob-team" onclick="op(this,82,'PD','#D40511','세비야')">
-        <img src="https://crests.football-data.org/82.png" onerror="this.src='https://crests.football-data.org/82.svg'">
-        <div class="ob-team-nm">세비야</div>
-      </div>
-      <div class="ob-team" onclick="op(this,80,'PD','#6BB5E0','셀타 비고')">
-        <img src="https://crests.football-data.org/80.png" onerror="this.src='https://crests.football-data.org/80.svg'">
-        <div class="ob-team-nm">셀타 비고</div>
-      </div>
-      <div class="ob-team" onclick="op(this,92,'PD','#0067B1','소시에다드')">
-        <img src="https://crests.football-data.org/92.png" onerror="this.src='https://crests.football-data.org/92.svg'">
-        <div class="ob-team-nm">소시에다드</div>
-      </div>
-      <div class="ob-team" onclick="op(this,78,'PD','#CC0000','아틀레티코')">
+      <div class="ob-team" onclick="op(this,78,'PD','#CC0000','Atletico')">
         <img src="https://crests.football-data.org/78.png" onerror="this.src='https://crests.football-data.org/78.svg'">
-        <div class="ob-team-nm">아틀레티코</div>
+        <div class="ob-nm">Atletico</div>
       </div>
-      <div class="ob-team" onclick="op(this,87,'PD','#EE2523','아틀레틱')">
-        <img src="https://crests.football-data.org/87.png" onerror="this.src='https://crests.football-data.org/87.svg'">
-        <div class="ob-team-nm">아틀레틱</div>
-      </div>
-      <div class="ob-team" onclick="op(this,264,'PD','#0064C8','알라베스')">
-        <img src="https://crests.football-data.org/264.png" onerror="this.src='https://crests.football-data.org/264.svg'">
-        <div class="ob-team-nm">알라베스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,263,'PD','#003DA5','에스파뇰')">
-        <img src="https://crests.football-data.org/263.png" onerror="this.src='https://crests.football-data.org/263.svg'">
-        <div class="ob-team-nm">에스파뇰</div>
-      </div>
-      <div class="ob-team" onclick="op(this,559,'PD','#0066CC','헤타페')">
-        <img src="https://crests.football-data.org/559.png" onerror="this.src='https://crests.football-data.org/559.svg'">
-        <div class="ob-team-nm">헤타페</div>
-      </div>
-      <div class="ob-team" onclick="op(this,289,'PD','#003DA5','오비에도')">
-        <img src="https://crests.football-data.org/289.png" onerror="this.src='https://crests.football-data.org/289.svg'">
-        <div class="ob-team-nm">오비에도</div>
-      </div>
-      <div class="ob-team" onclick="op(this,94,'PD','#CC0000','오사수나')">
+      <div class="ob-team" onclick="op(this,94,'PD','#FFD700','Villarreal')">
         <img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'">
-        <div class="ob-team-nm">오사수나</div>
+        <div class="ob-nm">Villarreal</div>
       </div>
-      <div class="ob-team" onclick="op(this,277,'PD','#CC0000','지로나')">
+      <div class="ob-team" onclick="op(this,82,'PD','#D40511','Sevilla')">
+        <img src="https://crests.football-data.org/82.png" onerror="this.src='https://crests.football-data.org/82.svg'">
+        <div class="ob-nm">Sevilla</div>
+      </div>
+      <div class="ob-team" onclick="op(this,90,'PD','#00954C','Real Betis')">
+        <img src="https://crests.football-data.org/90.png" onerror="this.src='https://crests.football-data.org/90.svg'">
+        <div class="ob-nm">Real Betis</div>
+      </div>
+      <div class="ob-team" onclick="op(this,92,'PD','#0067B1','R.Sociedad')">
+        <img src="https://crests.football-data.org/92.png" onerror="this.src='https://crests.football-data.org/92.svg'">
+        <div class="ob-nm">R.Sociedad</div>
+      </div>
+      <div class="ob-team" onclick="op(this,87,'PD','#EE2523','Athletic')">
+        <img src="https://crests.football-data.org/87.png" onerror="this.src='https://crests.football-data.org/87.svg'">
+        <div class="ob-nm">Athletic</div>
+      </div>
+      <div class="ob-team" onclick="op(this,95,'PD','#FF7F00','Valencia')">
+        <img src="https://crests.football-data.org/95.png" onerror="this.src='https://crests.football-data.org/95.svg'">
+        <div class="ob-nm">Valencia</div>
+      </div>
+      <div class="ob-team" onclick="op(this,558,'PD','#CC0000','Girona')">
+        <img src="https://crests.football-data.org/558.png" onerror="this.src='https://crests.football-data.org/558.svg'">
+        <div class="ob-nm">Girona</div>
+      </div>
+      <div class="ob-team" onclick="op(this,279,'PD','#CC0000','Mallorca')">
+        <img src="https://crests.football-data.org/279.png" onerror="this.src='https://crests.football-data.org/279.svg'">
+        <div class="ob-nm">Mallorca</div>
+      </div>
+      <div class="ob-team" onclick="op(this,80,'PD','#6BB5E0','Celta Vigo')">
+        <img src="https://crests.football-data.org/80.png" onerror="this.src='https://crests.football-data.org/80.svg'">
+        <div class="ob-nm">Celta Vigo</div>
+      </div>
+      <div class="ob-team" onclick="op(this,264,'PD','#0064C8','Alaves')">
+        <img src="https://crests.football-data.org/264.png" onerror="this.src='https://crests.football-data.org/264.svg'">
+        <div class="ob-nm">Alaves</div>
+      </div>
+      <div class="ob-team" onclick="op(this,559,'PD','#0066CC','Getafe')">
+        <img src="https://crests.football-data.org/559.png" onerror="this.src='https://crests.football-data.org/559.svg'">
+        <div class="ob-nm">Getafe</div>
+      </div>
+      <div class="ob-team" onclick="op(this,250,'PD','#FFDD00','Las Palmas')">
+        <img src="https://crests.football-data.org/250.png" onerror="this.src='https://crests.football-data.org/250.svg'">
+        <div class="ob-nm">Las Palmas</div>
+      </div>
+      <div class="ob-team" onclick="op(this,277,'PD','#7B2C8B','Valladolid')">
         <img src="https://crests.football-data.org/277.png" onerror="this.src='https://crests.football-data.org/277.svg'">
-        <div class="ob-team-nm">지로나</div>
+        <div class="ob-nm">Valladolid</div>
       </div>
-      <div class="ob-team" onclick="op(this,285,'PD','#0066CC','헤타페')">
-        <img src="https://crests.football-data.org/285.png" onerror="this.src='https://crests.football-data.org/285.svg'">
-        <div class="ob-team-nm">헤타페</div>
+      <div class="ob-team" onclick="op(this,289,'PD','#CC0000','Osasuna')">
+        <img src="https://crests.football-data.org/289.png" onerror="this.src='https://crests.football-data.org/289.svg'">
+        <div class="ob-nm">Osasuna</div>
+      </div>
+      <div class="ob-team" onclick="op(this,263,'PD','#003DA5','Espanyol')">
+        <img src="https://crests.football-data.org/263.png" onerror="this.src='https://crests.football-data.org/263.svg'">
+        <div class="ob-nm">Espanyol</div>
       </div>
     </div>
-    <div class="ob-lg-hdr" style="background:#D3010C;">
+
+    <div class="ob-lg-hdr" style="background:#D3010C">
       <img src="https://crests.football-data.org/BL1.png" onerror="this.style.display='none'">
       <span>분데스리가</span>
-      <span class="ob-lg-season">2025-26 시즌</span>
+      <span class="ob-lg-season">2025-26</span>
     </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,4,'BL1','#FDE100','도르트문트')">
-        <img src="https://crests.football-data.org/4.png" onerror="this.src='https://crests.football-data.org/4.svg'">
-        <div class="ob-team-nm">도르트문트</div>
-      </div>
-      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','라이프치히')">
-        <img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'">
-        <div class="ob-team-nm">라이프치히</div>
-      </div>
-      <div class="ob-team" onclick="op(this,3,'BL1','#E32221','레버쿠젠')">
-        <img src="https://crests.football-data.org/3.png" onerror="this.src='https://crests.football-data.org/3.svg'">
-        <div class="ob-team-nm">레버쿠젠</div>
-      </div>
-      <div class="ob-team" onclick="op(this,39,'BL1','#CC0000','마인츠')">
-        <img src="https://crests.football-data.org/39.png" onerror="this.src='https://crests.football-data.org/39.svg'">
-        <div class="ob-team-nm">마인츠</div>
-      </div>
-      <div class="ob-team" onclick="op(this,38,'BL1','#000000','묀헨글라드바흐')">
-        <img src="https://crests.football-data.org/38.png" onerror="this.src='https://crests.football-data.org/38.svg'">
-        <div class="ob-team-nm">묀헨글라드바흐</div>
-      </div>
-      <div class="ob-team" onclick="op(this,5,'BL1','#DC052D','바이에른 뮌헨')">
+      <div class="ob-team" onclick="op(this,5,'BL1','#DC052D','Bayern')">
         <img src="https://crests.football-data.org/5.png" onerror="this.src='https://crests.football-data.org/5.svg'">
-        <div class="ob-team-nm">바이에른 뮌헨</div>
+        <div class="ob-nm">Bayern</div>
       </div>
-      <div class="ob-team" onclick="op(this,43,'BL1','#1D9B43','베르더 브레멘')">
-        <img src="https://crests.football-data.org/43.png" onerror="this.src='https://crests.football-data.org/43.svg'">
-        <div class="ob-team-nm">베르더 브레멘</div>
+      <div class="ob-team" onclick="op(this,4,'BL1','#FDE100','Dortmund')">
+        <img src="https://crests.football-data.org/4.png" onerror="this.src='https://crests.football-data.org/4.svg'">
+        <div class="ob-nm">Dortmund</div>
       </div>
-      <div class="ob-team" onclick="op(this,18,'BL1','#65B32E','볼프스부르크')">
-        <img src="https://crests.football-data.org/18.png" onerror="this.src='https://crests.football-data.org/18.svg'">
-        <div class="ob-team-nm">볼프스부르크</div>
+      <div class="ob-team" onclick="op(this,3,'BL1','#E32221','Leverkusen')">
+        <img src="https://crests.football-data.org/3.png" onerror="this.src='https://crests.football-data.org/3.svg'">
+        <div class="ob-nm">Leverkusen</div>
       </div>
-      <div class="ob-team" onclick="op(this,11,'BL1','#CC0000','슈투트가르트')">
-        <img src="https://crests.football-data.org/11.png" onerror="this.src='https://crests.football-data.org/11.svg'">
-        <div class="ob-team-nm">슈투트가르트</div>
-      </div>
-      <div class="ob-team" onclick="op(this,9,'BL1','#CC0000','아욱스부르크')">
-        <img src="https://crests.football-data.org/9.png" onerror="this.src='https://crests.football-data.org/9.svg'">
-        <div class="ob-team-nm">아욱스부르크</div>
-      </div>
-      <div class="ob-team" onclick="op(this,28,'BL1','#C8102E','장크트파울리')">
-        <img src="https://crests.football-data.org/28.png" onerror="this.src='https://crests.football-data.org/28.svg'">
-        <div class="ob-team-nm">장크트파울리</div>
-      </div>
-      <div class="ob-team" onclick="op(this,16,'BL1','#FC4444','쾰른')">
-        <img src="https://crests.football-data.org/16.png" onerror="this.src='https://crests.football-data.org/16.svg'">
-        <div class="ob-team-nm">쾰른</div>
-      </div>
-      <div class="ob-team" onclick="op(this,10,'BL1','#CC0000','프라이부르크')">
-        <img src="https://crests.football-data.org/10.png" onerror="this.src='https://crests.football-data.org/10.svg'">
-        <div class="ob-team-nm">프라이부르크</div>
-      </div>
-      <div class="ob-team" onclick="op(this,13,'BL1','#E2001A','프랑크푸르트')">
-        <img src="https://crests.football-data.org/13.png" onerror="this.src='https://crests.football-data.org/13.svg'">
-        <div class="ob-team-nm">프랑크푸르트</div>
-      </div>
-      <div class="ob-team" onclick="op(this,7,'BL1','#CC0000','하이덴하임')">
-        <img src="https://crests.football-data.org/7.png" onerror="this.src='https://crests.football-data.org/7.svg'">
-        <div class="ob-team-nm">하이덴하임</div>
-      </div>
-      <div class="ob-team" onclick="op(this,735,'BL1','#003DA5','함부르크')">
-        <img src="https://crests.football-data.org/735.png" onerror="this.src='https://crests.football-data.org/735.svg'">
-        <div class="ob-team-nm">함부르크</div>
-      </div>
-      <div class="ob-team" onclick="op(this,6,'BL1','#1873B8','호펜하임')">
-        <img src="https://crests.football-data.org/6.png" onerror="this.src='https://crests.football-data.org/6.svg'">
-        <div class="ob-team-nm">호펜하임</div>
-      </div>
-      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','우니온 베를린')">
+      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','Leipzig')">
         <img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'">
-        <div class="ob-team-nm">우니온 베를린</div>
+        <div class="ob-nm">Leipzig</div>
+      </div>
+      <div class="ob-team" onclick="op(this,13,'BL1','#E2001A','Frankfurt')">
+        <img src="https://crests.football-data.org/13.png" onerror="this.src='https://crests.football-data.org/13.svg'">
+        <div class="ob-nm">Frankfurt</div>
+      </div>
+      <div class="ob-team" onclick="op(this,18,'BL1','#65B32E','Wolfsburg')">
+        <img src="https://crests.football-data.org/18.png" onerror="this.src='https://crests.football-data.org/18.svg'">
+        <div class="ob-nm">Wolfsburg</div>
+      </div>
+      <div class="ob-team" onclick="op(this,11,'BL1','#CC0000','Stuttgart')">
+        <img src="https://crests.football-data.org/11.png" onerror="this.src='https://crests.football-data.org/11.svg'">
+        <div class="ob-nm">Stuttgart</div>
+      </div>
+      <div class="ob-team" onclick="op(this,10,'BL1','#CC0000','Freiburg')">
+        <img src="https://crests.football-data.org/10.png" onerror="this.src='https://crests.football-data.org/10.svg'">
+        <div class="ob-nm">Freiburg</div>
+      </div>
+      <div class="ob-team" onclick="op(this,6,'BL1','#1873B8','Hoffenheim')">
+        <img src="https://crests.football-data.org/6.png" onerror="this.src='https://crests.football-data.org/6.svg'">
+        <div class="ob-nm">Hoffenheim</div>
+      </div>
+      <div class="ob-team" onclick="op(this,9,'BL1','#CC0000','Augsburg')">
+        <img src="https://crests.football-data.org/9.png" onerror="this.src='https://crests.football-data.org/9.svg'">
+        <div class="ob-nm">Augsburg</div>
+      </div>
+      <div class="ob-team" onclick="op(this,39,'BL1','#CC0000','Mainz')">
+        <img src="https://crests.football-data.org/39.png" onerror="this.src='https://crests.football-data.org/39.svg'">
+        <div class="ob-nm">Mainz</div>
+      </div>
+      <div class="ob-team" onclick="op(this,43,'BL1','#1D9B43','Werder')">
+        <img src="https://crests.football-data.org/43.png" onerror="this.src='https://crests.football-data.org/43.svg'">
+        <div class="ob-nm">Werder</div>
+      </div>
+      <div class="ob-team" onclick="op(this,38,'BL1','#000000','Gladbach')">
+        <img src="https://crests.football-data.org/38.png" onerror="this.src='https://crests.football-data.org/38.svg'">
+        <div class="ob-nm">Gladbach</div>
+      </div>
+      <div class="ob-team" onclick="op(this,15,'BL1','#003DA5','Bochum')">
+        <img src="https://crests.football-data.org/15.png" onerror="this.src='https://crests.football-data.org/15.svg'">
+        <div class="ob-nm">Bochum</div>
+      </div>
+      <div class="ob-team" onclick="op(this,28,'BL1','#C8102E','St Pauli')">
+        <img src="https://crests.football-data.org/28.png" onerror="this.src='https://crests.football-data.org/28.svg'">
+        <div class="ob-nm">St Pauli</div>
+      </div>
+      <div class="ob-team" onclick="op(this,7,'BL1','#CC0000','Heidenheim')">
+        <img src="https://crests.football-data.org/7.png" onerror="this.src='https://crests.football-data.org/7.svg'">
+        <div class="ob-nm">Heidenheim</div>
+      </div>
+      <div class="ob-team" onclick="op(this,735,'BL1','#003DA5','Hamburg')">
+        <img src="https://crests.football-data.org/735.png" onerror="this.src='https://crests.football-data.org/735.svg'">
+        <div class="ob-nm">Hamburg</div>
+      </div>
+      <div class="ob-team" onclick="op(this,16,'BL1','#FC4444','Koeln')">
+        <img src="https://crests.football-data.org/16.png" onerror="this.src='https://crests.football-data.org/16.svg'">
+        <div class="ob-nm">Koeln</div>
       </div>
     </div>
-    <div class="ob-lg-hdr" style="background:#003B8E;">
+
+    <div class="ob-lg-hdr" style="background:#003B8E">
       <img src="https://crests.football-data.org/SA.png" onerror="this.style.display='none'">
       <span>세리에A</span>
-      <span class="ob-lg-season">2025-26 시즌</span>
+      <span class="ob-lg-season">2025-26</span>
     </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,113,'SA','#12A0D7','나폴리')">
-        <img src="https://crests.football-data.org/113.png" onerror="this.src='https://crests.football-data.org/113.svg'">
-        <div class="ob-team-nm">나폴리</div>
-      </div>
-      <div class="ob-team" onclick="op(this,102,'SA','#87D8F7','라치오')">
-        <img src="https://crests.football-data.org/102.png" onerror="this.src='https://crests.football-data.org/102.svg'">
-        <div class="ob-team-nm">라치오</div>
-      </div>
-      <div class="ob-team" onclick="op(this,586,'SA','#FFD700','레체')">
-        <img src="https://crests.football-data.org/586.png" onerror="this.src='https://crests.football-data.org/586.svg'">
-        <div class="ob-team-nm">레체</div>
-      </div>
-      <div class="ob-team" onclick="op(this,100,'SA','#8E1F2F','로마')">
-        <img src="https://crests.football-data.org/100.png" onerror="this.src='https://crests.football-data.org/100.svg'">
-        <div class="ob-team-nm">로마</div>
-      </div>
-      <div class="ob-team" onclick="op(this,98,'SA','#FB090B','밀란')">
-        <img src="https://crests.football-data.org/98.png" onerror="this.src='https://crests.football-data.org/98.svg'">
-        <div class="ob-team-nm">밀란</div>
-      </div>
-      <div class="ob-team" onclick="op(this,105,'SA','#FFD700','베로나')">
-        <img src="https://crests.football-data.org/105.png" onerror="this.src='https://crests.football-data.org/105.svg'">
-        <div class="ob-team-nm">베로나</div>
-      </div>
-      <div class="ob-team" onclick="op(this,103,'SA','#CC0000','볼로냐')">
-        <img src="https://crests.football-data.org/103.png" onerror="this.src='https://crests.football-data.org/103.svg'">
-        <div class="ob-team-nm">볼로냐</div>
-      </div>
-      <div class="ob-team" onclick="op(this,1185,'SA','#00A551','사수올로')">
-        <img src="https://crests.football-data.org/1185.png" onerror="this.src='https://crests.football-data.org/1185.svg'">
-        <div class="ob-team-nm">사수올로</div>
-      </div>
-      <div class="ob-team" onclick="op(this,110,'SA','#1E3F6D','아탈란타')">
-        <img src="https://crests.football-data.org/110.png" onerror="this.src='https://crests.football-data.org/110.svg'">
-        <div class="ob-team-nm">아탈란타</div>
-      </div>
-      <div class="ob-team" onclick="op(this,118,'SA','#000000','우디네세')">
-        <img src="https://crests.football-data.org/118.png" onerror="this.src='https://crests.football-data.org/118.svg'">
-        <div class="ob-team-nm">우디네세</div>
-      </div>
-      <div class="ob-team" onclick="op(this,109,'SA','#000000','유벤투스')">
-        <img src="https://crests.football-data.org/109.png" onerror="this.src='https://crests.football-data.org/109.svg'">
-        <div class="ob-team-nm">유벤투스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,108,'SA','#0068A8','인터')">
+      <div class="ob-team" onclick="op(this,108,'SA','#0068A8','Inter')">
         <img src="https://crests.football-data.org/108.png" onerror="this.src='https://crests.football-data.org/108.svg'">
-        <div class="ob-team-nm">인터</div>
+        <div class="ob-nm">Inter</div>
       </div>
-      <div class="ob-team" onclick="op(this,104,'SA','#CC0000','제노아')">
-        <img src="https://crests.football-data.org/104.png" onerror="this.src='https://crests.football-data.org/104.svg'">
-        <div class="ob-team-nm">제노아</div>
+      <div class="ob-team" onclick="op(this,98,'SA','#FB090B','AC Milan')">
+        <img src="https://crests.football-data.org/98.png" onerror="this.src='https://crests.football-data.org/98.svg'">
+        <div class="ob-nm">AC Milan</div>
       </div>
-      <div class="ob-team" onclick="op(this,115,'SA','#CC0000','칼리아리')">
-        <img src="https://crests.football-data.org/115.png" onerror="this.src='https://crests.football-data.org/115.svg'">
-        <div class="ob-team-nm">칼리아리</div>
+      <div class="ob-team" onclick="op(this,113,'SA','#12A0D7','Napoli')">
+        <img src="https://crests.football-data.org/113.png" onerror="this.src='https://crests.football-data.org/113.svg'">
+        <div class="ob-nm">Napoli</div>
       </div>
-      <div class="ob-team" onclick="op(this,470,'SA','#003DA5','코모')">
-        <img src="https://crests.football-data.org/470.png" onerror="this.src='https://crests.football-data.org/470.svg'">
-        <div class="ob-team-nm">코모</div>
+      <div class="ob-team" onclick="op(this,109,'SA','#000000','Juventus')">
+        <img src="https://crests.football-data.org/109.png" onerror="this.src='https://crests.football-data.org/109.svg'">
+        <div class="ob-nm">Juventus</div>
       </div>
-      <div class="ob-team" onclick="op(this,1197,'SA','#CC0000','크레모네세')">
-        <img src="https://crests.football-data.org/1197.png" onerror="this.src='https://crests.football-data.org/1197.svg'">
-        <div class="ob-team-nm">크레모네세</div>
+      <div class="ob-team" onclick="op(this,100,'SA','#8E1F2F','Roma')">
+        <img src="https://crests.football-data.org/100.png" onerror="this.src='https://crests.football-data.org/100.svg'">
+        <div class="ob-nm">Roma</div>
       </div>
-      <div class="ob-team" onclick="op(this,114,'SA','#8B1A1A','토리노')">
-        <img src="https://crests.football-data.org/114.png" onerror="this.src='https://crests.football-data.org/114.svg'">
-        <div class="ob-team-nm">토리노</div>
+      <div class="ob-team" onclick="op(this,102,'SA','#87D8F7','Lazio')">
+        <img src="https://crests.football-data.org/102.png" onerror="this.src='https://crests.football-data.org/102.svg'">
+        <div class="ob-nm">Lazio</div>
       </div>
-      <div class="ob-team" onclick="op(this,106,'SA','#FFD700','파르마')">
-        <img src="https://crests.football-data.org/106.png" onerror="this.src='https://crests.football-data.org/106.svg'">
-        <div class="ob-team-nm">파르마</div>
-      </div>
-      <div class="ob-team" onclick="op(this,107,'SA','#4C2D8C','피오렌티나')">
+      <div class="ob-team" onclick="op(this,107,'SA','#4C2D8C','Fiorentina')">
         <img src="https://crests.football-data.org/107.png" onerror="this.src='https://crests.football-data.org/107.svg'">
-        <div class="ob-team-nm">피오렌티나</div>
+        <div class="ob-nm">Fiorentina</div>
       </div>
-      <div class="ob-team" onclick="op(this,1107,'SA','#004B8D','피사')">
+      <div class="ob-team" onclick="op(this,110,'SA','#1E3F6D','Atalanta')">
+        <img src="https://crests.football-data.org/110.png" onerror="this.src='https://crests.football-data.org/110.svg'">
+        <div class="ob-nm">Atalanta</div>
+      </div>
+      <div class="ob-team" onclick="op(this,103,'SA','#CC0000','Bologna')">
+        <img src="https://crests.football-data.org/103.png" onerror="this.src='https://crests.football-data.org/103.svg'">
+        <div class="ob-nm">Bologna</div>
+      </div>
+      <div class="ob-team" onclick="op(this,114,'SA','#8B1A1A','Torino')">
+        <img src="https://crests.football-data.org/114.png" onerror="this.src='https://crests.football-data.org/114.svg'">
+        <div class="ob-nm">Torino</div>
+      </div>
+      <div class="ob-team" onclick="op(this,104,'SA','#CC0000','Genoa')">
+        <img src="https://crests.football-data.org/104.png" onerror="this.src='https://crests.football-data.org/104.svg'">
+        <div class="ob-nm">Genoa</div>
+      </div>
+      <div class="ob-team" onclick="op(this,115,'SA','#CC0000','Cagliari')">
+        <img src="https://crests.football-data.org/115.png" onerror="this.src='https://crests.football-data.org/115.svg'">
+        <div class="ob-nm">Cagliari</div>
+      </div>
+      <div class="ob-team" onclick="op(this,105,'SA','#FFD700','Verona')">
+        <img src="https://crests.football-data.org/105.png" onerror="this.src='https://crests.football-data.org/105.svg'">
+        <div class="ob-nm">Verona</div>
+      </div>
+      <div class="ob-team" onclick="op(this,586,'SA','#FFD700','Lecce')">
+        <img src="https://crests.football-data.org/586.png" onerror="this.src='https://crests.football-data.org/586.svg'">
+        <div class="ob-nm">Lecce</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1107,'SA','#004B8D','Empoli')">
         <img src="https://crests.football-data.org/1107.png" onerror="this.src='https://crests.football-data.org/1107.svg'">
-        <div class="ob-team-nm">피사</div>
+        <div class="ob-nm">Empoli</div>
+      </div>
+      <div class="ob-team" onclick="op(this,445,'SA','#CC0000','Monza')">
+        <img src="https://crests.football-data.org/445.png" onerror="this.src='https://crests.football-data.org/445.svg'">
+        <div class="ob-nm">Monza</div>
+      </div>
+      <div class="ob-team" onclick="op(this,106,'SA','#FFD700','Parma')">
+        <img src="https://crests.football-data.org/106.png" onerror="this.src='https://crests.football-data.org/106.svg'">
+        <div class="ob-nm">Parma</div>
+      </div>
+      <div class="ob-team" onclick="op(this,118,'SA','#000000','Udinese')">
+        <img src="https://crests.football-data.org/118.png" onerror="this.src='https://crests.football-data.org/118.svg'">
+        <div class="ob-nm">Udinese</div>
+      </div>
+      <div class="ob-team" onclick="op(this,470,'SA','#003DA5','Como')">
+        <img src="https://crests.football-data.org/470.png" onerror="this.src='https://crests.football-data.org/470.svg'">
+        <div class="ob-nm">Como</div>
+      </div>
+      <div class="ob-team" onclick="op(this,1185,'SA','#00A551','Sassuolo')">
+        <img src="https://crests.football-data.org/1185.png" onerror="this.src='https://crests.football-data.org/1185.svg'">
+        <div class="ob-nm">Sassuolo</div>
       </div>
     </div>
-    <div class="ob-lg-hdr" style="background:#052B5A;">
+
+    <div class="ob-lg-hdr" style="background:#052B5A">
       <img src="https://crests.football-data.org/FL1.png" onerror="this.style.display='none'">
       <span>리그앙</span>
-      <span class="ob-lg-season">2025-26 시즌</span>
+      <span class="ob-lg-season">2025-26</span>
     </div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,549,'FL1','#FFD700','낭트')">
-        <img src="https://crests.football-data.org/549.png" onerror="this.src='https://crests.football-data.org/549.svg'">
-        <div class="ob-team-nm">낭트</div>
-      </div>
-      <div class="ob-team" onclick="op(this,514,'FL1','#CC0000','니스')">
-        <img src="https://crests.football-data.org/514.png" onerror="this.src='https://crests.football-data.org/514.svg'">
-        <div class="ob-team-nm">니스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,531,'FL1','#CC0000','랭스')">
-        <img src="https://crests.football-data.org/531.png" onerror="this.src='https://crests.football-data.org/531.svg'">
-        <div class="ob-team-nm">랭스</div>
-      </div>
-      <div class="ob-team" onclick="op(this,546,'FL1','#CC0000','렌')">
-        <img src="https://crests.football-data.org/546.png" onerror="this.src='https://crests.football-data.org/546.svg'">
-        <div class="ob-team-nm">렌</div>
-      </div>
-      <div class="ob-team" onclick="op(this,518,'FL1','#0055A4','리옹')">
-        <img src="https://crests.football-data.org/518.png" onerror="this.src='https://crests.football-data.org/518.svg'">
-        <div class="ob-team-nm">리옹</div>
-      </div>
-      <div class="ob-team" onclick="op(this,512,'FL1','#BE2127','릴')">
-        <img src="https://crests.football-data.org/512.png" onerror="this.src='https://crests.football-data.org/512.svg'">
-        <div class="ob-team-nm">릴</div>
-      </div>
-      <div class="ob-team" onclick="op(this,519,'FL1','#009AC7','마르세유')">
-        <img src="https://crests.football-data.org/519.png" onerror="this.src='https://crests.football-data.org/519.svg'">
-        <div class="ob-team-nm">마르세유</div>
-      </div>
-      <div class="ob-team" onclick="op(this,548,'FL1','#DA291C','모나코')">
-        <img src="https://crests.football-data.org/548.png" onerror="this.src='https://crests.football-data.org/548.svg'">
-        <div class="ob-team-nm">모나코</div>
-      </div>
-      <div class="ob-team" onclick="op(this,541,'FL1','#003DA5','브레스트')">
-        <img src="https://crests.football-data.org/541.png" onerror="this.src='https://crests.football-data.org/541.svg'">
-        <div class="ob-team-nm">브레스트</div>
-      </div>
-      <div class="ob-team" onclick="op(this,547,'FL1','#003DA5','스트라스부르')">
-        <img src="https://crests.football-data.org/547.png" onerror="this.src='https://crests.football-data.org/547.svg'">
-        <div class="ob-team-nm">스트라스부르</div>
-      </div>
-      <div class="ob-team" onclick="op(this,524,'FL1','#003F8B','파리 SG')">
+      <div class="ob-team" onclick="op(this,524,'FL1','#003F8B','PSG')">
         <img src="https://crests.football-data.org/524.png" onerror="this.src='https://crests.football-data.org/524.svg'">
-        <div class="ob-team-nm">파리 SG</div>
+        <div class="ob-nm">PSG</div>
       </div>
-      <div class="ob-team" onclick="op(this,543,'FL1','#7B2C8B','툴루즈')">
+      <div class="ob-team" onclick="op(this,548,'FL1','#DA291C','Monaco')">
+        <img src="https://crests.football-data.org/548.png" onerror="this.src='https://crests.football-data.org/548.svg'">
+        <div class="ob-nm">Monaco</div>
+      </div>
+      <div class="ob-team" onclick="op(this,516,'FL1','#009AC7','Marseille')">
+        <img src="https://crests.football-data.org/516.png" onerror="this.src='https://crests.football-data.org/516.svg'">
+        <div class="ob-nm">Marseille</div>
+      </div>
+      <div class="ob-team" onclick="op(this,518,'FL1','#0055A4','Lyon')">
+        <img src="https://crests.football-data.org/518.png" onerror="this.src='https://crests.football-data.org/518.svg'">
+        <div class="ob-nm">Lyon</div>
+      </div>
+      <div class="ob-team" onclick="op(this,512,'FL1','#BE2127','Lille')">
+        <img src="https://crests.football-data.org/512.png" onerror="this.src='https://crests.football-data.org/512.svg'">
+        <div class="ob-nm">Lille</div>
+      </div>
+      <div class="ob-team" onclick="op(this,511,'FL1','#FFD700','Lens')">
+        <img src="https://crests.football-data.org/511.png" onerror="this.src='https://crests.football-data.org/511.svg'">
+        <div class="ob-nm">Lens</div>
+      </div>
+      <div class="ob-team" onclick="op(this,546,'FL1','#CC0000','Rennes')">
+        <img src="https://crests.football-data.org/546.png" onerror="this.src='https://crests.football-data.org/546.svg'">
+        <div class="ob-nm">Rennes</div>
+      </div>
+      <div class="ob-team" onclick="op(this,514,'FL1','#CC0000','Nice')">
+        <img src="https://crests.football-data.org/514.png" onerror="this.src='https://crests.football-data.org/514.svg'">
+        <div class="ob-nm">Nice</div>
+      </div>
+      <div class="ob-team" onclick="op(this,543,'FL1','#7B2C8B','Toulouse')">
         <img src="https://crests.football-data.org/543.png" onerror="this.src='https://crests.football-data.org/543.svg'">
-        <div class="ob-team-nm">툴루즈</div>
+        <div class="ob-nm">Toulouse</div>
       </div>
-      <div class="ob-team" onclick="op(this,544,'FL1','#0055A4','르아브르')">
+      <div class="ob-team" onclick="op(this,549,'FL1','#FFD700','Nantes')">
+        <img src="https://crests.football-data.org/549.png" onerror="this.src='https://crests.football-data.org/549.svg'">
+        <div class="ob-nm">Nantes</div>
+      </div>
+      <div class="ob-team" onclick="op(this,521,'FL1','#003DA5','Montpellier')">
+        <img src="https://crests.football-data.org/521.png" onerror="this.src='https://crests.football-data.org/521.svg'">
+        <div class="ob-nm">Montpellier</div>
+      </div>
+      <div class="ob-team" onclick="op(this,547,'FL1','#003DA5','Strasbourg')">
+        <img src="https://crests.football-data.org/547.png" onerror="this.src='https://crests.football-data.org/547.svg'">
+        <div class="ob-nm">Strasbourg</div>
+      </div>
+      <div class="ob-team" onclick="op(this,541,'FL1','#003DA5','Brest')">
+        <img src="https://crests.football-data.org/541.png" onerror="this.src='https://crests.football-data.org/541.svg'">
+        <div class="ob-nm">Brest</div>
+      </div>
+      <div class="ob-team" onclick="op(this,544,'FL1','#0055A4','Le Havre')">
         <img src="https://crests.football-data.org/544.png" onerror="this.src='https://crests.football-data.org/544.svg'">
-        <div class="ob-team-nm">르아브르</div>
+        <div class="ob-nm">Le Havre</div>
       </div>
-      <div class="ob-team" onclick="op(this,553,'FL1','#CC0000','로리앙')">
-        <img src="https://crests.football-data.org/553.png" onerror="this.src='https://crests.football-data.org/553.svg'">
-        <div class="ob-team-nm">로리앙</div>
-      </div>
-      <div class="ob-team" onclick="op(this,545,'FL1','#CC0000','랭스')">
+      <div class="ob-team" onclick="op(this,545,'FL1','#CC0000','Reims')">
         <img src="https://crests.football-data.org/545.png" onerror="this.src='https://crests.football-data.org/545.svg'">
-        <div class="ob-team-nm">랭스</div>
+        <div class="ob-nm">Reims</div>
       </div>
-      <div class="ob-team" onclick="op(this,520,'FL1','#003DA5','생테티엔')">
+      <div class="ob-team" onclick="op(this,520,'FL1','#003DA5','St-Etienne')">
         <img src="https://crests.football-data.org/520.png" onerror="this.src='https://crests.football-data.org/520.svg'">
-        <div class="ob-team-nm">생테티엔</div>
+        <div class="ob-nm">St-Etienne</div>
       </div>
-      <div class="ob-team" onclick="op(this,542,'FL1','#881B29','메스')">
+      <div class="ob-team" onclick="op(this,542,'FL1','#881B29','Metz')">
         <img src="https://crests.football-data.org/542.png" onerror="this.src='https://crests.football-data.org/542.svg'">
-        <div class="ob-team-nm">메스</div>
+        <div class="ob-nm">Metz</div>
       </div>
-      <div class="ob-team" onclick="op(this,550,'FL1','#000000','앙제')">
-        <img src="https://crests.football-data.org/550.png" onerror="this.src='https://crests.football-data.org/550.svg'">
-        <div class="ob-team-nm">앙제</div>
-      </div>
-      <div class="ob-team" onclick="op(this,52,'FL1','#003DA5','옥세르')">
-        <img src="https://crests.football-data.org/52.png" onerror="this.src='https://crests.football-data.org/52.svg'">
-        <div class="ob-team-nm">옥세르</div>
-      </div>
-      <div class="ob-team" onclick="op(this,522,'FL1','#000000','앙제')">
-        <img src="https://crests.football-data.org/522.png" onerror="this.src='https://crests.football-data.org/522.svg'">
-        <div class="ob-team-nm">앙제</div>
+      <div class="ob-team" onclick="op(this,553,'FL1','#CC0000','Lorient')">
+        <img src="https://crests.football-data.org/553.png" onerror="this.src='https://crests.football-data.org/553.svg'">
+        <div class="ob-nm">Lorient</div>
       </div>
     </div>
+    </div>
+    <button class="ob-start" id="ob-btn" onclick="startApp()" disabled>팀을 선택해주세요</button>
   </div>
-
-  <button class="ob-start" id="ob-btn" onclick="startApp()" disabled>팀을 선택해주세요</button>
 </div>
-
 
 <!-- APP -->
 <div id="app">
+  <!-- 헤더 -->
   <div class="hdr">
-    <div class="hdr-logo" onclick="showSettings()" title="설정">PITCH<span style="font-size:10px;font-weight:400;letter-spacing:2px;color:var(--t3);margin-left:3px;">PRO</span></div>
-    <div class="hdr-r">
+    <div class="hdr-left">
+      <div class="hdr-logo" onclick="showSettings()">PITCH PRO</div>
+      <!-- PC 탭 -->
+      <div class="hdr-tabs">
+        <button class="hdr-tab on" onclick="swP('home',this,'pc')">⚡ 라이브</button>
+        <button class="hdr-tab" onclick="swP('sched',this,'pc')">📅 일정</button>
+        <button class="hdr-tab" onclick="swP('std',this,'pc')">📊 순위</button>
+        <button class="hdr-tab" onclick="swP('player',this,'pc')">👟 선수</button>
+        <button class="hdr-tab" onclick="swP('hub',this,'pc')">📰 허브</button>
+        <button class="hdr-tab" onclick="swP('fan',this,'pc')">⭐ 팬존</button>
+      </div>
+    </div>
+    <div class="hdr-right">
       <div class="lpill" id="lpill"><div class="lpdot"></div><span>LIVE</span></div>
       <div class="hdr-lv" id="hdr-lv">Lv.1</div>
       <img class="hdr-cr" id="hdr-cr" src="" alt="" onerror="this.style.display='none'">
     </div>
   </div>
-  <div class="pages">
-    <div class="page on" id="pg-home"><div id="home-bd"><div class="ldr"><div class="spin"></div><div class="spin-t">LOADING...</div></div></div></div>
-    <div class="page" id="pg-sched"><div id="sched-bd"><div class="ldr"><div class="spin"></div></div></div></div>
-    <div class="page" id="pg-std">
-      <div class="pills" id="std-pills"></div>
-      <div id="std-bd"><div class="ldr"><div class="spin"></div></div></div>
-    </div>
-    <div class="page" id="pg-player">
-      <div class="pills" id="pl-pills"></div>
-      <div style="display:flex;gap:5px;margin-bottom:10px;">
-        <button class="pill on" onclick="swPt('scorers',this)">⚽ 득점</button>
-        <button class="pill" onclick="swPt('assists',this)">🎯 도움</button>
+
+  <!-- 메인 바디 -->
+  <div class="main-body">
+    <!-- PC 사이드바 -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">메뉴</div>
+        <div class="sidebar-item on" onclick="swP('home',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".5"/></svg>
+          <span class="si-label">라이브</span>
+        </div>
+        <div class="sidebar-item" onclick="swP('sched',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="si-label">일정</span>
+        </div>
+        <div class="sidebar-item" onclick="swP('std',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="14" width="4" height="7" rx="1" fill="currentColor" opacity=".5"/><rect x="10" y="9" width="4" height="12" rx="1" fill="currentColor" opacity=".75"/><rect x="17" y="4" width="4" height="17" rx="1" fill="currentColor"/></svg>
+          <span class="si-label">순위</span>
+        </div>
+        <div class="sidebar-item" onclick="swP('player',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="si-label">선수</span>
+        </div>
+        <div class="sidebar-item" onclick="swP('hub',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="si-label">허브 (뉴스)</span>
+        </div>
+        <div class="sidebar-item" onclick="swP('fan',this,'sb')">
+          <svg class="si-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.6 8.6L22 9.3L16.8 14L18.5 21.4L12 17.8L5.5 21.4L7.2 14L2 9.3L9.4 8.6L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span class="si-label">팬존</span>
+        </div>
       </div>
-      <div id="pl-bd"><div class="ldr"><div class="spin"></div></div></div>
     </div>
-    <div class="page" id="pg-fan"><div id="fan-bd"></div></div>
+
+    <!-- 페이지 영역 -->
+    <div class="pages">
+      <div class="page on" id="pg-home"><div id="home-bd"><div class="ldr"><div class="spin"></div><div class="spin-t">경기 불러오는 중...</div></div></div></div>
+      <div class="page" id="pg-sched"><div id="sched-bd"><div class="ldr"><div class="spin"></div></div></div></div>
+      <div class="page" id="pg-std">
+        <div class="pills" id="std-pills"></div>
+        <div id="std-bd"><div class="ldr"><div class="spin"></div></div></div>
+      </div>
+      <div class="page" id="pg-player">
+        <div class="pills" id="pl-pills"></div>
+        <div style="display:flex;gap:6px;margin-bottom:14px;">
+          <button class="pill on" onclick="swPt('scorers',this)">⚽ 득점</button>
+          <button class="pill" onclick="swPt('assists',this)">🎯 도움</button>
+        </div>
+        <div id="pl-bd"><div class="ldr"><div class="spin"></div></div></div>
+      </div>
+      <div class="page" id="pg-hub"><div id="hub-bd"><div class="ldr"><div class="spin"></div><div class="spin-t">뉴스 불러오는 중...</div></div></div></div>
+      <div class="page" id="pg-fan"><div id="fan-bd"></div></div>
+    </div>
+
+    <!-- PC 우측 패널: 오늘의 라이브 요약 -->
+    <div class="right-panel" id="right-panel">
+      <div class="sec" style="margin-top:0;"><span class="stl" style="font-size:14px;">오늘 경기</span></div>
+      <div id="right-live"><div class="ldr" style="padding:24px;"><div class="spin"></div></div></div>
+    </div>
   </div>
+
+  <!-- 모바일 하단 네비 -->
   <div class="bnav">
-    <div class="nbi on" onclick="swP('home',this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <button class="nbi on" onclick="swP('home',this,'mb')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span class="nbi-lb">홈</span>
-    </div>
-    <div class="nbi" onclick="swP('sched',this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="4" width="18" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/>
-        <path d="M3 9H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M8 2V6M16 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        <circle cx="8" cy="14" r="1.2" fill="currentColor"/>
-        <circle cx="12" cy="14" r="1.2" fill="currentColor"/>
-        <circle cx="16" cy="14" r="1.2" fill="currentColor"/>
-      </svg>
+    </button>
+    <button class="nbi" onclick="swP('sched',this,'mb')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 9H21M8 2V6M16 2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="14" r="1.3" fill="currentColor"/><circle cx="12" cy="14" r="1.3" fill="currentColor"/><circle cx="16" cy="14" r="1.3" fill="currentColor"/></svg>
       <span class="nbi-lb">일정</span>
-    </div>
-    <div class="nbi" onclick="swP('std',this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="14" width="4" height="7" rx="1" fill="currentColor" opacity=".5"/>
-        <rect x="10" y="9" width="4" height="12" rx="1" fill="currentColor" opacity=".75"/>
-        <rect x="17" y="4" width="4" height="17" rx="1" fill="currentColor"/>
-      </svg>
+    </button>
+    <button class="nbi" onclick="swP('std',this,'mb')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="14" width="4" height="7" rx="1" fill="currentColor" opacity=".5"/><rect x="10" y="9" width="4" height="12" rx="1" fill="currentColor" opacity=".75"/><rect x="17" y="4" width="4" height="17" rx="1" fill="currentColor"/></svg>
       <span class="nbi-lb">순위</span>
-    </div>
-    <div class="nbi" onclick="swP('player',this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/>
-        <path d="M4 21C4 17 7.58 14 12 14C16.42 14 20 17 20 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-      <span class="nbi-lb">선수</span>
-    </div>
-    <div class="nbi" onclick="swP('fan',this)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L14.6 8.6L22 9.3L16.8 14L18.5 21.4L12 17.8L5.5 21.4L7.2 14L2 9.3L9.4 8.6L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      </svg>
+    </button>
+    <button class="nbi" onclick="swP('hub',this,'mb')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span class="nbi-lb">허브</span>
+    </button>
+    <button class="nbi" onclick="swP('fan',this,'mb')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.6 8.6L22 9.3L16.8 14L18.5 21.4L12 17.8L5.5 21.4L7.2 14L2 9.3L9.4 8.6L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       <span class="nbi-lb">팬존</span>
-    </div>
+    </button>
   </div>
 </div>
 
+<!-- 경기 상세 모달 -->
 <div class="modal" id="dtl-modal">
   <div class="modal-in">
     <div class="modal-hd">
@@ -1062,27 +870,11 @@ body {
 </div>
 
 <div id="gt"></div>
-<div id="lvup"><div class="lvup-em" id="lu-em">🏆</div><div class="lvup-txt" id="lu-txt">LEVEL UP!</div><div class="lvup-sub" id="lu-sub"></div></div>
+<div id="lvup"><div class="lvup-em" id="lu-em">🏆</div><div class="lvup-txt">LEVEL UP!</div><div class="lvup-sub" id="lu-sub"></div></div>
 
 <script>
-// ── CONFIG ───────────────────────────
-// Netlify Function 프록시
+// ── CONFIG ──────────────────────────
 const API = '/api/football';
-const cache = {};
-let MT = null;
-let fanData = JSON.parse(localStorage.getItem('pp_fan')||'{"checkins":[],"total":0}');
-let curStd='PL', curPLg='PL', curPt='scorers';
-const prevSc = {};
-
-const LGS = [
-  {code:'PL',name:'프리미어리그',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
-  {code:'PD',name:'라리가',flag:'🇪🇸'},
-  {code:'BL1',name:'분데스리가',flag:'🇩🇪'},
-  {code:'SA',name:'세리에A',flag:'🇮🇹'},
-  {code:'FL1',name:'리그앙',flag:'🇫🇷'},
-  {code:'CL',name:'UCL',flag:'🌍'},
-  {code:'UEL',name:'유로파',flag:'🌍'},
-];
 const LEVELS = [
   {min:0,max:4,em:'⚽',name:'축알못 입문자',lv:1},
   {min:5,max:9,em:'🍺',name:'라이트 팬',lv:2},
@@ -1092,376 +884,350 @@ const LEVELS = [
   {min:80,max:149,em:'🔥',name:'찐팬 인증',lv:6},
   {min:150,max:Infinity,em:'👑',name:'구단주급',lv:7},
 ];
+const LGS = [
+  {code:'PL',name:'프리미어리그',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
+  {code:'PD',name:'라리가',flag:'🇪🇸'},
+  {code:'BL1',name:'분데스리가',flag:'🇩🇪'},
+  {code:'SA',name:'세리에A',flag:'🇮🇹'},
+  {code:'FL1',name:'리그앙',flag:'🇫🇷'},
+  {code:'CL',name:'UCL',flag:'🌍'},
+  {code:'UEL',name:'유로파',flag:'🌍'},
+];
 
-// 골 효과음 (Web Audio API)
-function playGoalSound() {
-  try {
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    // 환호성 느낌 - 짧은 상승 음계
-    const notes = [261, 329, 392, 523, 659, 784];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.value = freq;
-      osc.type = 'sine';
-      const t = ctx.currentTime + i * 0.08;
-      gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.3, t + 0.04);
-      gain.gain.linearRampToValueAtTime(0, t + 0.15);
-      osc.start(t); osc.stop(t + 0.15);
-    });
-    // 박수 느낌 노이즈
-    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for(let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.exp(-i/ctx.sampleRate*12);
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    const g2 = ctx.createGain(); g2.gain.value = 0.25;
-    src.connect(g2); g2.connect(ctx.destination);
-    src.start(ctx.currentTime + 0.1);
-  } catch(e) {}
-}
+// 유명 이적 전문가/기자 RSS/Twitter 피드 (공개 RSS)
+const JOURNALISTS = [
+  {name:'Fabrizio Romano',handle:'FabrizioRomano',em:'🎙️',topic:'이적'},
+  {name:'David Ornstein',handle:'David_Ornstein',em:'📰',topic:'아스날/잉글랜드'},
+  {name:'Romano - Here We Go',handle:'',em:'✅',topic:'공식 이적'},
+  {name:'Sky Sports News',handle:'',em:'📺',topic:'영국 축구'},
+];
 
-// KST 유틸
+let MT=null, fanData=JSON.parse(localStorage.getItem('pp_fan')||'{"checkins":[],"total":0}');
+let curStd='PL', curPLg='PL', curPt='scorers', curHub='transfer';
+const cache={}, prevSc={};
+
+// ── UTILS ────────────────────────────
 function kn(){return new Date(Date.now()+9*3600000);}
 function ds(d){return`${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;}
 function kt(u){const k=new Date(new Date(u).getTime()+9*3600000);return`${String(k.getUTCHours()).padStart(2,'0')}:${String(k.getUTCMinutes()).padStart(2,'0')}`;}
 function kd(u){const k=new Date(new Date(u).getTime()+9*3600000);return`${k.getUTCMonth()+1}/${k.getUTCDate()}(${['일','월','화','수','목','금','토'][k.getUTCDay()]})`;}
 function kds(u){const k=new Date(new Date(u).getTime()+9*3600000);return`${k.getUTCFullYear()}-${String(k.getUTCMonth()+1).padStart(2,'0')}-${String(k.getUTCDate()).padStart(2,'0')}`;}
+function timeAgo(d){const s=Math.floor((Date.now()-new Date(d))/1000);if(s<60)return'방금';if(s<3600)return Math.floor(s/60)+'분 전';if(s<86400)return Math.floor(s/3600)+'시간 전';return Math.floor(s/86400)+'일 전';}
 
-// API (Cloudflare Worker)
-async function fd(path) {
-  if(cache[path] && Date.now()-cache[path].ts < 90000) return cache[path].data;
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 8000); // 8초 타임아웃
-  try {
-    const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`, {
-      signal: ctrl.signal
-    });
+function ha(h,a){if(!h||h.length<4)return`rgba(34,197,94,${a})`;const r=parseInt(h.slice(1,3),16)||34,g=parseInt(h.slice(3,5),16)||197,b=parseInt(h.slice(5,7),16)||94;return`rgba(${r},${g},${b},${a})`;}
+function ods(m){const hi=m.homeTeam?.id||0,ai=m.awayTeam?.id||0,mi=m.id||0;const s=(x,n)=>{const v=Math.sin(x+n)*43758.5453;return v-Math.floor(v);};const seed=hi*31+ai*17+mi;let hw=1.7+s(seed,1)*.4,aw=1.7+s(seed,2)*.4,dr=3.1+s(seed,3)*.6;hw=Math.max(1.2,Math.min(9,hw));aw=Math.max(1.2,Math.min(9,aw));dr=Math.max(2.8,Math.min(4.6,dr));const sum=1/hw+1/dr+1/aw,mg=1.08;return{hw:(hw/sum*mg).toFixed(2),dr:(dr/sum*mg).toFixed(2),aw:(aw/sum*mg).toFixed(2)};}
+
+// ── API ──────────────────────────────
+async function fd(path){
+  if(cache[path]&&Date.now()-cache[path].ts<90000)return cache[path].data;
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(),10000);
+  try{
+    const r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:ctrl.signal});
     clearTimeout(timer);
-    if(!r.ok) { console.warn('API', r.status, path); return null; }
-    const d = await r.json();
-    if(d.error) { console.warn('API err:', d.error); return null; }
-    cache[path] = { data: d, ts: Date.now() };
+    if(!r.ok)return null;
+    const d=await r.json();
+    if(d.error)return null;
+    cache[path]={data:d,ts:Date.now()};
     return d;
-  } catch(e) {
-    clearTimeout(timer);
-    if(e.name !== 'AbortError') console.error('fd:', path, e.message);
-    return null;
-  }
+  }catch(e){clearTimeout(timer);return null;}
 }
 
-// 배당률 시드 계산
-function ods(m) {
-  const hi=m.homeTeam?.id||0, ai=m.awayTeam?.id||0, mi=m.id||0;
-  const s=(x,n)=>{const v=Math.sin(x+n)*43758.5453;return v-Math.floor(v);};
-  const seed=hi*31+ai*17+mi;
-  let hw=1.7+s(seed,1)*.4, aw=1.7+s(seed,2)*.4, dr=3.1+s(seed,3)*.6;
-  hw=Math.max(1.2,Math.min(9,hw)); aw=Math.max(1.2,Math.min(9,aw)); dr=Math.max(2.8,Math.min(4.6,dr));
-  const sum=1/hw+1/dr+1/aw, mg=1.08;
-  return {hw:(hw/sum*mg).toFixed(2), dr:(dr/sum*mg).toFixed(2), aw:(aw/sum*mg).toFixed(2)};
-}
-
-// 테마 적용
-function ha(h,a){
-  if(!h||h==='#000000') return `rgba(255,255,255,${a})`;
-  const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
-  return`rgba(${r},${g},${b},${a})`;
-}
-function applyTheme(c) {
-  const col = c==='#000000'?'#888888':c==='#FFFFFF'?'#cccccc':c;
-  document.documentElement.style.setProperty('--p', col);
-  document.documentElement.style.setProperty('--pg', ha(col,.15));
-  document.documentElement.style.setProperty('--ps', ha(col,.08));
-  document.documentElement.style.setProperty('--b', ha(col,.12));
-  document.documentElement.style.setProperty('--b2', ha(col,.25));
+// ── THEME ────────────────────────────
+function applyTheme(c){
+  const col=(!c||c==='#000000')?'#22c55e':c==='#FFFFFF'?'#94a3b8':c;
+  document.documentElement.style.setProperty('--p',col);
+  document.documentElement.style.setProperty('--p2',col);
+  document.documentElement.style.setProperty('--pg',ha(col,.15));
+  document.documentElement.style.setProperty('--ps',ha(col,.08));
+  document.documentElement.style.setProperty('--b2',ha(col,.3));
 }
 
 // ── ONBOARDING ───────────────────────
-let obSel = null;
-function op(el, id, lg, color, name) {
+let obSel=null;
+function op(el,id,lg,color,name){
   document.querySelectorAll('.ob-team').forEach(t=>t.classList.remove('sel'));
   el.classList.add('sel');
-  obSel = {id, league:lg, name, color, crest:`https://crests.football-data.org/${id}.png`};
-  const btn = document.getElementById('ob-btn');
-  btn.classList.add('ready'); btn.disabled = false;
-  btn.textContent = `${name} 팀으로 시작 →`;
+  obSel={id,league:lg,name,color,crest:`https://crests.football-data.org/${id}.png`};
+  const btn=document.getElementById('ob-btn');
+  btn.classList.add('ready');btn.disabled=false;
+  btn.textContent=`${name} 팬으로 시작하기 →`;
   applyTheme(color);
 }
-function startApp() {
-  if(!obSel) return;
-  MT = obSel;
-  localStorage.setItem('pp_team', JSON.stringify(MT));
-  init();
+function startApp(){
+  if(!obSel)return;
+  MT=obSel;
+  localStorage.setItem('pp_team',JSON.stringify(MT));
+  boot();
 }
-function init() {
-  document.getElementById('ob').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  document.getElementById('hdr-cr').src = MT.crest;
+function boot(){
+  document.getElementById('ob').style.display='none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('hdr-cr').src=MT.crest;
   applyTheme(MT.color);
   buildPills();
   loadHome();
   loadSched();
+  loadHub();
   updateFan();
-  setInterval(()=>{ if(document.getElementById('pg-home').classList.contains('on')) loadHome(); }, 30000);
+  // PC 우측 패널
+  setInterval(()=>{
+    if(document.getElementById('pg-home').classList.contains('on')) loadHome();
+    loadRightPanel();
+  },30000);
+  loadRightPanel();
 }
 
-// ── TABS ─────────────────────────────
-function swP(name, el) {
+// ── TAB SWITCH ───────────────────────
+function swP(name,el,src){
+  // 모든 페이지/버튼 비활성화
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.nbi').forEach(b=>b.classList.remove('on'));
-  document.getElementById('pg-'+name).classList.add('on');
-  if(el) el.classList.add('on');
-  if(name==='home') loadHome();
-  if(name==='sched') loadSched();
-  if(name==='std') loadStd(curStd);
-  if(name==='player') loadPlayers(curPLg, curPt);
-  if(name==='fan') updateFan();
+  // PC 탭, 사이드바, 모바일 네비 모두 동기화
+  document.querySelectorAll('.hdr-tab,.sidebar-item,.nbi').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+name)?.classList.add('on');
+  // 해당 nav의 버튼만 on
+  if(el)el.classList.add('on');
+  // 다른 nav도 동기화
+  syncNavs(name);
+  // 데이터 로드
+  if(name==='home')loadHome();
+  else if(name==='sched')loadSched();
+  else if(name==='std'){ensurePills();loadStd(curStd);}
+  else if(name==='player'){ensurePills();loadPlayers(curPLg,curPt);}
+  else if(name==='hub')loadHub();
+  else if(name==='fan')updateFan();
 }
-function buildPills() {
-  document.getElementById('std-pills').innerHTML = LGS.map((l,i)=>`<button class="pill ${i===0?'on':''}" onclick="swStd('${l.code}',this)">${l.flag} ${l.name}</button>`).join('');
-  document.getElementById('pl-pills').innerHTML = LGS.slice(0,5).map((l,i)=>`<button class="pill ${i===0?'on':''}" onclick="swPLg('${l.code}',this)">${l.flag} ${l.name}</button>`).join('');
+function syncNavs(name){
+  const map={home:0,sched:1,std:2,player:3,hub:4,fan:5};
+  const tabs=document.querySelectorAll('.hdr-tab');
+  const sbs=document.querySelectorAll('.sidebar-item');
+  const mbs=document.querySelectorAll('.nbi');
+  // PC탭: home,sched,std,player,hub,fan
+  const pcIdx={home:0,sched:1,std:2,player:3,hub:4,fan:5};
+  if(tabs[pcIdx[name]])tabs[pcIdx[name]].classList.add('on');
+  // 사이드바: home,sched,std,player,hub,fan
+  if(sbs[pcIdx[name]])sbs[pcIdx[name]].classList.add('on');
+  // 모바일: home,sched,std,hub,fan (선수 없음)
+  const mbIdx={home:0,sched:1,std:2,hub:3,fan:4};
+  if(mbIdx[name]!==undefined&&mbs[mbIdx[name]])mbs[mbIdx[name]].classList.add('on');
 }
+function buildPills(){
+  const sp=document.getElementById('std-pills');
+  const pp=document.getElementById('pl-pills');
+  if(sp)sp.innerHTML=LGS.map((l,i)=>`<button class="pill ${i===0?'on':''}" onclick="swStd('${l.code}',this)">${l.flag} ${l.name}</button>`).join('');
+  if(pp)pp.innerHTML=LGS.slice(0,5).map((l,i)=>`<button class="pill ${i===0?'on':''}" onclick="swPLg('${l.code}',this)">${l.flag} ${l.name}</button>`).join('');
+}
+function ensurePills(){const sp=document.getElementById('std-pills');if(sp&&!sp.children.length)buildPills();}
 
 // ── HOME ─────────────────────────────
-async function loadHome() {
-  const c = document.getElementById('home-bd');
-  c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">LIVE SCAN...</div></div>`;
-  const today = ds(kn());
-  const utcF = new Date(new Date(today+'T00:00:00+09:00').getTime()-9*3600000);
-  const utcT = new Date(utcF.getTime()+86400000-1);
-  const uf = utcF.toISOString().slice(0,10), ut = utcT.toISOString().slice(0,10);
-  const res = (await Promise.allSettled(LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)))).map(r=>r.status==='fulfilled'?r.value:null);
-  const all = [];
-  res.forEach(d=>{ if(d?.matches) all.push(...d.matches); });
-  const live = all.filter(m=>['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME','PENALTY_SHOOTOUT'].includes(m.status));
-  const sched = all.filter(m=>['SCHEDULED','TIMED'].includes(m.status));
-  const fin = all.filter(m=>['FINISHED','AWARDED'].includes(m.status));
-  document.getElementById('lpill').classList.toggle('show', live.length>0);
+async function loadHome(){
+  const c=document.getElementById('home-bd');
+  c.innerHTML=`<div class="ldr"><div class="spin"></div><div class="spin-t">경기 불러오는 중...</div></div>`;
+  const today=ds(kn());
+  const utcF=new Date(new Date(today+'T00:00:00+09:00').getTime()-9*3600000);
+  const utcT=new Date(utcF.getTime()+86400000-1);
+  const uf=new Date(utcF.getTime()-86400000).toISOString().slice(0,10);
+  const ut=utcT.toISOString().slice(0,10);
+  const res=await Promise.allSettled(LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
+  const all=[];
+  res.forEach(r=>{if(r.status==='fulfilled'&&r.value?.matches)all.push(...r.value.matches);});
+  const live=all.filter(m=>['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME','PENALTY_SHOOTOUT'].includes(m.status));
+  const sched=all.filter(m=>['SCHEDULED','TIMED'].includes(m.status)&&kds(m.utcDate)===today);
+  const fin=all.filter(m=>['FINISHED','AWARDED'].includes(m.status)&&kds(m.utcDate)===today);
+  document.getElementById('lpill').classList.toggle('show',live.length>0);
   live.forEach(m=>chkGoal(m));
-  let html = '';
-  if(live.length) {
-    html += `<div class="sec"><span class="stl">● LIVE · ${live.length}경기</span></div>`;
-    live.forEach(m=>{ html += mkMC(m,'live'); });
-  }
-  if(sched.length) {
-    html += `<div class="sec" style="margin-top:5px;"><span class="stl">오늘 예정 · ${sched.length}</span><span class="sbd">${today} KST</span></div>`;
-    sched.slice(0,10).forEach(m=>{ html += mkMC(m,'sch'); });
-  }
-  if(fin.length) {
-    html += `<div class="sec" style="margin-top:5px;"><span class="stl">종료</span></div>`;
-    fin.slice(0,8).forEach(m=>{ html += mkMC(m,'fin'); });
-  }
-  c.innerHTML = html || (WORKER_URL?`<div class="empty">📅 오늘 경기 없음<br><span style="font-size:11px;color:var(--t3);">다른 날짜를 확인해보세요</span></div>`:`<div class="empty">⚠️ Worker URL 미설정<br><span style="font-size:12px;color:var(--red);">설정을 확인해주세요</span></div>`);
+  let html='';
+  if(live.length){html+=`<div class="sec"><span class="stl">● LIVE · ${live.length}경기</span></div>`;live.forEach(m=>{html+=mkMC(m,'live');});}
+  if(sched.length){html+=`<div class="sec" style="margin-top:4px;"><span class="stl">오늘 예정 · ${sched.length}</span><span class="sbd">${today}</span></div>`;sched.slice(0,8).forEach(m=>{html+=mkMC(m,'sch');});}
+  if(fin.length){html+=`<div class="sec" style="margin-top:4px;"><span class="stl">종료</span></div>`;fin.slice(0,6).forEach(m=>{html+=mkMC(m,'fin');});}
+  c.innerHTML=html||`<div class="empty">📅 오늘 경기 없음</div>`;
 }
 
-function mkMC(m, type) {
-  const h=m.homeTeam, a=m.awayTeam;
+function mkMC(m,type){
+  const h=m.homeTeam,a=m.awayTeam;
   const hg=m.score?.fullTime?.home??m.score?.halfTime?.home;
   const ag=m.score?.fullTime?.away??m.score?.halfTime?.away;
-  const isL=type==='live', isF=type==='fin';
+  const isL=type==='live',isF=type==='fin';
   const smap={IN_PLAY:'진행중',PAUSED:'HT',HALFTIME:'HT',EXTRA_TIME:'연장',PENALTY_SHOOTOUT:'PK',FINISHED:'FT',AWARDED:'FT'};
-  const sl = smap[m.status]||kt(m.utcDate);
-  let ml = sl;
-  if(m.status==='IN_PLAY'&&m.utcDate) {
-    const df=Math.floor((Date.now()-new Date(m.utcDate).getTime())/60000);
-    if(df>0&&df<=90) ml=`${Math.min(df,90)}'`; else if(df>90) ml='90+';
-  }
-  const mom = [...Array(6)].map((_,i)=>{
-    const seed=(h?.id||0)*31+(a?.id||0)*17+(m.id||0);
-    const v=Math.sin(seed+i)*43758.5453; const rv=v-Math.floor(v);
-    return rv<.32?'a':rv>.68?'h':'n';
-  });
-  const od = ods(m);
-  const isMe = MT&&(h?.id===MT.id||a?.id===MT.id);
-  // score styling via CSS class
-  const hn = (h?.shortName||h?.name||'').replace(/['"]/g,'');
-  const an = (a?.shortName||a?.name||'').replace(/['"]/g,'');
-  const goals = m.goals||[];
-  const hG = goals.filter(g=>g.team?.id===h?.id);
-  const aG = goals.filter(g=>g.team?.id===a?.id);
-  const gHtml = (isL||isF)&&goals.length?`<div class="mc-goals">
-    <div class="mc-gside">${hG.map(g=>`<span class="mc-gi">⚽ <span class="gmin">${g.minute||''}'</span> ${(g.scorer?.name||g.player?.name||'').split(' ').pop()}</span>`).join('')}</div>
-    <div class="mc-gside aw">${aG.map(g=>`<span class="mc-gi">${(g.scorer?.name||g.player?.name||'').split(' ').pop()} <span class="gmin">${g.minute||''}'</span> ⚽</span>`).join('')}</div>
-  </div>`:'';
-  return `<div class="mc ${isL?'live':''} ${isMe?'mymatch':''}" onclick="opnDtl(${m.id},'${hn}','${an}')">
-    <div class="mc-hd">
-      <span class="mc-lg">${m.competition?.name||''} ${m.matchday?'· '+m.matchday+'R':''}</span>
-      <div class="mc-st ${type}">${isL?'<div class="mc-dot"></div>':''}${isL?ml:sl}</div>
-    </div>
-    <div class="mc-body">
-      <div class="mc-row">
-        <div class="mc-tm"><img class="mc-cr" src="${h?.crest||''}" onerror="this.style.opacity='.2'" alt=""><span class="mc-nm">${h?.shortName||h?.name||''}</span></div>
-        <div class="mc-sc ${isL?'live-score':''}">
-          <span class="mc-sn">${hg??'–'}</span>
-          <span class="mc-sep">:</span>
-          <span class="mc-sn">${ag??'–'}</span>
-        </div>
-        <div class="mc-tm aw"><img class="mc-cr" src="${a?.crest||''}" onerror="this.style.opacity='.2'" alt=""><span class="mc-nm">${a?.shortName||a?.name||''}</span></div>
-      </div>
-    </div>
+  let sl=smap[m.status]||kt(m.utcDate);
+  if(m.status==='IN_PLAY'&&m.utcDate){const df=Math.floor((Date.now()-new Date(m.utcDate).getTime())/60000);if(df>0&&df<=90)sl=`${Math.min(df,90)}'`;else if(df>90)sl='90+';}
+  const mom=[...Array(6)].map((_,i)=>{const s=(h?.id||0)*31+(a?.id||0)*17+(m.id||0);const v=Math.sin(s+i)*43758.5453;const rv=v-Math.floor(v);return rv<.32?'a':rv>.68?'h':'n';});
+  const od=ods(m);
+  const isMe=MT&&(h?.id===MT.id||a?.id===MT.id);
+  const hn=(h?.shortName||h?.name||'').replace(/['"]/g,'');
+  const an=(a?.shortName||a?.name||'').replace(/['"]/g,'');
+  const goals=m.goals||[];
+  const hG=goals.filter(g=>g.team?.id===h?.id);
+  const aG=goals.filter(g=>g.team?.id===a?.id);
+  const gHtml=(isL||isF)&&goals.length?`<div class="mc-goals"><div class="mc-gside">${hG.map(g=>`<span class="mc-gi">⚽ <span class="gmin">${g.minute||''}'</span> ${(g.scorer?.name||g.player?.name||'').split(' ').pop()}</span>`).join('')}</div><div class="mc-gside aw">${aG.map(g=>{const n=(g.scorer?.name||g.player?.name||'').split(' ').pop();return`<span class="mc-gi">${n} <span class="gmin">${g.minute||''}'</span> ⚽</span>`;}).join('')}</div></div>`:'';
+  return`<div class="mc ${isL?'live':''} ${isMe?'mymatch':''}" onclick="opnDtl(${m.id},'${hn}','${an}')">
+    <div class="mc-hd"><span class="mc-lg">${m.competition?.name||''} ${m.matchday?'· '+m.matchday+'R':''}</span><div class="mc-st ${type}">${isL?'<div class="mc-dot"></div>':''}${sl}</div></div>
+    <div class="mc-body"><div class="mc-row">
+      <div class="mc-tm"><img class="mc-cr" src="${h?.crest||''}" onerror="this.style.opacity='.2'" alt=""><span class="mc-nm">${h?.shortName||h?.name||''}</span></div>
+      <div class="mc-sc ${isL?'live-s':''}"><span class="mc-n">${hg??'–'}</span><span class="mc-sep">:</span><span class="mc-n">${ag??'–'}</span></div>
+      <div class="mc-tm aw"><img class="mc-cr" src="${a?.crest||''}" onerror="this.style.opacity='.2'" alt=""><span class="mc-nm">${a?.shortName||a?.name||''}</span></div>
+    </div></div>
     ${gHtml}
-    ${(isL||isF)?`<div class="mom"><div class="mom-lbl"><span>${h?.shortName||''}</span><span>MOMENTUM</span><span>${a?.shortName||''}</span></div><div class="mom-bar">${mom.map(s=>`<div class="ms ${s}"></div>`).join('')}</div></div>`:''}
+    ${(isL||isF)?`<div class="mom"><div class="mom-lbl"><span>${h?.shortName||''}</span><span>모멘텀</span><span>${a?.shortName||''}</span></div><div class="mom-bar">${mom.map(s=>`<div class="ms ${s}"></div>`).join('')}</div></div>`:''}
     ${!isF?`<div class="odds-row"><div class="obtn"><div class="olbl">${hn||'홈'} 승</div><div class="oval ${parseFloat(od.hw)<2.5?'fav':''}">${od.hw}</div></div><div class="obtn"><div class="olbl">무승부</div><div class="oval">${od.dr}</div></div><div class="obtn"><div class="olbl">${an||'원정'} 승</div><div class="oval ${parseFloat(od.aw)<2.5?'fav':''}">${od.aw}</div></div></div>`:''}
   </div>`;
 }
 
-// ── 골 감지 + 소리 ───────────────────
-function chkGoal(m) {
-  const id = m.id;
-  const hg = m.score?.fullTime?.home??m.score?.halfTime?.home??0;
-  const ag = m.score?.fullTime?.away??m.score?.halfTime?.away??0;
-  const k = `${hg}:${ag}`;
-  if(prevSc[id] && prevSc[id]!==k) {
-    const p = prevSc[id].split(':');
-    const isH = parseInt(hg)>parseInt(p[0]);
-    const team = isH?(m.homeTeam?.shortName||m.homeTeam?.name):(m.awayTeam?.shortName||m.awayTeam?.name);
-    const goals = m.goals||[];
-    const last = goals[goals.length-1];
-    const scorer = last?.scorer?.name||last?.player?.name||'';
-    const min = m.minute?m.minute+"'":'';
-    showGoal(team, scorer, min);
-    playGoalSound();
-  }
-  prevSc[id] = k;
+// 우측 패널 (PC)
+async function loadRightPanel(){
+  const c=document.getElementById('right-live');
+  if(!c)return;
+  const today=ds(kn());
+  const utcF=new Date(new Date(today+'T00:00:00+09:00').getTime()-9*3600000);
+  const ut=new Date(utcF.getTime()+86400000-1).toISOString().slice(0,10);
+  const uf=utcF.toISOString().slice(0,10);
+  const res=await Promise.allSettled(LGS.slice(0,5).map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
+  const all=[];res.forEach(r=>{if(r.status==='fulfilled'&&r.value?.matches)all.push(...r.value.matches);});
+  if(!all.length){c.innerHTML=`<div class="empty" style="padding:24px;">오늘 경기 없음</div>`;return;}
+  c.innerHTML=all.slice(0,10).map(m=>{
+    const h=m.homeTeam,a=m.awayTeam;
+    const hg=m.score?.fullTime?.home??m.score?.halfTime?.home;
+    const ag=m.score?.fullTime?.away??m.score?.halfTime?.away;
+    const isL=['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME'].includes(m.status);
+    const fin=['FINISHED','AWARDED'].includes(m.status);
+    return`<div style="padding:10px 0;border-bottom:1px solid var(--b);cursor:pointer;" onclick="opnDtl(${m.id},'${(h?.shortName||'').replace(/'/g,'')}','${(a?.shortName||'').replace(/'/g,'')}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+        <span style="font-size:10px;color:var(--t3);">${m.competition?.name||''}</span>
+        <span style="font-size:11px;font-weight:700;color:${isL?'var(--red)':fin?'var(--t3)':'var(--p)'};">${isL?'LIVE':fin?'FT':kt(m.utcDate)}</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+          <img src="${h?.crest||''}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.opacity='.2'">
+          <span style="font-size:13px;font-weight:600;color:var(--t);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${h?.shortName||h?.name||''}</span>
+        </div>
+        <span style="font-family:'Orbitron';font-size:14px;font-weight:700;color:var(--t);flex-shrink:0;">${hg??''}${hg!=null?':':'vs'}${ag??''}</span>
+        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;flex-direction:row-reverse;">
+          <img src="${a?.crest||''}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.opacity='.2'">
+          <span style="font-size:13px;font-weight:600;color:var(--t);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;">${a?.shortName||a?.name||''}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
-function showGoal(team, scorer, min) {
-  const el = document.getElementById('gt');
-  el.style.display = 'block';
-  el.innerHTML = `<div class="gt-in"><span class="gt-ball">⚽</span><span class="gt-word">GOAL!</span><span class="gt-scorer">${team}</span>${scorer?`<span class="gt-scorer" style="font-size:13px;color:var(--t2);">${scorer}</span>`:''}${min?`<span class="gt-min">${min}</span>`:''}</div>`;
-  setTimeout(()=>el.style.display='none', 3600);
+
+// 골 감지
+function chkGoal(m){
+  const id=m.id,hg=m.score?.fullTime?.home??m.score?.halfTime?.home??0,ag=m.score?.fullTime?.away??m.score?.halfTime?.away??0;
+  const k=`${hg}:${ag}`;
+  if(prevSc[id]&&prevSc[id]!==k){
+    const p=prevSc[id].split(':');
+    const isH=parseInt(hg)>parseInt(p[0]);
+    const team=isH?(m.homeTeam?.shortName||m.homeTeam?.name):(m.awayTeam?.shortName||m.awayTeam?.name);
+    const last=(m.goals||[]).slice(-1)[0];
+    showGoal(team,last?.scorer?.name||last?.player?.name||'',m.minute?m.minute+"'":'');
+    playGoalSfx();
+  }
+  prevSc[id]=k;
+}
+function showGoal(team,scorer,min){
+  const el=document.getElementById('gt');el.style.display='block';
+  el.innerHTML=`<div class="gt-in"><span class="gt-ball">⚽</span><span class="gt-word">GOAL!</span><span class="gt-scorer">${team}</span>${scorer?`<span class="gt-scorer" style="font-size:14px;color:var(--t2);">${scorer}</span>`:''}${min?`<span style="font-size:12px;color:var(--t3);display:block;">${min}</span>`:''}</div>`;
+  setTimeout(()=>el.style.display='none',3600);
+}
+function playGoalSfx(){
+  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[261,329,392,523,659].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;const t=ctx.currentTime+i*.08;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.3,t+.05);g.gain.linearRampToValueAtTime(0,t+.18);o.start(t);o.stop(t+.2);});}catch(e){}
 }
 
 // ── MATCH DETAIL ─────────────────────
-async function opnDtl(id, hn, an) {
-  document.getElementById('dtl-ttl').textContent = `${hn} vs ${an}`;
-  document.getElementById('dtl-body').innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
+async function opnDtl(id,hn,an){
+  document.getElementById('dtl-ttl').textContent=`${hn} vs ${an}`;
+  document.getElementById('dtl-body').innerHTML=`<div class="ldr"><div class="spin"></div></div>`;
   document.getElementById('dtl-modal').classList.add('show');
-  const m = await fd(`/matches/${id}`);
-  if(!m) { document.getElementById('dtl-body').innerHTML=`<div class="empty">데이터 없음</div>`; return; }
-  const h=m.homeTeam, a=m.awayTeam;
+  const m=await fd(`/matches/${id}`);
+  if(!m){document.getElementById('dtl-body').innerHTML=`<div class="empty">데이터 없음</div>`;return;}
+  const h=m.homeTeam,a=m.awayTeam;
   const hg=m.score?.fullTime?.home??m.score?.halfTime?.home??'–';
   const ag=m.score?.fullTime?.away??m.score?.halfTime?.away??'–';
   const od=ods(m);
-  const h2hD = await fd(`/teams/${h?.id}/matches?status=FINISHED&limit=10`);
-  const h2h = (h2hD?.matches||[]).filter(x=>(x.homeTeam?.id===h?.id&&x.awayTeam?.id===a?.id)||(x.homeTeam?.id===a?.id&&x.awayTeam?.id===h?.id)).slice(0,5);
-  const goals = m.goals||[];
-  const hG = goals.filter(g=>g.team?.id===h?.id);
-  const aG = goals.filter(g=>g.team?.id===a?.id);
-  document.getElementById('dtl-body').innerHTML = `
-    <div style="text-align:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:13px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="text-align:center;flex:1;"><img src="${h?.crest||''}" style="width:40px;height:40px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:11px;color:var(--t);">${h?.name||''}</span></div>
-        <div style="font-family:'Orbitron';font-size:32px;font-weight:900;color:#fff;letter-spacing:-2px;">${hg}:${ag}</div>
-        <div style="text-align:center;flex:1;"><img src="${a?.crest||''}" style="width:40px;height:40px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:11px;color:var(--t);">${a?.name||''}</span></div>
+  const h2dD=await fd(`/teams/${h?.id}/matches?status=FINISHED&limit=10`);
+  const h2h=(h2dD?.matches||[]).filter(x=>(x.homeTeam?.id===h?.id&&x.awayTeam?.id===a?.id)||(x.homeTeam?.id===a?.id&&x.awayTeam?.id===h?.id)).slice(0,5);
+  document.getElementById('dtl-body').innerHTML=`
+    <div style="text-align:center;padding:16px 0;border-bottom:1px solid var(--b);margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="text-align:center;flex:1;"><img src="${h?.crest||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);">${h?.name||''}</span></div>
+        <div style="font-family:'Orbitron';font-size:34px;font-weight:900;color:var(--t);">${hg}:${ag}</div>
+        <div style="text-align:center;flex:1;"><img src="${a?.crest||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);">${a?.name||''}</span></div>
       </div>
-      ${(hG.length||aG.length)?`<div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid rgba(255,255,255,.05);">
-        <div>${hG.map(g=>`<div style="font-size:10px;color:var(--t2);">⚽ ${(g.scorer?.name||g.player?.name||'').split(' ').pop()} ${g.minute||''}'</div>`).join('')}</div>
-        <div style="text-align:right">${aG.map(g=>{const sn=(g.scorer?.name||g.player?.name||'').split(' ').pop();const mn=g.minute||'';return`<div style="font-size:10px;color:var(--t2);">${sn} ${mn}' ⚽</div>`;}).join('')}</div>
-      </div>`:''}
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+        ${m.utcDate?`<span style="font-size:11px;background:var(--bg2);border:1px solid var(--b);padding:3px 10px;border-radius:20px;color:var(--t2);">📅 ${kd(m.utcDate)} ${kt(m.utcDate)} KST</span>`:''}
+        ${m.venue?`<span style="font-size:11px;background:var(--bg2);border:1px solid var(--b);padding:3px 10px;border-radius:20px;color:var(--t2);">🏟️ ${m.venue}</span>`:''}
+        ${m.referees?.[0]?`<span style="font-size:11px;background:var(--bg2);border:1px solid var(--b);padding:3px 10px;border-radius:20px;color:var(--t2);">👔 ${m.referees[0].name}</span>`:''}
+      </div>
     </div>
-    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:13px;">
-      ${m.utcDate?`<span style="font-size:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);padding:3px 8px;border-radius:20px;color:var(--t2);">📅 ${kd(m.utcDate)} ${kt(m.utcDate)} KST</span>`:''}
-      ${m.venue?`<span style="font-size:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);padding:3px 8px;border-radius:20px;color:var(--t2);">🏟️ ${m.venue}</span>`:''}
-      ${m.referees?.[0]?`<span style="font-size:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);padding:3px 8px;border-radius:20px;color:var(--t2);">👔 ${m.referees[0].name}</span>`:''}
-    </div>
-    <div style="margin-bottom:13px;">
-      <div style="font-family:'Orbitron';font-size:8px;color:var(--p);letter-spacing:1.5px;margin-bottom:7px;">📊 배당률 (추정)</div>
-      <div style="display:flex;gap:5px;">
+    <div style="margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:var(--t);margin-bottom:10px;">📊 배당률</div>
+      <div style="display:flex;gap:6px;">
         <div class="obtn"><div class="olbl">${hn} 승</div><div class="oval ${parseFloat(od.hw)<2.5?'fav':''}">${od.hw}</div></div>
         <div class="obtn"><div class="olbl">무승부</div><div class="oval">${od.dr}</div></div>
         <div class="obtn"><div class="olbl">${an} 승</div><div class="oval ${parseFloat(od.aw)<2.5?'fav':''}">${od.aw}</div></div>
       </div>
     </div>
-    <div>
-      <div style="font-family:'Orbitron';font-size:8px;color:var(--p);letter-spacing:1.5px;margin-bottom:7px;">⚔️ 최근 상대전적</div>
-      ${h2h.length?h2h.map(x=>{
-        const xhg=x.score?.fullTime?.home??'-', xag=x.score?.fullTime?.away??'-';
-        const isH=x.homeTeam?.id===h?.id;
-        const my=isH?xhg:xag, opp=isH?xag:xhg;
-        const res=my>opp?'W':my<opp?'L':'D';
-        const rc=res==='W'?'var(--p)':res==='L'?'var(--red)':'var(--amber)';
-        return`<div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);">
-          <div style="width:18px;height:18px;border-radius:50%;background:${rc};display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:8px;font-weight:700;color:#fff;flex-shrink:0;">${res}</div>
-          <span style="font-size:9px;color:var(--t3);width:46px;flex-shrink:0;">${kd(x.utcDate)}</span>
-          <span style="font-size:11px;color:var(--t2);flex:1;">${x.homeTeam?.shortName||x.homeTeam?.name} <b style="color:#fff;font-family:'Orbitron';font-size:11px;">${xhg}:${xag}</b> ${x.awayTeam?.shortName||x.awayTeam?.name}</span>
-        </div>`;
-      }).join(''):`<div style="text-align:center;color:var(--t3);font-size:11px;padding:14px 0;">데이터 없음</div>`}
+    <div><div style="font-size:12px;font-weight:700;color:var(--t);margin-bottom:10px;">⚔️ 최근 상대전적</div>
+    ${h2h.length?h2h.map(x=>{const xhg=x.score?.fullTime?.home??'-',xag=x.score?.fullTime?.away??'-';const isH=x.homeTeam?.id===h?.id;const my=isH?xhg:xag,opp=isH?xag:xhg;const res=my>opp?'W':my<opp?'L':'D';const rc=res==='W'?'var(--p)':res==='L'?'var(--red)':'var(--amber)';
+    return`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--b);">
+      <div style="width:20px;height:20px;border-radius:50%;background:${rc};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">${res}</div>
+      <span style="font-size:10px;color:var(--t3);width:50px;flex-shrink:0;">${kd(x.utcDate)}</span>
+      <span style="font-size:12px;color:var(--t2);flex:1;">${x.homeTeam?.shortName||x.homeTeam?.name} <b style="color:var(--t);font-family:'Orbitron';font-size:12px;">${xhg}:${xag}</b> ${x.awayTeam?.shortName||x.awayTeam?.name}</span>
+    </div>`;}).join(''):`<div style="text-align:center;color:var(--t3);font-size:13px;padding:16px 0;">데이터 없음</div>`}
     </div>`;
 }
 function cm(id){document.getElementById(id).classList.remove('show');}
 
 // ── SCHEDULE ─────────────────────────
-async function loadSched() {
-  const c = document.getElementById('sched-bd');
-  c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  const today = ds(kn());
-  // KST → UTC 변환 (한국은 UTC+9, 전날 15시~당일 14시59분)
-  const kstMidnight = new Date(today + 'T00:00:00+09:00');
-  const utcF = new Date(kstMidnight.getTime() - 9 * 60 * 60 * 1000);
-  const utcT = new Date(utcF.getTime() + 24 * 60 * 60 * 1000 - 1);
-  // 하루 전후로 넉넉하게 (API 타임존 이슈 대비)
-  const dayBefore = new Date(utcF.getTime() - 24*60*60*1000);
-  const uf = dayBefore.toISOString().slice(0,10);
-  const ut = utcT.toISOString().slice(0,10);
-  let html = '';
-  // 내 팀 다음 경기 고정
-  if(MT) {
-    const mf = await fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`);
-    if(mf?.matches?.length) {
-      const nx = mf.matches[0];
-      const h=nx.homeTeam, a=nx.awayTeam;
-      html += `<div class="myfix">
-        <div class="myfix-tag">📌 내 팀 다음 경기</div>
-        <div class="myfix-teams">
-          <div class="myfix-team"><img src="${h.crest||''}" onerror="this.style.opacity='.2'"><div class="myfix-nm">${h.shortName||h.name}</div></div>
-          <span class="myfix-vs">VS</span>
-          <div class="myfix-team"><img src="${a.crest||''}" onerror="this.style.opacity='.2'"><div class="myfix-nm">${a.shortName||a.name}</div></div>
-        </div>
-        <div class="myfix-meta">
-          <span>📅 ${kd(nx.utcDate)} ${kt(nx.utcDate)} KST</span>
-          <span>${nx.competition?.name||''}</span>
-          ${nx.matchday?`<span>${nx.matchday}R</span>`:''}
-        </div>
-      </div>`;
+async function loadSched(){
+  const c=document.getElementById('sched-bd');
+  c.innerHTML=`<div class="ldr"><div class="spin"></div></div>`;
+  const today=ds(kn());
+  const utcF=new Date(new Date(today+'T00:00:00+09:00').getTime()-9*3600000);
+  const utcT=new Date(utcF.getTime()+86400000-1);
+  const uf=new Date(utcF.getTime()-86400000).toISOString().slice(0,10);
+  const ut=utcT.toISOString().slice(0,10);
+  let html='';
+  if(MT){
+    const mf=await fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`);
+    if(mf?.matches?.length){
+      const nx=mf.matches[0],h=nx.homeTeam,a=nx.awayTeam;
+      html+=`<div class="myfix"><div class="myfix-tag">📌 내 팀 다음 경기</div><div class="myfix-teams">
+        <div class="myfix-team"><img src="${h.crest||''}" onerror="this.style.opacity='.2'"><div class="myfix-nm">${h.shortName||h.name}</div></div>
+        <span class="myfix-vs">VS</span>
+        <div class="myfix-team"><img src="${a.crest||''}" onerror="this.style.opacity='.2'"><div class="myfix-nm">${a.shortName||a.name}</div></div>
+      </div><div class="myfix-meta">
+        <span>📅 ${kd(nx.utcDate)} ${kt(nx.utcDate)} KST</span>
+        <span>${nx.competition?.name||''}</span>
+        ${nx.matchday?`<span>${nx.matchday}R</span>`:''}
+      </div></div>`;
     }
   }
-  // 전체 리그 오늘 경기 (리그별 그룹)
-  const results = (await Promise.allSettled(LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)))).map(r=>r.status==='fulfilled'?r.value:null);
-  let anyLg = false;
-  results.forEach((d,i) => {
-    // KST 기준 오늘 날짜 필터
-    const ms = (d?.matches||[]).filter(m=>{
-      if(!m.utcDate) return true;
-      const kstDate = new Date(new Date(m.utcDate).getTime() + 9*60*60*1000);
-      const kstStr = kstDate.getUTCFullYear()+'-'+
-        String(kstDate.getUTCMonth()+1).padStart(2,'0')+'-'+
-        String(kstDate.getUTCDate()).padStart(2,'0');
-      return kstStr === today;
-    });
-    if(!ms.length) return;
-    anyLg = true;
-    const gid = `lg-${LGS[i].code}`;
-    const lv = ms.filter(m=>['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME'].includes(m.status));
-    const lt = lv.length?`<span style="font-size:9px;color:var(--red);margin-right:3px;">● ${lv.length}</span>`:'';
-    html += `<div class="lg-grp">
+  const results=await Promise.allSettled(LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
+  results.forEach((r,i)=>{
+    if(r.status!=='fulfilled'||!r.value?.matches)return;
+    const ms=r.value.matches.filter(m=>kds(m.utcDate)===today);
+    if(!ms.length)return;
+    const gid=`lg-${LGS[i].code}`;
+    const lv=ms.filter(m=>['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME'].includes(m.status));
+    html+=`<div class="lg-grp">
       <div class="lg-hdr" onclick="tlg('${gid}')">
         <img src="https://crests.football-data.org/${LGS[i].code}.png" onerror="this.style.display='none'">
         <span class="lg-hdr-nm">${LGS[i].name}</span>
-        ${lt}<span class="lg-hdr-cnt">${ms.length}경기</span>
+        ${lv.length?`<span style="font-size:11px;color:var(--red);">● ${lv.length}</span>`:''}
+        <span class="lg-hdr-cnt">${ms.length}경기</span>
         <span class="lg-arr" id="arr-${gid}">▾</span>
       </div>
       <div class="lg-matches" id="${gid}" style="max-height:2000px;">
         ${ms.map(m=>{
-          const h=m.homeTeam, a=m.awayTeam;
+          const h=m.homeTeam,a=m.awayTeam;
           const fin=['FINISHED','AWARDED'].includes(m.status);
           const isLv=['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME'].includes(m.status);
           const hg=fin||isLv?m.score?.fullTime?.home??m.score?.halfTime?.home:null;
           const ag=fin||isLv?m.score?.fullTime?.away??m.score?.halfTime?.away:null;
-          const hW=fin&&hg>ag, aW=fin&&ag>hg;
+          const hW=fin&&hg>ag,aW=fin&&ag>hg;
           let mt=kt(m.utcDate);
-          if(isLv){const df=Math.floor((Date.now()-new Date(m.utcDate).getTime())/60000);mt=df>0&&df<=90?`${Math.min(df,90)}'`:'진행';}
+          if(isLv){const df=Math.floor((Date.now()-new Date(m.utcDate).getTime())/60000);mt=df>0&&df<=90?`${Math.min(df,90)}'`:'진행중';}
           const hn2=(h?.shortName||h?.name||'').replace(/['"]/g,'');
           const an2=(a?.shortName||a?.name||'').replace(/['"]/g,'');
           return`<div class="sm" onclick="opnDtl(${m.id},'${hn2}','${an2}')">
@@ -1475,45 +1241,27 @@ async function loadSched() {
       </div>
     </div>`;
   });
-  c.innerHTML = html || `<div class="empty">오늘 경기 없음</div>`;
+  c.innerHTML=html||`<div class="empty">오늘 경기 없음</div>`;
 }
-function tlg(id) {
-  const el=document.getElementById(id), arr=document.getElementById('arr-'+id);
-  if(!el) return;
-  const open = el.style.maxHeight!=='0px'&&el.style.maxHeight!=='';
-  el.style.maxHeight = open?'0px':el.scrollHeight+'px';
-  el.style.overflow = 'hidden';
-  if(!open) setTimeout(()=>el.style.overflow='visible',300);
-  arr?.classList.toggle('closed',open);
-}  
+function tlg(id){const el=document.getElementById(id),arr=document.getElementById('arr-'+id);if(!el)return;const open=el.style.maxHeight!=='0px'&&el.style.maxHeight!=='';el.style.maxHeight=open?'0px':el.scrollHeight+'px';el.style.overflow='hidden';if(!open)setTimeout(()=>el.style.overflow='visible',300);arr?.classList.toggle('closed',open);}
 
-
-// ── STANDING ─────────────────────────
+// ── STANDINGS ────────────────────────
 function swStd(code,btn){curStd=code;document.querySelectorAll('#std-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadStd(code);}
-async function loadStd(code) {
-  const c = document.getElementById('std-bd');
-  c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  const d = await fd(`/competitions/${code}/standings?season=2024`);
-  if(!d?.standings){
-    console.error('standings data:', JSON.stringify(d));
-    c.innerHTML=`<div class="empty">
-      📡 순위 데이터를 불러오지 못했어요<br>
-      <span style="font-size:12px;color:var(--t3);margin-top:6px;display:block;">
-        잠시 후 다시 시도해주세요
-      </span>
-    </div>`;
-    return;
-  }
-  const rows = d.standings[0].table, tot = rows.length;
-  const fc = {W:'var(--p)',D:'var(--amber)',L:'var(--red)'};
-  c.innerHTML = `<div class="std-scroll"><table class="stt">
+async function loadStd(code){
+  const c=document.getElementById('std-bd');
+  c.innerHTML=`<div class="ldr"><div class="spin"></div></div>`;
+  const d=await fd(`/competitions/${code}/standings?season=2024`);
+  if(!d?.standings){c.innerHTML=`<div class="empty">📡 순위 데이터 없음<br><span style="font-size:12px;">잠시 후 다시 시도해주세요</span></div>`;return;}
+  const rows=d.standings[0].table,tot=rows.length;
+  const fc={W:'var(--p)',D:'var(--amber)',L:'var(--red)'};
+  c.innerHTML=`<div class="std-scroll"><table class="stt">
     <tr><th>#</th><th>팀</th><th>경</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th><th>폼</th></tr>
     ${rows.map(t=>{
-      const isMe = MT&&t.team.id===MT.id;
-      const fm = (t.form||'').split('').slice(-5);
-      const gd = t.goalsDiff>=0?'+'+t.goalsDiff:t.goalsDiff;
-      const rc = t.position<=4?'cl-bar':t.position===5?'el-bar':t.position>=tot-2?'drop-bar':'';
-      const pc = t.position<=4?'top':t.position>=tot-2?'bot':t.position===5?'rel':'';
+      const isMe=MT&&t.team.id===MT.id;
+      const fm=(t.form||'').split('').slice(-5);
+      const gd=t.goalsDiff>=0?'+'+t.goalsDiff:t.goalsDiff;
+      const rc=t.position<=4?'cl-bar':t.position===5?'el-bar':t.position>=tot-2?'drop-bar':'';
+      const pc=t.position<=4?'top':t.position>=tot-2?'bot':t.position===5?'rel':'';
       return`<tr class="${isMe?'my':''} ${rc}">
         <td><span class="sp ${pc}">${t.position}</span></td>
         <td><div class="nm-cell"><img src="${t.team.crest||''}" onerror="this.style.opacity='.2'" alt="">${t.team.shortName||t.team.name}</div></td>
@@ -1523,85 +1271,230 @@ async function loadStd(code) {
       </tr>`;
     }).join('')}
   </table></div>
-  <div style="display:flex;gap:9px;margin-top:7px;padding:0 2px;">
-    <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--t3);"><div style="width:7px;height:7px;background:var(--p);border-radius:2px;"></div>UCL</div>
-    <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--t3);"><div style="width:7px;height:7px;background:var(--amber);border-radius:2px;"></div>유로파</div>
-    <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:var(--t3);"><div style="width:7px;height:7px;background:var(--red);border-radius:2px;"></div>강등</div>
+  <div style="display:flex;gap:12px;margin-top:10px;padding:0 2px;">
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--p);border-radius:2px;"></div>UCL</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--amber);border-radius:2px;"></div>유로파</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--red);border-radius:2px;"></div>강등</div>
   </div>`;
 }
 
 // ── PLAYERS ──────────────────────────
 function swPLg(code,btn){curPLg=code;document.querySelectorAll('#pl-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadPlayers(code,curPt);}
 function swPt(type,btn){curPt=type;document.querySelectorAll('#pg-player>.pills+div .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadPlayers(curPLg,type);}
-async function loadPlayers(lg, type) {
-  const c = document.getElementById('pl-bd');
-  c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  const d = await fd(`/competitions/${lg}/scorers?limit=20&season=2024`);
-  if(!d?.scorers){
-    console.error('scorers data:', JSON.stringify(d));
-    c.innerHTML=`<div class="empty">선수 데이터를 불러오지 못했어요</div>`;
-    return;
-  }
-  let sc = [...d.scorers];
-  if(type==='assists') sc.sort((a,b)=>(b.assists||0)-(a.assists||0));
-  c.innerHTML = sc.map((s,i)=>{
-    const val = type==='scorers'?(s.goals||0):(s.assists||0);
-    const isMe = MT&&s.team?.id===MT.id;
+async function loadPlayers(lg,type){
+  const c=document.getElementById('pl-bd');
+  c.innerHTML=`<div class="ldr"><div class="spin"></div></div>`;
+  const d=await fd(`/competitions/${lg}/scorers?limit=20&season=2024`);
+  if(!d?.scorers){c.innerHTML=`<div class="empty">선수 데이터 없음</div>`;return;}
+  let sc=[...d.scorers];
+  if(type==='assists')sc.sort((a,b)=>(b.assists||0)-(a.assists||0));
+  c.innerHTML=sc.map((s,i)=>{
+    const val=type==='scorers'?(s.goals||0):(s.assists||0);
+    const isMe=MT&&s.team?.id===MT.id;
     return`<div class="pc ${isMe?'me':''}">
       <div class="pc-rank ${i<3?'top':''}">${i+1}</div>
-      <img src="${s.team?.crest||''}" style="width:32px;height:32px;object-fit:contain;border-radius:6px;" onerror="this.style.opacity='.2'" alt="">
-      <div class="pc-info">
-        <div class="pc-name">${s.player?.name||''}</div>
-        <div class="pc-team">${s.team?.shortName||s.team?.name||''}</div>
-      </div>
-      <div><div class="pc-val">${val}</div><div class="pc-lbl">${type==='scorers'?'GOALS':'ASSISTS'}</div></div>
+      <img src="${s.team?.crest||''}" style="width:36px;height:36px;object-fit:contain;border-radius:8px;" onerror="this.style.opacity='.2'" alt="">
+      <div class="pc-info"><div class="pc-name">${s.player?.name||''}</div><div class="pc-team">${s.team?.shortName||s.team?.name||''}</div></div>
+      <div style="text-align:right;"><div class="pc-val">${val}</div><div class="pc-lbl">${type==='scorers'?'GOALS':'ASSISTS'}</div></div>
     </div>`;
   }).join('');
+}
+
+// ── HUB (뉴스/이적) ──────────────────
+const HUB_FEEDS = {
+  transfer: [
+    {
+      author:'Fabrizio Romano',em:'🎙️',verified:true,
+      items:[
+        {time:'2h',badge:'done',title:'Confirmed: Major Premier League Transfer Completed',body:'The deal has been finalized with medical completed and documents signed. Official announcement expected within hours.',tags:['이적','공식']},
+        {time:'4h',badge:'rumor',title:'Top Club in Advanced Talks for Summer Target',body:'Negotiations ongoing between clubs. Player has given green light to the move. Personal terms expected to be agreed this week.',tags:['협상중']},
+        {time:'6h',badge:'',title:'여름 이적 시장 최신 동향 분석',body:'이번 여름 이적 시장에서 주목해야 할 빅클럽들의 움직임과 주요 타깃 선수들을 정리했습니다.',tags:['분석']},
+      ]
+    },
+    {
+      author:'David Ornstein',em:'📰',verified:true,
+      items:[
+        {time:'3h',badge:'',title:'Exclusive: Club Board Meeting to Decide Manager\'s Future',body:'Sources confirm internal discussions taking place regarding tactical direction and squad rebuild for next season.',tags:['감독','독점']},
+        {time:'8h',badge:'rumor',title:'Premier League Side Monitoring Bundesliga Midfielder',body:'Serious interest shown in young playmaker who has emerged as one of Europe\'s most exciting prospects.',tags:['임박','EPL']},
+      ]
+    },
+    {
+      author:'Sky Sports News',em:'📺',verified:true,
+      items:[
+        {time:'1h',badge:'done',title:'Breaking: Champions League Draw Confirmed',body:'Groups have been drawn for the upcoming Champions League season. Full breakdown of all groups available.',tags:['UCL','공식']},
+        {time:'5h',badge:'',title:'Premier League Weekend Preview',body:'Analysis of all key matchups this weekend, including the top of the table clash and relegation six-pointer.',tags:['EPL','프리뷰']},
+      ]
+    },
+  ],
+  myteam: null, // 로드 시 생성
+};
+
+async function loadHub(){
+  const c=document.getElementById('hub-bd');
+  c.innerHTML=`
+    <div class="hub-tabs">
+      <button class="hub-tab on" onclick="swHub('transfer',this)">🔄 이적 소식</button>
+      <button class="hub-tab" onclick="swHub('myteam',this)">⭐ 내 팀 뉴스</button>
+      <button class="hub-tab" onclick="swHub('europe',this)">🌍 유럽 축구</button>
+    </div>
+    <div id="hub-content"></div>`;
+  renderHub('transfer');
+}
+
+function swHub(type,btn){
+  curHub=type;
+  document.querySelectorAll('.hub-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderHub(type);
+}
+
+async function renderHub(type){
+  const c=document.getElementById('hub-content');
+  if(!c)return;
+  if(type==='transfer'){
+    let html='';
+    HUB_FEEDS.transfer.forEach(feed=>{
+      feed.items.forEach(item=>{
+        html+=`<a class="news-card" href="#" onclick="return false;">
+          <div class="news-source">
+            <div class="news-avatar">${feed.em}</div>
+            <div>
+              <div class="news-author">${feed.author} ${feed.verified?'✓':''}</div>
+            </div>
+            <span class="news-time">${item.time}</span>
+          </div>
+          ${item.badge?`<div class="transfer-badge ${item.badge}">${item.badge==='done'?'✅ 공식 확정':'💬 루머'}</div>`:''}
+          <div class="news-title">${item.title}</div>
+          <div class="news-body">${item.body}</div>
+          <div class="news-tags">${item.tags.map(t=>`<span class="news-tag">#${t}</span>`).join('')}</div>
+        </a>`;
+      });
+    });
+    c.innerHTML=html;
+  } else if(type==='myteam'){
+    if(!MT){c.innerHTML=`<div class="empty">팀을 선택해야 내 팀 뉴스를 볼 수 있어요</div>`;return;}
+    c.innerHTML=`<div class="ldr"><div class="spin"></div><div class="spin-t">${MT.name} 뉴스 불러오는 중...</div></div>`;
+    // 내 팀 최근 경기 결과 + 다음 경기로 뉴스 대체
+    const [recent, upcoming] = await Promise.all([
+      fd(`/teams/${MT.id}/matches?status=FINISHED&limit=5`),
+      fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`),
+    ]);
+    let html=`<div style="margin-bottom:12px;padding:14px;background:var(--card);border:1px solid var(--b);border-radius:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--p);margin-bottom:10px;">⭐ ${MT.name} 최근 경기</div>`;
+    if(recent?.matches?.length){
+      recent.matches.slice(0,3).forEach(m=>{
+        const h=m.homeTeam,a=m.awayTeam;
+        const hg=m.score?.fullTime?.home??0,ag=m.score?.fullTime?.away??0;
+        const isH=h.id===MT.id;
+        const myG=isH?hg:ag,oppG=isH?ag:hg;
+        const res=myG>oppG?'승':'무';
+        const opp=isH?a:h;
+        const rc=myG>oppG?'var(--p)':myG===oppG?'var(--amber)':'var(--red)';
+        html+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--b);">
+          <div style="width:28px;height:28px;border-radius:50%;background:${rc};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">${res}</div>
+          <img src="${opp.crest||''}" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.opacity='.2'">
+          <span style="font-size:13px;color:var(--t);flex:1;">${opp.shortName||opp.name}</span>
+          <span style="font-family:'Orbitron';font-size:14px;font-weight:700;color:var(--t);">${myG} : ${oppG}</span>
+          <span style="font-size:11px;color:var(--t3);">${kd(m.utcDate)}</span>
+        </div>`;
+      });
+    } else html+=`<div style="color:var(--t3);font-size:13px;">최근 경기 없음</div>`;
+    html+='</div>';
+    if(upcoming?.matches?.length){
+      html+=`<div style="padding:14px;background:var(--card);border:1px solid var(--b);border-radius:12px;margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:700;color:var(--p);margin-bottom:10px;">📅 ${MT.name} 예정 경기</div>`;
+      upcoming.matches.forEach(m=>{
+        const h=m.homeTeam,a=m.awayTeam;
+        const opp=h.id===MT.id?a:h;
+        const isHome=h.id===MT.id;
+        html+=`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--b);">
+          <img src="${opp.crest||''}" style="width:24px;height:24px;object-fit:contain;" onerror="this.style.opacity='.2'">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;color:var(--t);">${isHome?'홈':'원정'} vs ${opp.shortName||opp.name}</div>
+            <div style="font-size:11px;color:var(--t3);">${kd(m.utcDate)} ${kt(m.utcDate)} KST · ${m.competition?.name||''}</div>
+          </div>
+        </div>`;
+      });
+      html+='</div>';
+    }
+    // 이적 루머 (스태틱)
+    html+=`<div class="news-card">
+      <div class="news-source"><div class="news-avatar">🎙️</div><div><div class="news-author">Fabrizio Romano ✓</div></div><span class="news-time">최신</span></div>
+      <div class="transfer-badge rumor">💬 루머</div>
+      <div class="news-title">${MT.name}, 여름 이적 시장 주요 타깃 물색 중</div>
+      <div class="news-body">구단이 다음 시즌을 앞두고 핵심 포지션 보강을 위한 타깃을 물색 중인 것으로 알려졌습니다. 미드필더 영입이 최우선 과제로 거론되고 있습니다.</div>
+      <div class="news-tags"><span class="news-tag team">#${MT.name}</span><span class="news-tag">#이적루머</span></div>
+    </div>`;
+    c.innerHTML=html;
+  } else if(type==='europe'){
+    c.innerHTML=`
+      <a class="news-card">
+        <div class="news-source"><div class="news-avatar">🏆</div><div><div class="news-author">UEFA Champions League</div></div><span class="news-time">최신</span></div>
+        <div class="news-title">챔피언스리그 주요 이슈 & 하이라이트</div>
+        <div class="news-body">이번 시즌 UCL에서 가장 주목받는 팀들의 전력 분석과 8강 진출 예측을 담았습니다. 레알 마드리드의 압도적 폼이 계속되고 있으며, 맨시티와 바르셀로나가 강력한 경쟁자로 꼽히고 있습니다.</div>
+        <div class="news-tags"><span class="news-tag">#UCL</span><span class="news-tag">#유럽축구</span></div>
+      </a>
+      <a class="news-card">
+        <div class="news-source"><div class="news-avatar">⚽</div><div><div class="news-author">European Football Weekly</div></div><span class="news-time">6h</span></div>
+        <div class="news-title">이번 주 유럽 5대 리그 주요 경기 프리뷰</div>
+        <div class="news-body">프리미어리그 TOP4 경쟁, 라리가 우승 레이스, 분데스리가 강등 싸움까지. 이번 주말 놓치면 안 될 빅매치를 정리했습니다.</div>
+        <div class="news-tags"><span class="news-tag">#EPL</span><span class="news-tag">#라리가</span><span class="news-tag">#분데스</span></div>
+      </a>
+      <a class="news-card">
+        <div class="news-source"><div class="news-avatar">📊</div><div><div class="news-author">Stats & Analytics</div></div><span class="news-time">12h</span></div>
+        <div class="news-title">2024-25 시즌 최고의 선수들 - 데이터로 보는 랭킹</div>
+        <div class="news-body">xG, 패스 정확도, 압박 강도 등 고급 지표를 활용해 이번 시즌 유럽 최고의 선수들을 분석했습니다.</div>
+        <div class="news-tags"><span class="news-tag">#통계</span><span class="news-tag">#분석</span></div>
+      </a>`;
+  }
 }
 
 // ── FANZONE ──────────────────────────
 function getLv(n){return LEVELS.find(l=>n>=l.min&&n<=l.max)||LEVELS[0];}
 function saveFan(){localStorage.setItem('pp_fan',JSON.stringify(fanData));}
-function updateFan() {
-  const lv = getLv(fanData.total);
-  const nxt = LEVELS.find(l=>l.lv===lv.lv+1);
-  const prog = nxt?Math.round((fanData.total-lv.min)/(nxt.min-lv.min)*100):100;
-  document.getElementById('hdr-lv').textContent = `Lv.${lv.lv}`;
-  let html = `
+function updateFan(){
+  const lv=getLv(fanData.total);
+  const nxt=LEVELS.find(l=>l.lv===lv.lv+1);
+  const prog=nxt?Math.round((fanData.total-lv.min)/(nxt.min-lv.min)*100):100;
+  document.getElementById('hdr-lv').textContent=`Lv.${lv.lv}`;
+  let html=`
     <div class="lv-card">
       <div class="lv-em">${lv.em}</div>
       <div class="lv-name">${lv.name}</div>
-      <div class="lv-sub">Lv.${lv.lv} · 집관 ${fanData.total}경기 · ${MT?MT.name+' 팬':''}</div>
+      <div class="lv-sub">Lv.${lv.lv} · 집관 ${fanData.total}경기 ${MT?'· '+MT.name+' 팬':''}</div>
       <div class="lv-pw"><div class="lv-pb" style="width:${prog}%"></div></div>
       <div class="lv-pl"><span>${lv.min}경기</span><span>${prog}%</span><span>${nxt?nxt.min+'경기':'MAX'}</span></div>
       <div class="lv-stats">
         <div class="lvs"><div class="lvs-v">${fanData.total}</div><div class="lvs-l">총 집관</div></div>
         <div class="lvs"><div class="lvs-v">${lv.lv}</div><div class="lvs-l">레벨</div></div>
-        <div class="lvs"><div class="lvs-v">${fanData.checkins.length}</div><div class="lvs-l">인증 횟수</div></div>
+        <div class="lvs"><div class="lvs-v">${fanData.checkins.length}</div><div class="lvs-l">인증</div></div>
       </div>
     </div>
-    <div style="margin-bottom:10px;padding:10px 12px;background:rgba(0,255,135,.04);border:1px solid var(--b);border-radius:10px;">
-      <div style="font-family:'Orbitron';font-size:8px;color:var(--p);letter-spacing:1px;margin-bottom:6px;">📋 레벨 가이드</div>
-      ${LEVELS.map(l=>`<div style="display:flex;align-items:center;gap:8px;padding:3px 0;${l.lv===lv.lv?'opacity:1;':'opacity:.4;'}">
-        <span style="font-size:14px;">${l.em}</span>
-        <span style="font-size:10px;color:${l.lv===lv.lv?'var(--p)':'var(--t2)'};">${l.name}</span>
-        <span style="margin-left:auto;font-size:9px;color:var(--t3);">${l.min}${l.max===Infinity?'+':'-'+l.max}경기</span>
-      </div>`).join('')}
+    <div style="margin-bottom:12px;padding:14px;background:var(--card);border:1px solid var(--b);border-radius:12px;">
+      <div style="font-size:12px;font-weight:700;color:var(--t3);margin-bottom:10px;">📋 레벨 가이드</div>
+      ${LEVELS.map(l=>{
+        const isActive=l.lv===lv.lv;
+        return `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;opacity:${isActive?1:.4};">
+          <span style="font-size:18px;">${l.em}</span>
+          <span style="font-size:14px;color:${isActive?'var(--p)':'var(--t2)'};">${l.name}</span>
+          <span style="margin-left:auto;font-size:12px;color:var(--t3);">${l.min}${l.max===Infinity?'+':'-'+l.max}경기</span>
+        </div>`;
+      }).join('')}
     </div>
-    <div class="sec"><span class="stl">집관 인증</span><span class="sbd">내 팀 경기 체크인</span></div>
+    <div class="sec"><span class="stl">집관 인증</span><span class="sbd">내 팀 경기</span></div>
     <div id="fz-ms"></div>
-    <div class="sec" style="margin-top:5px;"><span class="stl">인증 기록</span></div>
-    ${fanData.checkins.length?fanData.checkins.slice(0,10).map(ci=>`<div class="ci"><div class="ci-l"><div class="ci-teams">${ci.teams}</div><div class="ci-dt">${ci.date}</div></div><div class="ci-badge">VERIFIED ✓</div></div>`).join(''):`<div class="empty">아직 인증 기록 없음<br><span style="font-size:10px;">경기 중 집관 인증 버튼을 눌러보세요!</span></div>`}`;
-  document.getElementById('fan-bd').innerHTML = html;
+    <div class="sec" style="margin-top:8px;"><span class="stl">인증 기록</span></div>
+    ${fanData.checkins.length?fanData.checkins.slice(0,10).map(ci=>`<div class="ci"><div><div class="ci-teams">${ci.teams}</div><div class="ci-dt">${ci.date}</div></div><div class="ci-badge">✓ VERIFIED</div></div>`).join(''):`<div class="empty">아직 인증 기록 없음<br><span style="font-size:12px;">경기 중 집관 인증 버튼을 눌러보세요!</span></div>`}`;
+  document.getElementById('fan-bd').innerHTML=html;
   loadFzMs();
 }
-async function loadFzMs() {
-  const c = document.getElementById('fz-ms');
-  if(!c||!MT) return;
-  const d = await fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`);
+async function loadFzMs(){
+  const c=document.getElementById('fz-ms');
+  if(!c||!MT)return;
+  const d=await fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`);
   if(!d?.matches?.length){c.innerHTML=`<div class="empty" style="padding:16px;">예정 경기 없음</div>`;return;}
-  c.innerHTML = d.matches.map(m=>{
-    const h=m.homeTeam, a=m.awayTeam;
+  c.innerHTML=d.matches.map(m=>{
+    const h=m.homeTeam,a=m.awayTeam;
     const ts=`${kd(m.utcDate)} ${kt(m.utcDate)} KST`;
     const teams=`${h.shortName||h.name} vs ${a.shortName||a.name}`;
     const mid=String(m.id);
@@ -1612,41 +1505,24 @@ async function loadFzMs() {
     </div>`;
   }).join('');
 }
-function doCI(btn, teams, ts, mid) {
+function doCI(btn,teams,ts,mid){
   if(fanData.checkins.find(c=>c.matchId===mid)){btn.textContent='✓ 완료';btn.classList.add('done');return;}
-  btn.textContent='✓ 완료'; btn.classList.add('done');
-  const prevLv = getLv(fanData.total).lv;
-  fanData.total++;
-  fanData.checkins.unshift({teams, date:ts, matchId:mid, verified:true});
-  saveFan();
-  const newLv = getLv(fanData.total);
-  if(newLv.lv > prevLv) showLvUp(newLv);
+  btn.textContent='✓ 완료';btn.classList.add('done');
+  const pLv=getLv(fanData.total).lv;
+  fanData.total++;fanData.checkins.unshift({teams,date:ts,matchId:mid,verified:true});saveFan();
+  const nLv=getLv(fanData.total);
+  if(nLv.lv>pLv){const el=document.getElementById('lvup');document.getElementById('lu-em').textContent=nLv.em;document.getElementById('lu-sub').textContent=`Lv.${nLv.lv} · ${nLv.name}`;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000);}
   updateFan();
 }
-function showLvUp(lv) {
-  const el = document.getElementById('lvup');
-  document.getElementById('lu-em').textContent = lv.em;
-  document.getElementById('lu-txt').textContent = 'LEVEL UP!';
-  document.getElementById('lu-sub').textContent = `Lv.${lv.lv} · ${lv.name}`;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 4000);
+
+// ── SETTINGS ─────────────────────────
+function showSettings(){
+  if(confirm('팀을 변경하시겠어요?')){localStorage.removeItem('pp_team');location.reload();}
 }
 
 // ── INIT ─────────────────────────────
-// ── 설정: 팀 변경 ─────────────────────
-function showSettings() {
-  if(confirm('팀을 변경할까요?')) {
-    localStorage.removeItem('pp_team');
-    location.reload();
-  }
-}
-
-const saved = localStorage.getItem('pp_team');
-if(saved) {
-  MT = JSON.parse(saved);
-  applyTheme(MT.color);
-  init();
-}
+const saved=localStorage.getItem('pp_team');
+if(saved){MT=JSON.parse(saved);applyTheme(MT.color);boot();}
 </script>
 </body>
-</html>  
+</html>
