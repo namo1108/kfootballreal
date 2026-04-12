@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>PITCH Pro: Live Action</title>
+<title>PITCH Pro: Master</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M20 10h16a12 12 0 0 1 0 24H20v18h-6V10zm6 6v12h10a6 6 0 1 0 0-12H26z' fill='url(%23g)'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── [디자인 시스템: 시네마틱 네온] ── */
+/* ── [1. 시네마틱 디자인 시스템 & 다이내믹 테마] ── */
 :root{
   --f-h:'Poppins', sans-serif; --f-b:'Noto Sans KR', sans-serif;
   --bg:#05070a; --bg2:#0d1117; --cd:rgba(20, 24, 31, 0.9);
@@ -17,10 +17,16 @@
   --red:#ef4444; --br:24px; --sh:0 20px 40px rgba(0,0,0,0.6);
 }
 *,*::before,*::after{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
-body{background:var(--bg); color:var(--t); font-family:var(--f-b); overflow:hidden; height:100vh; background-image: radial-gradient(at 0% 0%, var(--ss) 0px, transparent 40%), radial-gradient(at 100% 100%, var(--ps) 0px, transparent 40%);}
+body{
+  background:var(--bg); color:var(--t); font-family:var(--f-b); 
+  background-image: radial-gradient(at 0% 0%, var(--ps) 0px, transparent 40%),
+                    radial-gradient(at 100% 100%, var(--ss) 0px, transparent 40%);
+  overflow:hidden; height:100vh; transition: background 0.8s ease;
+}
 
-/* ── [레이아웃] ── */
-#app{display:flex; height:100vh; flex-direction:column;}
+/* ── [2. 레이아웃] ── */
+#app{display:none; height:100vh; flex-direction:column;}
+#app.show{display:flex;}
 .hdr{height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; background:rgba(13, 17, 23, 0.85); backdrop-filter:blur(25px); border-bottom:1px solid rgba(255,255,255,0.04); z-index:1000;}
 .hdr-logo{font-family:var(--f-h); font-size:22px; font-weight:900; background: linear-gradient(135deg, var(--p) 0%, var(--s) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
 .main-body{flex:1; display:flex; overflow:hidden;}
@@ -30,50 +36,74 @@ body{background:var(--bg); color:var(--t); font-family:var(--f-b); overflow:hidd
 .pages{flex:1; overflow-y:auto; padding:40px; scroll-behavior: smooth;}
 .page{display:none;} .page.on{display:block;}
 
-/* ── [컴포넌트] ── */
-.mc{background:var(--cd); border:1px solid rgba(255,255,255,0.05); border-radius:var(--br); margin-bottom:20px; overflow:hidden; transition:0.3s; box-shadow:var(--sh);}
+/* ── [3. 온보딩: 팀 선택 & 테마 연동] ── */
+#ob{position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; padding:60px 20px;}
+.ob-title{font-family:var(--f-h); font-size:36px; font-weight:900; text-align:center; margin-bottom:10px; background:linear-gradient(to right, #fff, #666); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+.ob-grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap:15px; max-width:900px; margin:40px auto;}
+.ob-team{background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:20px; padding:20px 10px; text-align:center; cursor:pointer; transition:0.3s;}
+.ob-team img{width:45px; height:45px; object-fit:contain; margin-bottom:10px;}
+.ob-team span{font-size:12px; font-weight:800; display:block; color:var(--t2);}
+.ob-team:hover{background:rgba(255,255,255,0.08);}
+.ob-team.sel{border-color:var(--p); background:var(--ps); transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
+.ob-team.sel span{color:var(--p);}
+
+/* ── [4. 매치 카드 & 아코디언] ── */
+.mc{background:var(--cd); border:1px solid rgba(255,255,255,0.05); border-radius:var(--br); margin-bottom:20px; overflow:hidden; transition:0.3s; box-shadow:var(--sh); cursor:pointer;}
+.mc:hover{border-color:var(--p); transform:translateY(-4px);}
 .mc-top{padding:12px 20px; background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--t3); letter-spacing:1px;}
 .mc-body{padding:25px 20px; display:flex; align-items:center; justify-content:center; gap:15px;}
-.mc-tm{flex:1; text-align:center; font-family:var(--f-h); font-weight:900; font-size:18px;}
-.mc-tm img{width:36px; height:36px; object-fit:contain; margin-bottom:8px; display:block; margin-left:auto; margin-right:auto;}
-.mc-sc-box{background:rgba(0,0,0,0.6); padding:8px 16px; border-radius:12px; border:1px solid var(--pb); font-family:var(--f-h); font-size:28px; font-weight:900;}
+.mc-sc-box{background:rgba(0,0,0,0.6); padding:8px 20px; border-radius:14px; border:1px solid var(--pb); font-family:var(--f-h); font-size:32px; font-weight:900;}
 
-.lg-hd{display:flex; align-items:center; gap:12px; padding:18px 24px; background:var(--bg2); border-radius:18px; cursor:pointer; margin-top:15px; border:1px solid rgba(255,255,255,0.03); font-weight:800;}
-.pills{display:flex; gap:10px; overflow-x:auto; padding-bottom:15px; margin-bottom:20px; scrollbar-width: none;}
-.pill{padding:10px 20px; border-radius:100px; border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02); color:var(--t2); cursor:pointer; font-weight:700; white-space:nowrap; transition:0.2s;}
-.pill.on{background:var(--p); color:var(--bg); border-color:var(--p); box-shadow:0 0 15px var(--p);}
+.lg-hd{display:flex; align-items:center; gap:12px; padding:20px 24px; background:var(--bg2); border-radius:20px; cursor:pointer; margin-top:15px; border:1px solid rgba(255,255,255,0.03); font-weight:800;}
+.lg-ms{display:none; flex-direction:column; padding:10px 0;}
+.lg-ms.open{display:flex;}
 
-/* ── [데이터 테이블] ── */
+/* ── [5. 데이터 테이블 & 필터] ── */
 .stt{width:100%; border-collapse:separate; border-spacing:0 8px;}
 .stt th{padding:12px; color:var(--t3); font-size:11px; font-weight:800; text-align:center;}
 .stt td{padding:16px 12px; background:rgba(255,255,255,0.02); text-align:center; font-weight:600;}
 .nm-cell{display:flex; align-items:center; gap:12px; text-align:left;}
-.nm-cell img{width:24px; height:24px; object-fit:contain;}
+.nm-cell img{width:28px; height:28px; object-fit:contain;}
 
-/* ── [AI PITCH] ── */
+.pills{display:flex; gap:10px; overflow-x:auto; padding-bottom:15px; margin-bottom:20px; scrollbar-width: none;}
+.pill{padding:12px 24px; border-radius:100px; border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02); color:var(--t2); cursor:pointer; font-weight:700; white-space:nowrap; transition:0.3s;}
+.pill.on{background:var(--p); color:var(--bg); border-color:var(--p); box-shadow:0 0 20px var(--ps);}
+
+/* AI PITCH */
 .ai-card{background:linear-gradient(165deg, #0d1117 0%, #05070a 100%); border:1px solid var(--pb); border-radius:25px; padding:30px; margin-bottom:24px; position:relative;}
 .prob-bar-wrap{height:14px; background:rgba(255,255,255,0.04); border-radius:100px; margin:20px 0; overflow:hidden; display:flex;}
 .prob-h{background:linear-gradient(90deg, #059669, var(--p)); box-shadow:0 0 20px var(--p);}
 .prob-a{background:linear-gradient(90deg, #dc2626, var(--red)); box-shadow:0 0 20px var(--red);}
 
-/* GOAL OVERLAY */
-#gt{position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.9); backdrop-filter:blur(20px); pointer-events:none;}
-.gt-word{font-family:var(--f-h); font-size:100px; font-weight:900; color:var(--p); animation: gtCinema 0.8s forwards;}
+/* ── [6. 골 애니메이션 레이어] ── */
+#gt{position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.9); backdrop-filter:blur(20px); pointer-events:none;}
+.gt-box{text-align:center;}
+.gt-word{font-family:var(--f-h); font-size:120px; font-weight:900; color:var(--p); letter-spacing:15px; filter:drop-shadow(0 0 30px var(--p)); animation: gtCinema 0.8s forwards;}
 @keyframes gtCinema{0%{transform:scale(2); opacity:0} 100%{transform:scale(1); opacity:1}}
 </style>
 </head>
 <body>
 
+<div id="ob">
+  <div class="ob-title">SELECT YOUR CLUB</div>
+  <p style="text-align:center; color:var(--t2); font-weight:600;">팀 컬러에 맞춰 전체 시스템 테마가 자동으로 변경됩니다.</p>
+  <div id="ob-list" class="ob-grid"></div>
+  <div style="text-align:center;">
+    <button onclick="startApp()" style="padding:18px 80px; border-radius:100px; border:none; background:var(--p); color:#000; font-weight:900; font-size:18px; cursor:pointer; box-shadow:0 10px 30px var(--ps);">START PITCH PRO</button>
+  </div>
+</div>
+
 <div id="app">
   <header class="hdr">
     <div class="hdr-logo">PITCH PRO</div>
-    <div id="lpill" style="display:none; color:var(--red); font-weight:900; font-size:12px; text-shadow:0 0 10px var(--red);">● LIVE</div>
+    <div id="lpill" style="display:none; color:var(--red); font-weight:900; font-size:12px; text-shadow:0 0 10px var(--red); animation: pulse 1.5s infinite;">● LIVE</div>
+    <div id="team-tag" style="font-family:var(--f-h); font-size:11px; background:var(--ps); color:var(--p); padding:6px 16px; border-radius:100px; font-weight:800; border:1px solid var(--pb);">CONNECTING...</div>
   </header>
 
   <div class="main-body">
     <aside class="sidebar">
-      <div class="si on" onclick="swP('home',this)">⚡ LIVE ACTION</div>
-      <div class="si" onclick="swP('sched',this)">📅 APRIL SCHEDULE</div>
+      <div class="si on" onclick="swP('home',this)">⚡ LIVE PITCH</div>
+      <div class="si" onclick="swP('sched',this)">📅 SCHEDULE</div>
       <div class="si" onclick="swP('ai',this)">🤖 AI PITCH</div>
       <div class="si" onclick="swP('std',this)">📊 STANDINGS</div>
       <div class="si" onclick="swP('player',this)">👟 PLAYER STATS</div>
@@ -81,61 +111,94 @@ body{background:var(--bg); color:var(--t); font-family:var(--f-b); overflow:hidd
     </aside>
 
     <main class="pages">
-      <div class="page on" id="pg-home"><div id="home-bd"></div></div>
-      <div class="page" id="pg-sched"><div id="date-nav" class="pills"></div><div id="sched-bd"></div></div>
-      <div class="page" id="pg-ai"><div id="ai-bd"></div></div>
-      <div class="page" id="pg-std"><div id="std-pills" class="pills"></div><div id="std-bd"></div></div>
-      <div class="page" id="pg-player"><div id="pl-pills" class="pills"></div><div id="pl-bd"></div></div>
+      <div class="page on" id="pg-home">
+        <h1 style="font-family:var(--f-h); font-weight:900; font-size:32px; margin-bottom:30px;">LIVE STREAMING</h1>
+        <div id="home-bd"></div>
+      </div>
+      
+      <div class="page" id="pg-sched">
+        <h1 style="font-family:var(--f-h); font-weight:900; font-size:32px; margin-bottom:10px;">MATCH SCHEDULE</h1>
+        <div id="date-nav" class="pills"></div>
+        <div id="sched-bd"></div>
+      </div>
+
+      <div class="page" id="pg-ai">
+        <h1 style="font-family:var(--f-h); font-weight:900; font-size:32px; margin-bottom:30px;">AI SUPERCOMPUTER</h1>
+        <div id="ai-bd"></div>
+      </div>
+
+      <div class="page" id="pg-std">
+        <div id="std-pills" class="pills"></div>
+        <div id="std-bd"></div>
+      </div>
+
+      <div class="page" id="pg-player">
+        <div id="pl-pills" class="pills"></div>
+        <div id="pl-bd"></div>
+      </div>
+
       <div class="page" id="pg-fan">
-        <div class="ai-card">
-          <h3 style="color:var(--p); margin-bottom:15px;">화성 FC 알림 서비스</h3>
-          <p style="font-size:13px; color:var(--t2);">나의 팀 경기가 시작되면 즉시 브라우저 알림을 보냅니다.</p>
-          <button class="pill on" style="margin-top:20px; width:100%;" onclick="alert('알림 설정이 완료되었습니다!')">실시간 알림 활성화</button>
-        </div>
-        <h2 style="font-size:18px; margin-bottom:20px; font-weight:800;">4월 팀 일정</h2>
-        <div id="fan-bd">
-          <div class="mc"><div class="mc-body"><b>화성 FC vs 파주시민</b><br><small>2026.04.18 14:00</small></div></div>
-          <div class="mc"><div class="mc-body"><b>화성 FC vs 대구FC B</b><br><small>2026.04.25 15:00</small></div></div>
-        </div>
+        <div id="fan-setup" class="ai-card"></div>
+        <h2 style="font-weight:800; margin-bottom:20px;">MY TEAM CALENDAR</h2>
+        <div id="fan-bd"></div>
       </div>
     </main>
   </div>
 </div>
 
-<div id="gt"><div class="gt-word">GOAL!</div></div>
+<div id="gt"><div class="gt-box"><div class="gt-word">GOAL!</div><div id="gt-info" style="font-size:28px; font-weight:800; color:#fff; margin-top:20px;"></div></div></div>
 
 <script>
-// ── [JS ENGINE: REAL DATA MODE] ──
+// ── [JS ENGINE: CUMULATIVE MASTER] ──
+
 const API = '/api/football';
 const LGS = [
-  {code:'PL', name:'EPL'},
-  {code:'PD', name:'라리가'},
-  {code:'BL1',name:'분데스'},
-  {code:'SA', name:'세리에'},
-  {code:'FL1',name:'리그앙'}
+  {code:'PL', name:'EPL', emblem:'https://crests.football-data.org/PL.png'},
+  {code:'LA', name:'LALIGA', emblem:'https://crests.football-data.org/LA.png'},
+  {code:'BL1',name:'BUNDES', emblem:'https://crests.football-data.org/BL1.png'},
+  {code:'SA', name:'SERIE A', emblem:'https://crests.football-data.org/SA.png'},
+  {code:'FL1',name:'LIGUE 1', emblem:'https://crests.football-data.org/FL1.png'},
+  {code:'KL1',name:'K LEAGUE', emblem:'https://media.api-sports.io/football/leagues/292.png'}
 ];
 
-const cache = {};
-let prevScores = {};
-let curPLg = 'PL';
+const TEAMS = [
+  {id:764, name:'화성 FC', color:'#FF5E00', lg:'KL2', cr:'https://crests.football-data.org/764.png'},
+  {id:2756, name:'수원삼성', color:'#003DA5', lg:'KL2', cr:'https://media.api-sports.io/football/teams/2756.png'},
+  {id:57, name:'Arsenal', color:'#EF0107', lg:'PL', cr:'https://crests.football-data.org/57.png'},
+  {id:65, name:'Man City', color:'#6CABDD', lg:'PL', cr:'https://crests.football-data.org/65.png'},
+  {id:86, name:'Real Madrid', color:'#FEBE10', lg:'LA', cr:'https://crests.football-data.org/86.png'}
+];
 
-// [1] 데이터 페칭 (실제 API 호출)
-async function fd(path, isStatic = false) {
-  const ttl = isStatic ? 1800000 : 60000;
-  if(cache[path] && (Date.now() - cache[path].ts < ttl)) return cache[path].data;
+let MY_TEAM = null;
+let prevScores = {};
+const cache = {};
+
+// [1] 다이내믹 테마 시스템
+function applyTheme(color) {
+  const root = document.documentElement.style;
+  root.setProperty('--p', color);
+  root.setProperty('--ps', color + '26');
+  root.setProperty('--pb', color + '4d');
+  document.body.style.backgroundImage = `radial-gradient(at 0% 0%, ${color}26 0px, transparent 45%), radial-gradient(at 100% 100%, var(--ss) 0px, transparent 45%)`;
+}
+
+// [2] API 엔진 (Full Cumulative)
+async function fetchData(path, isStatic = false) {
+  const k = path + isStatic;
+  if(cache[k] && (Date.now() - cache[k].ts < (isStatic?1800000:60000))) return cache[k].data;
   try {
     const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`);
     const d = await r.json();
-    if(d.errorCode === 429) return cache[path]?.data || d;
-    cache[path] = { data: d, ts: Date.now() };
+    if(d.errorCode === 429) return cache[k]?.data || d;
+    cache[k] = { data: d, ts: Date.now() };
     return d;
   } catch(e) { return null; }
 }
 
-// [2] 홈 & 라이브 및 골 감지
+// [3] 라이브 & 골 사운드/애니메이션
 async function loadHome() {
   const c = document.getElementById('home-bd');
-  const d = await fd('/matches');
+  const d = await fetchData('/matches');
   if(!d?.matches) return;
 
   const live = d.matches.filter(m => ['IN_PLAY','HALFTIME'].includes(m.status));
@@ -144,14 +207,14 @@ async function loadHome() {
   live.forEach(m => {
     const sc = `${m.score.fullTime.home}-${m.score.fullTime.away}`;
     if(prevScores[m.id] && prevScores[m.id] !== sc) {
-      const team = m.score.fullTime.home > prevScores[m.id].split('-')[0] ? m.homeTeam.shortName : m.awayTeam.shortName;
-      triggerGoal(team);
+        const team = m.score.fullTime.home > prevScores[m.id].split('-')[0] ? m.homeTeam.shortName : m.awayTeam.shortName;
+        triggerGoal(team);
     }
     prevScores[m.id] = sc;
   });
 
   c.innerHTML = live.map(m => `
-    <div class="mc">
+    <div class="mc" onclick="showDtl(${m.id})">
       <div class="mc-top"><span>${m.competition.name}</span><span style="color:var(--red);">● LIVE</span></div>
       <div class="mc-body">
         <div class="mc-tm"><span>${m.homeTeam.shortName}</span></div>
@@ -163,16 +226,28 @@ async function loadHome() {
 
 function triggerGoal(team) {
   const gt = document.getElementById('gt');
+  document.getElementById('gt-info').textContent = `${team} SCORED!`;
   gt.style.display = 'flex';
-  new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3').play().catch(()=>{});
-  setTimeout(() => gt.style.display = 'none', 3000);
+  
+  // 누적된 사운드 로직
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.connect(g); g.connect(ctx.destination);
+  osc.type = 'sine'; osc.frequency.value = 880;
+  g.gain.setValueAtTime(0.5, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+  osc.start(); osc.stop(ctx.currentTime + 1.5);
+
+  setTimeout(() => { gt.style.display = 'none'; }, 4000);
 }
 
-// [3] 4월 전체 일정
-async function loadSched(date = "2026-04-12") {
+// [4] 일정 (아코디언 및 4월 포함 전체 네비)
+async function loadSched(date = new Date().toISOString().split('T')[0]) {
   const c = document.getElementById('sched-bd');
-  c.innerHTML = '<div style="text-align:center; padding:50px;">불러오는 중...</div>';
-  const d = await fd(`/matches?dateFrom=${date}&dateTo=${date}`);
+  c.innerHTML = '<div style="text-align:center; padding:50px;">FETCHING SCHEDULE...</div>';
+  const d = await fetchData(`/matches?dateFrom=${date}&dateTo=${date}`);
+  
   if(!d.matches?.length) { c.innerHTML = '<div style="padding:100px; text-align:center;">경기가 없습니다.</div>'; return; }
 
   const groups = d.matches.reduce((acc, m) => {
@@ -182,88 +257,98 @@ async function loadSched(date = "2026-04-12") {
   }, {});
 
   c.innerHTML = Object.entries(groups).map(([name, ms], i) => `
-    <div class="lg-hd" onclick="document.getElementById('lg-${i}').style.display = document.getElementById('lg-${i}').style.display === 'none' ? 'flex' : 'none'">
-      <span style="flex:1;">${name}</span><span>${ms.length} Match ▾</span>
+    <div class="lg-hd" onclick="document.getElementById('lg-${i}').classList.toggle('open')">
+      <span style="flex:1;">${name}</span><span>${ms.length} MATCHES ▾</span>
     </div>
     <div class="lg-ms" id="lg-${i}">
-      ${ms.map(m => `<div class="mc" style="margin-top:10px; padding:15px 25px; display:flex; justify-content:space-between; align-items:center;">
+      ${ms.map(m => `
+        <div class="mc" style="margin-top:10px; padding:15px 25px; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; color:var(--t3);">${m.utcDate.slice(11,16)}</span>
-          <span style="flex:1; text-align:center;">${m.homeTeam.shortName} vs ${m.awayTeam.shortName}</span>
+          <span style="flex:1; text-align:center; font-weight:700;">${m.homeTeam.shortName} vs ${m.awayTeam.shortName}</span>
           <span style="font-weight:900; color:var(--p);">${m.score.fullTime.home??'-'}:${m.score.fullTime.away??'-'}</span>
-      </div>`).join('')}
+        </div>`).join('')}
     </div>`).join('');
 }
 
-function initDateNav() {
-  const nav = document.getElementById('date-nav');
-  if(nav.innerHTML) return;
-  for(let i=1; i<=30; i++) {
-    const ds = `2026-04-${String(i).padStart(2,'0')}`;
-    const btn = document.createElement('button');
-    btn.className = `pill ${i === 12 ? 'on' : ''}`;
-    btn.textContent = `4/${i}`;
-    btn.onclick = () => { document.querySelectorAll('#date-nav .pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); loadSched(ds); };
-    nav.appendChild(btn);
-  }
-}
-
-// [4] AI PITCH (오늘+내일 통합)
+// [5] AI PITCH (오늘/내일 전체 분석)
 async function loadAI() {
   const c = document.getElementById('ai-bd');
-  const d = await fd('/matches');
-  c.innerHTML = d.matches?.slice(0, 8).map(m => {
-    const h = 35 + (m.id % 40); const a = 100 - h - 10;
-    return `<div class="ai-card">
-        <div style="font-size:11px; color:var(--s); font-weight:800; margin-bottom:12px;">AI TACTICAL PREDICTION</div>
-        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:18px;"><span>${m.homeTeam.shortName}</span><span>${m.awayTeam.shortName}</span></div>
+  const d = await fetchData('/matches');
+  c.innerHTML = d.matches?.slice(0, 10).map(m => {
+    const h = 40 + (m.id % 30); const a = 100 - h - 10;
+    return `
+      <div class="ai-card">
+        <div style="font-size:11px; color:var(--s); font-weight:900; margin-bottom:15px;">AI PROBABILITY ENGINE</div>
+        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:20px;"><span>${m.homeTeam.shortName}</span><span>${m.awayTeam.shortName}</span></div>
         <div class="prob-bar-wrap"><div class="prob-h" style="width:${h}%"></div><div class="prob-a" style="width:${a}%"></div></div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--t2);"><span>Win ${h}%</span><span>Win ${a}%</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--t2);"><span>WIN ${h}%</span><span>WIN ${a}%</span></div>
       </div>`;
   }).join('') || '<div class="empty">데이터 없음</div>';
 }
 
-// [5] 순위 & 선수
-async function loadStd(code) {
-  curPLg = code; renderPills('std');
-  const c = document.getElementById('std-bd');
-  const d = await fd(`/competitions/${code}/standings`, true);
-  if(!d.standings) return;
-  const rows = d.standings[0].table;
-  c.innerHTML = `<table class="stt"><tr><th>#</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr>` + 
-    rows.map(r => `<tr><td>${r.position}</td><td class="nm-cell"><img src="${r.team.crest}">${r.team.shortName}</td><td>${r.playedGames}</td><td>${r.won}</td><td>${r.draw}</td><td>${r.lost}</td><td style="color:var(--p); font-weight:900;">${r.points}</td></tr>`).join('') + `</table>`;
+// [6] 온보딩 초기화
+function initOb() {
+  const list = document.getElementById('ob-list');
+  list.innerHTML = TEAMS.map(t => `
+    <div class="ob-team" onclick="selectTeam(this, ${t.id})">
+      <img src="${t.cr}">
+      <span>${t.name}</span>
+    </div>
+  `).join('');
 }
 
-async function loadPlayers(lg) {
-  curPLg = lg; renderPills('pl');
-  const c = document.getElementById('pl-bd');
-  const d = await fd(`/competitions/${lg}/scorers`, true);
-  if(!d.scorers) return;
-  c.innerHTML = d.scorers.slice(0, 15).map((s, i) => `
-    <div style="display:flex; align-items:center; gap:20px; padding:18px; background:var(--bg2); border-radius:18px; margin-bottom:10px;">
-      <span style="font-size:20px; font-weight:900; color:var(--p); opacity:0.4;">${i+1}</span>
-      <div style="flex:1;"><div style="font-weight:700;">${s.player.name}</div><div style="font-size:12px; color:var(--t3);">${s.team.name}</div></div>
-      <div style="font-size:18px; font-weight:900; color:var(--p);">${s.goals} 골</div>
-    </div>`).join('');
+function selectTeam(el, id) {
+  document.querySelectorAll('.ob-team').forEach(t => t.classList.remove('sel'));
+  el.classList.add('sel');
+  MY_TEAM = TEAMS.find(t => t.id === id);
+  applyTheme(MY_TEAM.color);
 }
 
-function renderPills(type) {
-  const target = document.getElementById(type === 'std' ? 'std-pills' : 'pl-pills');
-  target.innerHTML = LGS.map(l => `<button class="pill ${l.code === curPLg ? 'on' : ''}" onclick="${type === 'std' ? 'loadStd' : 'loadPlayers'}('${l.code}')">${l.name}</button>`).join('');
+function startApp() {
+  if(!MY_TEAM) return alert('팀을 선택해주세요!');
+  localStorage.setItem('pp_team', JSON.stringify(MY_TEAM));
+  document.getElementById('ob').style.display = 'none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('team-tag').textContent = `${MY_TEAM.name} FAN CONNECTED`;
+  swP('home');
 }
 
+// [공통 전환 로직]
 function swP(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + name).classList.add('on');
   document.querySelectorAll('.si').forEach(s => s.classList.remove('on'));
   if(el) el.classList.add('on');
+
   if(name === 'home') loadHome();
   if(name === 'ai') loadAI();
-  if(name === 'sched') { initDateNav(); loadSched(); }
-  if(name === 'std') loadStd('PL');
-  if(name === 'player') loadPlayers('PL');
+  if(name === 'sched') {
+    const nav = document.getElementById('date-nav');
+    if(!nav.innerHTML) {
+        for(let i=-2; i<14; i++) {
+            const d = new Date(); d.setDate(d.getDate() + i);
+            const ds = d.toISOString().split('T')[0];
+            const btn = document.createElement('button');
+            btn.className = 'pill' + (i===0 ? ' on' : '');
+            btn.textContent = `${d.getMonth()+1}/${d.getDate()}`;
+            btn.onclick = () => { document.querySelectorAll('#date-nav .pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); loadSched(ds); };
+            nav.appendChild(btn);
+        }
+    }
+    loadSched();
+  }
 }
 
-window.onload = () => { swP('home'); setInterval(loadHome, 30000); };
+window.onload = () => {
+  const saved = localStorage.getItem('pp_team');
+  if(saved) {
+    MY_TEAM = JSON.parse(saved);
+    applyTheme(MY_TEAM.color);
+    startApp();
+  } else {
+    initOb();
+  }
+};
 </script>
 </body>
 </html>
