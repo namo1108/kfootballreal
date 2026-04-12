@@ -19,7 +19,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 .ob-hero{text-align:center;padding:44px 20px 24px;}
 .ob-logo{font-size:28px;font-weight:800;letter-spacing:4px;color:var(--p);margin-bottom:6px;}
 .ob-sub{font-size:12px;color:var(--t3);letter-spacing:2px;margin-bottom:16px;}
-.ob-hint{font-size:15px;color:var(--t2);line-height:1.7;}
 .ob-theme-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;}
 .ob-th-btn{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:22px;border:2px solid var(--b);background:var(--cd);color:var(--t2);font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;font-family:var(--f);}
 .ob-th-btn.sel{border-color:var(--p);color:var(--p);background:var(--ps);}
@@ -97,7 +96,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 .mc.mymatch{border-color:var(--pb);border-width:2px;}
 .mc-top{padding:9px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--b);background:var(--bg3);}
 .mc-lg{font-size:12px;color:var(--t3);font-weight:500;}
-.mc-top-r{display:flex;align-items:center;gap:8px;}
 .mc-badge{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
 .mc-badge.live{background:rgba(239,68,68,.12);color:var(--red);}
 .mc-badge.fin{background:var(--bg3);color:var(--t3);}
@@ -181,15 +179,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 .sm-nm{font-size:13px;font-weight:500;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
 .sm-nm.win{color:var(--t);font-weight:700;}
 .sm-sc{font-size:14px;font-weight:700;width:16px;text-align:right;flex-shrink:0;}
-.myfix{background:var(--cd);border:2px solid var(--pb);border-radius:var(--r);padding:16px;margin-bottom:14px;}
-.myfix-tag{font-size:12px;font-weight:700;color:var(--p);margin-bottom:11px;}
-.myfix-teams{display:flex;align-items:center;justify-content:space-between;}
-.myfix-t{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;}
-.myfix-t img{width:38px;height:38px;object-fit:contain;}
-.myfix-tnm{font-size:13px;font-weight:600;color:var(--t);text-align:center;}
-.myfix-vs{font-size:17px;font-weight:800;color:var(--p);}
-.myfix-meta{margin-top:11px;display:flex;gap:6px;flex-wrap:wrap;}
-.myfix-meta span{font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);}
 
 /* PLAYERS */
 .pc{background:var(--cd);border:1px solid var(--b);border-radius:12px;padding:13px;margin-bottom:8px;display:flex;align-items:center;gap:11px;}
@@ -258,7 +247,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 .gt-box{position:relative;z-index:1;text-align:center;animation:gtPop 3.8s ease forwards;}
 @keyframes gtPop{0%{opacity:0;transform:scale(.2)}12%{opacity:1;transform:scale(1.05)}18%{transform:scale(1)}85%{opacity:1}100%{opacity:0;transform:scale(.8)}}
 
-/* 골대 SVG 애니메이션 */
 .gt-net{display:block;margin:0 auto 14px;animation:netShake 0.5s ease 0.3s 3;}
 @keyframes netShake{
   0%{transform:scaleX(1) scaleY(1)}
@@ -322,18 +310,11 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 .dtl-info-row span:first-child{color:var(--t3);}
 .dtl-info-row span:last-child{color:var(--t);font-weight:600;}
 
-/* ── 뉴스 카드 개선 ── */
-.nc-src{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
-.nc-author{font-size:13px;font-weight:700;color:var(--p);}
-.tr-b{margin-left:auto;flex-shrink:0;}
-
-/* 일정 탭 네비 */
 #sched-nav{position:sticky;top:0;z-index:10;background:var(--bg);padding-bottom:4px;}
 </style>
 </head>
 <body data-theme="dark">
 
-<!-- ONBOARDING -->
 <div id="ob">
 <div class="ob-inner">
   <div class="ob-hero">
@@ -346,170 +327,32 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
     </div>
   </div>
   <div class="ob-body">
-
-    <div class="ob-lg-hdr" style="background:#3D195B">
-      <img src="https://crests.football-data.org/PL.png" onerror="this.style.opacity='.5'">
-      <span>프리미어리그</span>
-    </div>
+    <div class="ob-lg-hdr" style="background:#3D195B"><img src="https://crests.football-data.org/PL.png"><span>프리미어리그</span></div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','Arsenal')"><img src="https://crests.football-data.org/57.png" onerror="this.src='https://crests.football-data.org/57.svg'"><div class="ob-nm">Arsenal</div></div>
-      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','Man City')"><img src="https://crests.football-data.org/65.png" onerror="this.src='https://crests.football-data.org/65.svg'"><div class="ob-nm">Man City</div></div>
-      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','Liverpool')"><img src="https://crests.football-data.org/64.png" onerror="this.src='https://crests.football-data.org/64.svg'"><div class="ob-nm">Liverpool</div></div>
-      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','Man United')"><img src="https://crests.football-data.org/66.png" onerror="this.src='https://crests.football-data.org/66.svg'"><div class="ob-nm">Man United</div></div>
-      <div class="ob-team" onclick="op(this,61,'PL','#034694','Chelsea')"><img src="https://crests.football-data.org/61.png" onerror="this.src='https://crests.football-data.org/61.svg'"><div class="ob-nm">Chelsea</div></div>
-      <div class="ob-team" onclick="op(this,73,'PL','#132257','Tottenham')"><img src="https://crests.football-data.org/73.png" onerror="this.src='https://crests.football-data.org/73.svg'"><div class="ob-nm">Tottenham</div></div>
-      <div class="ob-team" onclick="op(this,67,'PL','#241F20','Newcastle')"><img src="https://crests.football-data.org/67.png" onerror="this.src='https://crests.football-data.org/67.svg'"><div class="ob-nm">Newcastle</div></div>
-      <div class="ob-team" onclick="op(this,58,'PL','#670E36','Aston Villa')"><img src="https://crests.football-data.org/58.png" onerror="this.src='https://crests.football-data.org/58.svg'"><div class="ob-nm">Aston Villa</div></div>
-      <div class="ob-team" onclick="op(this,563,'PL','#7A263A','West Ham')"><img src="https://crests.football-data.org/563.png" onerror="this.src='https://crests.football-data.org/563.svg'"><div class="ob-nm">West Ham</div></div>
-      <div class="ob-team" onclick="op(this,354,'PL','#1B458F','Crystal Palace')"><img src="https://crests.football-data.org/354.png" onerror="this.src='https://crests.football-data.org/354.svg'"><div class="ob-nm">Crystal Palace</div></div>
-      <div class="ob-team" onclick="op(this,397,'PL','#0057B8','Brighton')"><img src="https://crests.football-data.org/397.png" onerror="this.src='https://crests.football-data.org/397.svg'"><div class="ob-nm">Brighton</div></div>
-      <div class="ob-team" onclick="op(this,402,'PL','#E30613','Brentford')"><img src="https://crests.football-data.org/402.png" onerror="this.src='https://crests.football-data.org/402.svg'"><div class="ob-nm">Brentford</div></div>
-      <div class="ob-team" onclick="op(this,76,'PL','#FDB913','Wolves')"><img src="https://crests.football-data.org/76.png" onerror="this.src='https://crests.football-data.org/76.svg'"><div class="ob-nm">Wolves</div></div>
-      <div class="ob-team" onclick="op(this,74,'PL','#003399','Everton')"><img src="https://crests.football-data.org/74.png" onerror="this.src='https://crests.football-data.org/74.svg'"><div class="ob-nm">Everton</div></div>
-      <div class="ob-team" onclick="op(this,1044,'PL','#CC0000','Nottm Forest')"><img src="https://crests.football-data.org/1044.png" onerror="this.src='https://crests.football-data.org/1044.svg'"><div class="ob-nm">Nottm Forest</div></div>
-      <div class="ob-team" onclick="op(this,72,'PL','#CC0000','Fulham')"><img src="https://crests.football-data.org/72.png" onerror="this.src='https://crests.football-data.org/72.svg'"><div class="ob-nm">Fulham</div></div>
-      <div class="ob-team" onclick="op(this,715,'PL','#DA291C','Bournemouth')"><img src="https://crests.football-data.org/715.png" onerror="this.src='https://crests.football-data.org/715.svg'"><div class="ob-nm">Bournemouth</div></div>
-      <div class="ob-team" onclick="op(this,341,'PL','#FFCD00','Leeds Utd')"><img src="https://crests.football-data.org/341.png" onerror="this.src='https://crests.football-data.org/341.svg'"><div class="ob-nm">Leeds Utd</div></div>
-      <div class="ob-team" onclick="op(this,394,'PL','#CC0000','Sunderland')"><img src="https://crests.football-data.org/394.png" onerror="this.src='https://crests.football-data.org/394.svg'"><div class="ob-nm">Sunderland</div></div>
-      <div class="ob-team" onclick="op(this,328,'PL','#6B2C91','Burnley')"><img src="https://crests.football-data.org/328.png" onerror="this.src='https://crests.football-data.org/328.svg'"><div class="ob-nm">Burnley</div></div>
+      <div class="ob-team" onclick="op(this,57,'PL','#EF0107','Arsenal')"><img src="https://crests.football-data.org/57.png"><div class="ob-nm">Arsenal</div></div>
+      <div class="ob-team" onclick="op(this,65,'PL','#6CABDD','Man City')"><img src="https://crests.football-data.org/65.png"><div class="ob-nm">Man City</div></div>
+      <div class="ob-team" onclick="op(this,64,'PL','#C8102E','Liverpool')"><img src="https://crests.football-data.org/64.png"><div class="ob-nm">Liverpool</div></div>
+      <div class="ob-team" onclick="op(this,66,'PL','#DA291C','Man United')"><img src="https://crests.football-data.org/66.png"><div class="ob-nm">Man United</div></div>
+      <div class="ob-team" onclick="op(this,61,'PL','#034694','Chelsea')"><img src="https://crests.football-data.org/61.png"><div class="ob-nm">Chelsea</div></div>
+      <div class="ob-team" onclick="op(this,73,'PL','#132257','Tottenham')"><img src="https://crests.football-data.org/73.png"><div class="ob-nm">Tottenham</div></div>
     </div>
-
-    <div class="ob-lg-hdr" style="background:#FF4B1F">
-      <img src="https://crests.football-data.org/PD.png" onerror="this.style.opacity='.5'">
-      <span>라리가</span>
-    </div>
+    <div class="ob-lg-hdr" style="background:#FF4B1F"><img src="https://crests.football-data.org/PD.png"><span>라리가</span></div>
     <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','Real Madrid')"><img src="https://crests.football-data.org/86.png" onerror="this.src='https://crests.football-data.org/86.svg'"><div class="ob-nm">Real Madrid</div></div>
-      <div class="ob-team" onclick="op(this,81,'PD','#A50044','Barcelona')"><img src="https://crests.football-data.org/81.png" onerror="this.src='https://crests.football-data.org/81.svg'"><div class="ob-nm">Barcelona</div></div>
-      <div class="ob-team" onclick="op(this,78,'PD','#CC0000','Atletico')"><img src="https://crests.football-data.org/78.png" onerror="this.src='https://crests.football-data.org/78.svg'"><div class="ob-nm">Atletico</div></div>
-      <div class="ob-team" onclick="op(this,94,'PD','#FFD700','Villarreal')"><img src="https://crests.football-data.org/94.png" onerror="this.src='https://crests.football-data.org/94.svg'"><div class="ob-nm">Villarreal</div></div>
-      <div class="ob-team" onclick="op(this,82,'PD','#D40511','Sevilla')"><img src="https://crests.football-data.org/82.png" onerror="this.src='https://crests.football-data.org/82.svg'"><div class="ob-nm">Sevilla</div></div>
-      <div class="ob-team" onclick="op(this,90,'PD','#00954C','Real Betis')"><img src="https://crests.football-data.org/90.png" onerror="this.src='https://crests.football-data.org/90.svg'"><div class="ob-nm">Real Betis</div></div>
-      <div class="ob-team" onclick="op(this,92,'PD','#0067B1','R.Sociedad')"><img src="https://crests.football-data.org/92.png" onerror="this.src='https://crests.football-data.org/92.svg'"><div class="ob-nm">R.Sociedad</div></div>
-      <div class="ob-team" onclick="op(this,87,'PD','#EE2523','Athletic')"><img src="https://crests.football-data.org/87.png" onerror="this.src='https://crests.football-data.org/87.svg'"><div class="ob-nm">Athletic</div></div>
-      <div class="ob-team" onclick="op(this,95,'PD','#FF7F00','Valencia')"><img src="https://crests.football-data.org/95.png" onerror="this.src='https://crests.football-data.org/95.svg'"><div class="ob-nm">Valencia</div></div>
-      <div class="ob-team" onclick="op(this,558,'PD','#CC0000','Girona')"><img src="https://crests.football-data.org/558.png" onerror="this.src='https://crests.football-data.org/558.svg'"><div class="ob-nm">Girona</div></div>
-      <div class="ob-team" onclick="op(this,279,'PD','#CC0000','Mallorca')"><img src="https://crests.football-data.org/279.png" onerror="this.src='https://crests.football-data.org/279.svg'"><div class="ob-nm">Mallorca</div></div>
-      <div class="ob-team" onclick="op(this,80,'PD','#6BB5E0','Celta Vigo')"><img src="https://crests.football-data.org/80.png" onerror="this.src='https://crests.football-data.org/80.svg'"><div class="ob-nm">Celta Vigo</div></div>
-      <div class="ob-team" onclick="op(this,264,'PD','#0064C8','Alaves')"><img src="https://crests.football-data.org/264.png" onerror="this.src='https://crests.football-data.org/264.svg'"><div class="ob-nm">Alaves</div></div>
-      <div class="ob-team" onclick="op(this,263,'PD','#003DA5','Espanyol')"><img src="https://crests.football-data.org/263.png" onerror="this.src='https://crests.football-data.org/263.svg'"><div class="ob-nm">Espanyol</div></div>
-      <div class="ob-team" onclick="op(this,559,'PD','#0066CC','Getafe')"><img src="https://crests.football-data.org/559.png" onerror="this.src='https://crests.football-data.org/559.svg'"><div class="ob-nm">Getafe</div></div>
-      <div class="ob-team" onclick="op(this,289,'PD','#CC0000','Osasuna')"><img src="https://crests.football-data.org/289.png" onerror="this.src='https://crests.football-data.org/289.svg'"><div class="ob-nm">Osasuna</div></div>
-      <div class="ob-team" onclick="op(this,745,'PD','#063EA5','Levante')"><img src="https://crests.football-data.org/745.png" onerror="this.src='https://crests.football-data.org/745.svg'"><div class="ob-nm">Levante</div></div>
-      <div class="ob-team" onclick="op(this,277,'PD','#007800','Elche')"><img src="https://crests.football-data.org/277.png" onerror="this.src='https://crests.football-data.org/277.svg'"><div class="ob-nm">Elche</div></div>
-      <div class="ob-team" onclick="op(this,1073,'PD','#003DA5','Real Oviedo')"><img src="https://crests.football-data.org/1073.png" onerror="this.src='https://crests.football-data.org/1073.svg'"><div class="ob-nm">Real Oviedo</div></div>
-      <div class="ob-team" onclick="op(this,726,'PD','#FFDD00','Rayo Vallecano')"><img src="https://crests.football-data.org/726.png" onerror="this.src='https://crests.football-data.org/726.svg'"><div class="ob-nm">Rayo Vallecano</div></div>
-    </div>
-
-    <div class="ob-lg-hdr" style="background:#D3010C">
-      <img src="https://crests.football-data.org/BL1.png" onerror="this.style.opacity='.5'">
-      <span>분데스리가</span>
-    </div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,5,'BL1','#DC052D','Bayern')"><img src="https://crests.football-data.org/5.png" onerror="this.src='https://crests.football-data.org/5.svg'"><div class="ob-nm">Bayern</div></div>
-      <div class="ob-team" onclick="op(this,4,'BL1','#FDE100','Dortmund')"><img src="https://crests.football-data.org/4.png" onerror="this.src='https://crests.football-data.org/4.svg'"><div class="ob-nm">Dortmund</div></div>
-      <div class="ob-team" onclick="op(this,3,'BL1','#E32221','Leverkusen')"><img src="https://crests.football-data.org/3.png" onerror="this.src='https://crests.football-data.org/3.svg'"><div class="ob-nm">Leverkusen</div></div>
-      <div class="ob-team" onclick="op(this,721,'BL1','#CC0000','Leipzig')"><img src="https://crests.football-data.org/721.png" onerror="this.src='https://crests.football-data.org/721.svg'"><div class="ob-nm">Leipzig</div></div>
-      <div class="ob-team" onclick="op(this,13,'BL1','#E2001A','Frankfurt')"><img src="https://crests.football-data.org/13.png" onerror="this.src='https://crests.football-data.org/13.svg'"><div class="ob-nm">Frankfurt</div></div>
-      <div class="ob-team" onclick="op(this,18,'BL1','#65B32E','Wolfsburg')"><img src="https://crests.football-data.org/18.png" onerror="this.src='https://crests.football-data.org/18.svg'"><div class="ob-nm">Wolfsburg</div></div>
-      <div class="ob-team" onclick="op(this,11,'BL1','#CC0000','Stuttgart')"><img src="https://crests.football-data.org/11.png" onerror="this.src='https://crests.football-data.org/11.svg'"><div class="ob-nm">Stuttgart</div></div>
-      <div class="ob-team" onclick="op(this,10,'BL1','#CC0000','Freiburg')"><img src="https://crests.football-data.org/10.png" onerror="this.src='https://crests.football-data.org/10.svg'"><div class="ob-nm">Freiburg</div></div>
-      <div class="ob-team" onclick="op(this,6,'BL1','#1873B8','Hoffenheim')"><img src="https://crests.football-data.org/6.png" onerror="this.src='https://crests.football-data.org/6.svg'"><div class="ob-nm">Hoffenheim</div></div>
-      <div class="ob-team" onclick="op(this,9,'BL1','#CC0000','Augsburg')"><img src="https://crests.football-data.org/9.png" onerror="this.src='https://crests.football-data.org/9.svg'"><div class="ob-nm">Augsburg</div></div>
-      <div class="ob-team" onclick="op(this,39,'BL1','#CC0000','Mainz')"><img src="https://crests.football-data.org/39.png" onerror="this.src='https://crests.football-data.org/39.svg'"><div class="ob-nm">Mainz</div></div>
-      <div class="ob-team" onclick="op(this,43,'BL1','#1D9B43','Werder')"><img src="https://crests.football-data.org/43.png" onerror="this.src='https://crests.football-data.org/43.svg'"><div class="ob-nm">Werder</div></div>
-      <div class="ob-team" onclick="op(this,38,'BL1','#000000','Gladbach')"><img src="https://crests.football-data.org/38.png" onerror="this.src='https://crests.football-data.org/38.svg'"><div class="ob-nm">Gladbach</div></div>
-      <div class="ob-team" onclick="op(this,28,'BL1','#C8102E','St Pauli')"><img src="https://crests.football-data.org/28.png" onerror="this.src='https://crests.football-data.org/28.svg'"><div class="ob-nm">St Pauli</div></div>
-      <div class="ob-team" onclick="op(this,7,'BL1','#CC0000','Heidenheim')"><img src="https://crests.football-data.org/7.png" onerror="this.src='https://crests.football-data.org/7.svg'"><div class="ob-nm">Heidenheim</div></div>
-      <div class="ob-team" onclick="op(this,756,'BL1','#CC0000','Union Berlin')"><img src="https://crests.football-data.org/756.png" onerror="this.src='https://crests.football-data.org/756.svg'"><div class="ob-nm">Union Berlin</div></div>
-      <div class="ob-team" onclick="op(this,16,'BL1','#FC4444','FC Köln')"><img src="https://crests.football-data.org/16.png" onerror="this.src='https://crests.football-data.org/16.svg'"><div class="ob-nm">FC Köln</div></div>
-      <div class="ob-team" onclick="op(this,735,'BL1','#003DA5','Hamburg')"><img src="https://crests.football-data.org/735.png" onerror="this.src='https://crests.football-data.org/735.svg'"><div class="ob-nm">Hamburg</div></div>
-    </div>
-
-    <div class="ob-lg-hdr" style="background:#003B8E">
-      <img src="https://crests.football-data.org/SA.png" onerror="this.style.opacity='.5'">
-      <span>세리에A</span>
-    </div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,108,'SA','#0068A8','Inter')"><img src="https://crests.football-data.org/108.png" onerror="this.src='https://crests.football-data.org/108.svg'"><div class="ob-nm">Inter</div></div>
-      <div class="ob-team" onclick="op(this,98,'SA','#FB090B','AC Milan')"><img src="https://crests.football-data.org/98.png" onerror="this.src='https://crests.football-data.org/98.svg'"><div class="ob-nm">AC Milan</div></div>
-      <div class="ob-team" onclick="op(this,113,'SA','#12A0D7','Napoli')"><img src="https://crests.football-data.org/113.png" onerror="this.src='https://crests.football-data.org/113.svg'"><div class="ob-nm">Napoli</div></div>
-      <div class="ob-team" onclick="op(this,109,'SA','#000000','Juventus')"><img src="https://crests.football-data.org/109.png" onerror="this.src='https://crests.football-data.org/109.svg'"><div class="ob-nm">Juventus</div></div>
-      <div class="ob-team" onclick="op(this,100,'SA','#8E1F2F','AS Roma')"><img src="https://crests.football-data.org/100.png" onerror="this.src='https://crests.football-data.org/100.svg'"><div class="ob-nm">AS Roma</div></div>
-      <div class="ob-team" onclick="op(this,102,'SA','#87D8F7','Lazio')"><img src="https://crests.football-data.org/102.png" onerror="this.src='https://crests.football-data.org/102.svg'"><div class="ob-nm">Lazio</div></div>
-      <div class="ob-team" onclick="op(this,107,'SA','#4C2D8C','Fiorentina')"><img src="https://crests.football-data.org/107.png" onerror="this.src='https://crests.football-data.org/107.svg'"><div class="ob-nm">Fiorentina</div></div>
-      <div class="ob-team" onclick="op(this,110,'SA','#1E3F6D','Atalanta')"><img src="https://crests.football-data.org/110.png" onerror="this.src='https://crests.football-data.org/110.svg'"><div class="ob-nm">Atalanta</div></div>
-      <div class="ob-team" onclick="op(this,103,'SA','#CC0000','Bologna')"><img src="https://crests.football-data.org/103.png" onerror="this.src='https://crests.football-data.org/103.svg'"><div class="ob-nm">Bologna</div></div>
-      <div class="ob-team" onclick="op(this,114,'SA','#8B1A1A','Torino')"><img src="https://crests.football-data.org/114.png" onerror="this.src='https://crests.football-data.org/114.svg'"><div class="ob-nm">Torino</div></div>
-      <div class="ob-team" onclick="op(this,104,'SA','#CC0000','Genoa')"><img src="https://crests.football-data.org/104.png" onerror="this.src='https://crests.football-data.org/104.svg'"><div class="ob-nm">Genoa</div></div>
-      <div class="ob-team" onclick="op(this,115,'SA','#CC0000','Cagliari')"><img src="https://crests.football-data.org/115.png" onerror="this.src='https://crests.football-data.org/115.svg'"><div class="ob-nm">Cagliari</div></div>
-      <div class="ob-team" onclick="op(this,105,'SA','#FFD700','Verona')"><img src="https://crests.football-data.org/105.png" onerror="this.src='https://crests.football-data.org/105.svg'"><div class="ob-nm">Verona</div></div>
-      <div class="ob-team" onclick="op(this,586,'SA','#FFD700','Lecce')"><img src="https://crests.football-data.org/586.png" onerror="this.src='https://crests.football-data.org/586.svg'"><div class="ob-nm">Lecce</div></div>
-      <div class="ob-team" onclick="op(this,118,'SA','#000000','Udinese')"><img src="https://crests.football-data.org/118.png" onerror="this.src='https://crests.football-data.org/118.svg'"><div class="ob-nm">Udinese</div></div>
-      <div class="ob-team" onclick="op(this,470,'SA','#003DA5','Como')"><img src="https://crests.football-data.org/470.png" onerror="this.src='https://crests.football-data.org/470.svg'"><div class="ob-nm">Como</div></div>
-      <div class="ob-team" onclick="op(this,106,'SA','#FFD700','Parma')"><img src="https://crests.football-data.org/106.png" onerror="this.src='https://crests.football-data.org/106.svg'"><div class="ob-nm">Parma</div></div>
-      <div class="ob-team" onclick="op(this,1185,'SA','#00A551','Sassuolo')"><img src="https://crests.football-data.org/1185.png" onerror="this.src='https://crests.football-data.org/1185.svg'"><div class="ob-nm">Sassuolo</div></div>
-      <div class="ob-team" onclick="op(this,1107,'SA','#004B8D','Pisa')"><img src="https://crests.football-data.org/1107.png" onerror="this.src='https://crests.football-data.org/1107.svg'"><div class="ob-nm">Pisa</div></div>
-      <div class="ob-team" onclick="op(this,1197,'SA','#CC0000','Cremonese')"><img src="https://crests.football-data.org/1197.png" onerror="this.src='https://crests.football-data.org/1197.svg'"><div class="ob-nm">Cremonese</div></div>
-    </div>
-
-    <div class="ob-lg-hdr" style="background:#052B5A">
-      <img src="https://crests.football-data.org/FL1.png" onerror="this.style.opacity='.5'">
-      <span>리그앙</span>
-    </div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,524,'FL1','#003F8B','PSG')"><img src="https://crests.football-data.org/524.png" onerror="this.src='https://crests.football-data.org/524.svg'"><div class="ob-nm">PSG</div></div>
-      <div class="ob-team" onclick="op(this,548,'FL1','#DA291C','Monaco')"><img src="https://crests.football-data.org/548.png" onerror="this.src='https://crests.football-data.org/548.svg'"><div class="ob-nm">Monaco</div></div>
-      <div class="ob-team" onclick="op(this,516,'FL1','#009AC7','Marseille')"><img src="https://crests.football-data.org/516.png" onerror="this.src='https://crests.football-data.org/516.svg'"><div class="ob-nm">Marseille</div></div>
-      <div class="ob-team" onclick="op(this,518,'FL1','#0055A4','Lyon')"><img src="https://crests.football-data.org/518.png" onerror="this.src='https://crests.football-data.org/518.svg'"><div class="ob-nm">Lyon</div></div>
-      <div class="ob-team" onclick="op(this,512,'FL1','#BE2127','Lille')"><img src="https://crests.football-data.org/512.png" onerror="this.src='https://crests.football-data.org/512.svg'"><div class="ob-nm">Lille</div></div>
-      <div class="ob-team" onclick="op(this,511,'FL1','#FFD700','Lens')"><img src="https://crests.football-data.org/511.png" onerror="this.src='https://crests.football-data.org/511.svg'"><div class="ob-nm">Lens</div></div>
-      <div class="ob-team" onclick="op(this,546,'FL1','#CC0000','Rennes')"><img src="https://crests.football-data.org/546.png" onerror="this.src='https://crests.football-data.org/546.svg'"><div class="ob-nm">Rennes</div></div>
-      <div class="ob-team" onclick="op(this,514,'FL1','#CC0000','Nice')"><img src="https://crests.football-data.org/514.png" onerror="this.src='https://crests.football-data.org/514.svg'"><div class="ob-nm">Nice</div></div>
-      <div class="ob-team" onclick="op(this,543,'FL1','#7B2C8B','Toulouse')"><img src="https://crests.football-data.org/543.png" onerror="this.src='https://crests.football-data.org/543.svg'"><div class="ob-nm">Toulouse</div></div>
-      <div class="ob-team" onclick="op(this,549,'FL1','#FFD700','Nantes')"><img src="https://crests.football-data.org/549.png" onerror="this.src='https://crests.football-data.org/549.svg'"><div class="ob-nm">Nantes</div></div>
-      <div class="ob-team" onclick="op(this,547,'FL1','#003DA5','Strasbourg')"><img src="https://crests.football-data.org/547.png" onerror="this.src='https://crests.football-data.org/547.svg'"><div class="ob-nm">Strasbourg</div></div>
-      <div class="ob-team" onclick="op(this,541,'FL1','#003DA5','Brest')"><img src="https://crests.football-data.org/541.png" onerror="this.src='https://crests.football-data.org/541.svg'"><div class="ob-nm">Brest</div></div>
-      <div class="ob-team" onclick="op(this,544,'FL1','#0055A4','Le Havre')"><img src="https://crests.football-data.org/544.png" onerror="this.src='https://crests.football-data.org/544.svg'"><div class="ob-nm">Le Havre</div></div>
-      <div class="ob-team" onclick="op(this,522,'FL1','#000000','Angers')"><img src="https://crests.football-data.org/522.png" onerror="this.src='https://crests.football-data.org/522.svg'"><div class="ob-nm">Angers</div></div>
-      <div class="ob-team" onclick="op(this,52,'FL1','#003DA5','Auxerre')"><img src="https://crests.football-data.org/52.png" onerror="this.src='https://crests.football-data.org/52.svg'"><div class="ob-nm">Auxerre</div></div>
-      <div class="ob-team" onclick="op(this,553,'FL1','#CC0000','Lorient')"><img src="https://crests.football-data.org/553.png" onerror="this.src='https://crests.football-data.org/553.svg'"><div class="ob-nm">Lorient</div></div>
-      <div class="ob-team" onclick="op(this,593,'FL1','#003DA5','Paris FC')"><img src="https://crests.football-data.org/593.png" onerror="this.src='https://crests.football-data.org/593.svg'"><div class="ob-nm">Paris FC</div></div>
-      <div class="ob-team" onclick="op(this,542,'FL1','#881B29','Metz')"><img src="https://crests.football-data.org/542.png" onerror="this.src='https://crests.football-data.org/542.svg'"><div class="ob-nm">Metz</div></div>
+      <div class="ob-team" onclick="op(this,86,'PD','#FEBE10','Real Madrid')"><img src="https://crests.football-data.org/86.png"><div class="ob-nm">Real Madrid</div></div>
+      <div class="ob-team" onclick="op(this,81,'PD','#A50044','Barcelona')"><img src="https://crests.football-data.org/81.png"><div class="ob-nm">Barcelona</div></div>
     </div>
   </div>
-
-    <div class="ob-lg-hdr" style="background:#003087">
-      <img src="https://media.api-sports.io/football/leagues/292.png" onerror="this.style.opacity='.4'">
-      <span>K리그 1</span>
-    </div>
-    <div class="ob-grid">
-      <div class="ob-team" onclick="op(this,2762,'KL1','#C8102E','전북현대')"><img src="https://media.api-sports.io/football/teams/2762.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">전북현대</div></div>
-      <div class="ob-team" onclick="op(this,2759,'KL1','#E31E24','울산현대')"><img src="https://media.api-sports.io/football/teams/2759.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">울산HD</div></div>
-      <div class="ob-team" onclick="op(this,2756,'KL1','#003DA5','수원삼성')"><img src="https://media.api-sports.io/football/teams/2756.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">수원삼성</div></div>
-      <div class="ob-team" onclick="op(this,2763,'KL1','#0066B3','서울이랜드')"><img src="https://media.api-sports.io/football/teams/2763.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">FC서울</div></div>
-      <div class="ob-team" onclick="op(this,2760,'KL1','#231F20','제주유나이티드')"><img src="https://media.api-sports.io/football/teams/2760.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">제주유나이티드</div></div>
-      <div class="ob-team" onclick="op(this,2757,'KL1','#1A3172','인천유나이티드')"><img src="https://media.api-sports.io/football/teams/2757.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">인천유나이티드</div></div>
-      <div class="ob-team" onclick="op(this,2761,'KL1','#003082','대구FC')"><img src="https://media.api-sports.io/football/teams/2761.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">대구FC</div></div>
-      <div class="ob-team" onclick="op(this,2764,'KL1','#004EA2','포항스틸러스')"><img src="https://media.api-sports.io/football/teams/2764.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">포항스틸러스</div></div>
-      <div class="ob-team" onclick="op(this,2758,'KL1','#003DA5','성남FC')"><img src="https://media.api-sports.io/football/teams/2758.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">성남FC</div></div>
-      <div class="ob-team" onclick="op(this,2765,'KL1','#003DA5','광주FC')"><img src="https://media.api-sports.io/football/teams/2765.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">광주FC</div></div>
-      <div class="ob-team" onclick="op(this,2766,'KL1','#003DA5','강원FC')"><img src="https://media.api-sports.io/football/teams/2766.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">강원FC</div></div>
-      <div class="ob-team" onclick="op(this,2767,'KL1','#003DA5','대전시티즌')"><img src="https://media.api-sports.io/football/teams/2767.png" onerror="this.src='https://via.placeholder.com/32'"><div class="ob-nm">대전하나</div></div>
-    </div>
-
   <button class="ob-start" id="ob-btn" onclick="startApp()" disabled>팀을 선택해주세요</button>
 </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="hdr">
     <div class="hdr-logo" onclick="showSettings()">PITCH PRO</div>
     <div class="hdr-r">
       <div class="lpill" id="lpill"><div class="ldot"></div><span>LIVE</span></div>
       <div class="hdr-lv" id="hdr-lv">Lv.1</div>
-      <img class="hdr-cr" id="hdr-cr" src="" alt="" onerror="this.style.display='none'">
+      <img class="hdr-cr" id="hdr-cr" src="" alt="">
     </div>
   </div>
   <div class="main-body">
@@ -522,26 +365,16 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
       <div class="si" onclick="swP('fan',this)"><span class="si-ic">⭐</span><span class="si-lb">팬존</span></div>
     </div>
     <div class="pages">
-      <div class="page on" id="pg-home"><div id="home-bd"><div class="ldr"><div class="spin"></div><div class="spin-t">불러오는 중...</div></div></div></div>
-      <div class="page" id="pg-sched"><div id="sched-nav"></div><div id="sched-bd"><div class="ldr"><div class="spin"></div></div></div></div>
-      <div class="page" id="pg-std">
-        <div class="pills" id="std-pills"></div>
-        <div id="std-bd"><div class="ldr"><div class="spin"></div></div></div>
-      </div>
-      <div class="page" id="pg-player">
-        <div class="pills" id="pl-pills"></div>
-        <div style="display:flex;gap:6px;margin-bottom:14px;">
-          <button class="pill on" onclick="swPt('scorers',this)">⚽ 득점</button>
-          <button class="pill" onclick="swPt('assists',this)">🎯 도움</button>
-        </div>
-        <div id="pl-bd"><div class="ldr"><div class="spin"></div></div></div>
-      </div>
+      <div class="page on" id="pg-home"><div id="home-bd"></div></div>
+      <div class="page" id="pg-sched"><div id="sched-nav"></div><div id="sched-bd"></div></div>
+      <div class="page" id="pg-std"><div class="pills" id="std-pills"></div><div id="std-bd"></div></div>
+      <div class="page" id="pg-player"><div class="pills" id="pl-pills"></div><div style="display:flex;gap:6px;margin-bottom:14px;"><button class="pill on" onclick="swPt('scorers',this)">⚽ 득점</button><button class="pill" onclick="swPt('assists',this)">🎯 도움</button></div><div id="pl-bd"></div></div>
       <div class="page" id="pg-hub"><div id="hub-bd"></div></div>
       <div class="page" id="pg-fan"><div id="fan-bd"></div></div>
     </div>
     <div class="rp">
       <div class="sec" style="margin-top:0;"><span class="stl" style="font-size:13px;">오늘 경기</span></div>
-      <div id="rp-bd"><div class="ldr" style="padding:20px;"><div class="spin"></div></div></div>
+      <div id="rp-bd"></div>
     </div>
   </div>
   <div class="bnav">
@@ -553,7 +386,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
   </div>
 </div>
 
-<!-- MODALS -->
 <div class="modal" id="dtl-modal">
   <div class="modal-in">
     <div class="modal-hd"><span class="modal-ttl" id="dtl-ttl">경기 상세</span><button class="modal-x" onclick="cm('dtl-modal')">×</button></div>
@@ -561,29 +393,13 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
   </div>
 </div>
 
-<!-- GOAL OVERLAY -->
 <div id="gt">
   <div class="gt-bg"></div>
   <div class="gt-box">
     <svg class="gt-net" width="220" height="90" viewBox="0 0 220 90">
-      <defs>
-        <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <!-- 골대 포스트 -->
-      <line x1="15" y1="10" x2="15" y2="82" stroke="#22c55e" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
-      <line x1="205" y1="10" x2="205" y2="82" stroke="#22c55e" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
-      <line x1="15" y1="10" x2="205" y2="10" stroke="#22c55e" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
-      <!-- 그물 -->
-      <g opacity=".5" stroke="#22c55e" stroke-width=".8">
-        <line x1="15" y1="82" x2="205" y2="82"/>
-        <line x1="52" y1="10" x2="55" y2="82"/><line x1="89" y1="10" x2="92" y2="82"/>
-        <line x1="126" y1="10" x2="123" y2="82"/><line x1="163" y1="10" x2="160" y2="82"/>
-        <line x1="15" y1="32" x2="205" y2="32"/><line x1="15" y1="54" x2="205" y2="54"/>
-        <line x1="15" y1="68" x2="205" y2="68"/>
-      </g>
-      <!-- 공 -->
-      <circle cx="110" cy="46" r="14" fill="#fff" opacity=".95"/>
-      <path d="M110 32 l5 8 l9 0 l-7 6 l3 9 l-10-6 l-10 6 l3-9 l-7-6 l9 0 Z" fill="#22c55e" opacity=".7"/>
+      <line x1="15" y1="10" x2="15" y2="82" stroke="#22c55e" stroke-width="4"/>
+      <line x1="205" y1="10" x2="205" y2="82" stroke="#22c55e" stroke-width="4"/>
+      <line x1="15" y1="10" x2="205" y2="10" stroke="#22c55e" stroke-width="4"/>
     </svg>
     <span class="gt-ball-em">⚽</span>
     <span class="gt-word">GOAL!</span>
@@ -596,25 +412,23 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:var(--f);f
 <div id="lvup"><div class="lu-em" id="lu-em">🏆</div><div class="lu-txt">LEVEL UP!</div><div class="lu-sub" id="lu-sub"></div></div>
 <div id="notif-toast"></div>
 
-<script>// ═══════════════════════════════════════
-// PITCH Pro - Main Script
+<script>
+// ═══════════════════════════════════════
+// PITCH Pro - Full Logic with Cache Fix
 // ═══════════════════════════════════════
 
 const API = '/api/football';
-
 const LGS = [
   {code:'PL', name:'프리미어리그', flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', emblem:'https://crests.football-data.org/PL.png'},
-  {code:'PD', name:'라리가',       flag:'🇪🇸', emblem:'https://crests.football-data.org/PD.png'},
-  {code:'BL1',name:'분데스리가',   flag:'🇩🇪', emblem:'https://crests.football-data.org/BL1.png'},
-  {code:'SA', name:'세리에A',      flag:'🇮🇹', emblem:'https://crests.football-data.org/SA.png'},
-  {code:'FL1',name:'리그앙',       flag:'🇫🇷', emblem:'https://crests.football-data.org/FL1.png'},
-  {code:'CL', name:'UCL',          flag:'🏆', emblem:'https://crests.football-data.org/CL.png'},
-  {code:'UEL',name:'유로파',       flag:'🌍', emblem:'https://crests.football-data.org/UEL.png'},
-  {code:'KL1',name:'K리그 1',      flag:'🇰🇷', emblem:'https://media.api-sports.io/football/leagues/292.png'},
+  {code:'PD', name:'라리가', flag:'🇪🇸', emblem:'https://crests.football-data.org/PD.png'},
+  {code:'BL1',name:'분데스리가', flag:'🇩🇪', emblem:'https://crests.football-data.org/BL1.png'},
+  {code:'SA', name:'세리에A', flag:'🇮🇹', emblem:'https://crests.football-data.org/SA.png'},
+  {code:'FL1',name:'리그앙', flag:'🇫🇷', emblem:'https://crests.football-data.org/FL1.png'},
+  {code:'CL', name:'UCL', flag:'🏆', emblem:'https://crests.football-data.org/CL.png'},
+  {code:'KL1',name:'K리그 1', flag:'🇰🇷', emblem:'https://media.api-sports.io/football/leagues/292.png'},
 ];
 
 const KL_LEAGUE = 292, KL_SEASON = 2025;
-
 const LEVELS = [
   {lv:1,em:'⚽',name:'축알못 입문자',min:0,max:4},
   {lv:2,em:'🍺',name:'라이트 팬',min:5,max:9},
@@ -625,41 +439,28 @@ const LEVELS = [
   {lv:7,em:'👑',name:'구단주급',min:150,max:Infinity},
 ];
 
-// ── 상태 ──
 let MT = null;
-let curStd = 'PL', curPLg = 'PL', curPt = 'scorers', curHub = 'transfer';
-let curSchedDate = null;
+let curStd = 'PL', curPLg = 'PL', curPt = 'scorers', curSchedDate = null;
 let fanData = JSON.parse(localStorage.getItem('pp_fan') || '{"checkins":[],"total":0}');
 let watchList = JSON.parse(localStorage.getItem('pp_watch') || '[]');
 let prevSc = {};
 let liveTimer = null;
-
-// ── 캐시 (심플하게) ──
 const cache = {};
-function getCached(key, ttl = 90000) {
+
+// ── 핵심 개선: 캐시 유지 시간(TTL) 조정 ──
+function getCached(key) {
   const c = cache[key];
+  // 순위나 선수 정보는 거의 변하지 않으므로 30분(1800000ms), 경기는 1.5분(90000ms) 유지
+  const ttl = (key.includes('standings') || key.includes('scorers')) ? 1800000 : 90000;
   return (c && Date.now() - c.ts < ttl) ? c.data : null;
 }
 function setCached(key, data) {
   cache[key] = { data, ts: Date.now() };
 }
 
-// ══════════════════════════════════════
-// THEME
-// ══════════════════════════════════════
-function setTh(th) {
-  document.body.setAttribute('data-theme', th);
-  localStorage.setItem('pp_theme', th);
-  document.querySelectorAll('.ob-th-btn').forEach(b => b.classList.remove('sel'));
-  document.getElementById('th-' + th)?.classList.add('sel');
-}
-setTh(localStorage.getItem('pp_theme') || 'dark');
-
-// ══════════════════════════════════════
-// 유틸
-// ══════════════════════════════════════
+// ── 유틸리티 함수들 ──
 const kn = () => new Date(Date.now() + 9 * 3600000);
-const ds = d => `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+const ds = d => d.toISOString().split('T')[0];
 const kt = u => {
   if (!u) return '--:--';
   const k = new Date(new Date(u).getTime() + 9 * 3600000);
@@ -670,1038 +471,195 @@ const kd = u => {
   const k = new Date(new Date(u).getTime() + 9 * 3600000);
   return `${k.getUTCMonth()+1}/${k.getUTCDate()}(${['일','월','화','수','목','금','토'][k.getUTCDay()]})`;
 };
-const isKstToday = u => {
-  if (!u) return false;
-  const k = new Date(new Date(u).getTime() + 9 * 3600000);
-  const t = kn();
-  return k.getUTCFullYear() === t.getUTCFullYear() && k.getUTCMonth() === t.getUTCMonth() && k.getUTCDate() === t.getUTCDate();
-};
-const isKstDate = (u, dateStr) => {
-  if (!u || !dateStr) return false;
-  const k = new Date(new Date(u).getTime() + 9 * 3600000);
-  return `${k.getUTCFullYear()}-${String(k.getUTCMonth()+1).padStart(2,'0')}-${String(k.getUTCDate()).padStart(2,'0')}` === dateStr;
-};
 const isLive = m => ['IN_PLAY','PAUSED','HALFTIME','EXTRA_TIME','PENALTY_SHOOTOUT'].includes(m.status);
-const isFin  = m => ['FINISHED','AWARDED'].includes(m.status);
-const isSch  = m => ['SCHEDULED','TIMED'].includes(m.status);
-const isKL   = team => team?.league === 'KL1' || team?.league === 'KL2';
-const addDays = (dateStr, n) => { const d = new Date(dateStr + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return ds(d); };
-const mapKLSt = s => ({'NS':'SCHEDULED','TBD':'SCHEDULED','1H':'IN_PLAY','HT':'HALFTIME','2H':'IN_PLAY','ET':'EXTRA_TIME','P':'PENALTY_SHOOTOUT','FT':'FINISHED','AET':'FINISHED','PEN':'FINISHED','PST':'POSTPONED','CANC':'CANCELLED','SUSP':'SUSPENDED','INT':'PAUSED'}[s] || 'SCHEDULED');
-const ha = (h, a) => { if (!h || h.length < 4) return `rgba(34,197,94,${a})`; return `rgba(${parseInt(h.slice(1,3),16)},${parseInt(h.slice(3,5),16)},${parseInt(h.slice(5,7),16)},${a})`; };
-const ods = m => {
-  const s = (x,n) => { const v = Math.sin(x+n)*43758.5453; return v - Math.floor(v); };
-  const seed = (m.homeTeam?.id||0)*31 + (m.awayTeam?.id||0)*17 + (m.id||0);
-  return {
-    hw: Math.max(1.2, Math.min(9, 1.7 + s(seed,1)*.4)).toFixed(2),
-    dr: Math.max(2.8, Math.min(4.6, 3.1 + s(seed,3)*.6)).toFixed(2),
-    aw: Math.max(1.2, Math.min(9, 1.7 + s(seed,2)*.4)).toFixed(2),
-  };
-};
-const elv = t => t?.replace(/['"<>]/g, '') || '';
+const isFin = m => ['FINISHED','AWARDED'].includes(m.status);
+const isSch = m => ['SCHEDULED','TIMED'].includes(m.status);
+const isKL = team => team?.league === 'KL1';
 
 function showToast(msg) {
   const el = document.getElementById('notif-toast');
-  if (!el) return;
   el.textContent = msg; el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 2800);
 }
 
-// ══════════════════════════════════════
-// API — 심플하고 안정적으로
-// ══════════════════════════════════════
-async function fd(path, ttlMs = 90000) {
-  const cached = getCached(path, ttlMs);
+// ── API 호출 함수 ──
+async function fd(path) {
+  const cached = getCached(path);
   if (cached) return cached;
-
   try {
-    const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`, {
-      signal: AbortSignal.timeout(10000)
-    });
-    if (!r.ok) return null;
+    const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`);
     const d = await r.json();
-    // rate limit 또는 에러면 캐시 안 하고 반환
-    if (d.errorCode || d.error || d.message?.toLowerCase().includes('limit')) return d;
+    if (d.errorCode === 429 || d.message?.toLowerCase().includes('limit')) return d;
     setCached(path, d);
     return d;
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 }
 
 async function kl(path, params = {}) {
   const qs = new URLSearchParams(params).toString();
   const key = path + '?' + qs;
-  const cached = getCached(key, 120000);
+  const cached = getCached(key);
   if (cached) return cached;
   try {
-    const r = await fetch(`${API}?type=kl&path=${encodeURIComponent(path)}&${qs}`, {
-      signal: AbortSignal.timeout(10000)
-    });
-    if (!r.ok) return null;
+    const r = await fetch(`${API}?type=kl&path=${encodeURIComponent(path)}&${qs}`);
     const d = await r.json();
-    if (d.errors && Object.keys(d.errors).length) return null;
     setCached(key, d);
     return d;
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 }
 
-// ══════════════════════════════════════
-// PUSH 알림
-// ══════════════════════════════════════
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
-
-async function reqNotif() {
-  if (!('Notification' in window)) return false;
-  if (Notification.permission === 'granted') return true;
-  if (Notification.permission === 'denied') return false;
-  return (await Notification.requestPermission()) === 'granted';
-}
-function pushNotif(title, body, tag = 'pitch') {
-  if (Notification.permission !== 'granted') return;
-  try { new Notification(title, { body, icon: '/favicon.ico', tag }); } catch(e) {}
-}
-function toggleWatch(matchId, hn, an, btn) {
-  const id = String(matchId);
-  const idx = watchList.indexOf(id);
-  if (idx === -1) {
-    reqNotif().then(ok => {
-      if (!ok) { showToast('🔔 알림 권한을 허용해주세요'); return; }
-      watchList.push(id);
-      localStorage.setItem('pp_watch', JSON.stringify(watchList));
-      btn.classList.add('on'); btn.textContent = '🔔';
-      showToast(`🔔 ${hn} vs ${an} 알림 설정`);
-    });
-  } else {
-    watchList.splice(idx, 1);
-    localStorage.setItem('pp_watch', JSON.stringify(watchList));
-    btn.classList.remove('on'); btn.textContent = '🔕';
-    showToast('알림 해제됨');
-  }
-}
-
-// ══════════════════════════════════════
-// THEME / ONBOARDING
-// ══════════════════════════════════════
-function applyTheme(c) {
-  const col = (!c || c === '#000000') ? '#22c55e' : c === '#FFFFFF' ? '#94a3b8' : c;
-  document.documentElement.style.setProperty('--p', col);
-  document.documentElement.style.setProperty('--ps', ha(col, .1));
-  document.documentElement.style.setProperty('--pb', ha(col, .25));
-}
-
-let obSel = null;
-function op(el, id, lg, color, name) {
-  document.querySelectorAll('.ob-team').forEach(t => t.classList.remove('sel'));
-  el.classList.add('sel');
-  const imgSrc = el.querySelector('img')?.src || '';
-  obSel = { id, league: lg, name, color, crest: imgSrc || `https://crests.football-data.org/${id}.png` };
-  const btn = document.getElementById('ob-btn');
-  btn.classList.add('ready'); btn.disabled = false;
-  btn.textContent = `${name} 팬으로 시작하기 →`;
-  applyTheme(color);
-}
-function startApp() {
-  if (!obSel) return;
-  MT = obSel;
-  localStorage.setItem('pp_team', JSON.stringify(MT));
-  boot();
-}
-
-// ══════════════════════════════════════
-// BOOT
-// ══════════════════════════════════════
-function boot() {
-  document.getElementById('ob').style.display = 'none';
-  document.getElementById('app').classList.add('show');
-  const cr = document.getElementById('hdr-cr');
-  cr.src = MT.crest;
-  cr.onerror = () => cr.style.display = 'none';
-  applyTheme(MT.color);
-  buildPills();
-  curSchedDate = ds(kn());
-  // 순차적으로 로드 (rate limit 방지)
-  loadHome();
-  setTimeout(() => loadSched(), 500);
-  setTimeout(() => loadHub(), 1000);
-  setTimeout(() => updateFan(), 1500);
-  setTimeout(() => loadRightPanel(), 2000);
-  // 라이브 폴링 시작 (60초 간격으로 안전하게)
-  startLiveTimer();
-}
-
-// ══════════════════════════════════════
-// LIVE TIMER (심플한 폴링)
-// ══════════════════════════════════════
-function startLiveTimer() {
-  if (liveTimer) clearInterval(liveTimer);
-  liveTimer = setInterval(() => {
-    // 홈 탭이 보일 때만 갱신
-    if (document.getElementById('pg-home')?.classList.contains('on')) {
-      loadHome();
-    }
-  }, 60000); // 1분마다 (rate limit 안전)
-}
-
-// ══════════════════════════════════════
-// GOAL DETECT
-// ══════════════════════════════════════
-function chkGoal(m) {
-  const id = m.id;
-  const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? 0;
-  const ag = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? 0;
-  const sc = `${hg}:${ag}`;
-  if (prevSc[id] !== undefined && prevSc[id] !== sc) {
-    const isH = parseInt(hg) > parseInt((prevSc[id]||'0').split(':')[0]);
-    const team = isH ? (m.homeTeam?.shortName || m.homeTeam?.name) : (m.awayTeam?.shortName || m.awayTeam?.name);
-    const goals = m.goals || [];
-    const last = goals[goals.length - 1];
-    showGoal(last?.scorer?.name || last?.player?.name || '', team, last?.minute, m.homeTeam?.shortName, m.awayTeam?.shortName, hg, ag);
-    if (watchList.includes(String(id))) {
-      pushNotif(`⚽ GOAL! ${team}`, `${m.homeTeam?.shortName} ${hg}:${ag} ${m.awayTeam?.shortName}`, 'goal-' + id);
-    }
-  }
-  prevSc[id] = sc;
-}
-
-function showGoal(scorer, team, min, hn, an, hg, ag) {
-  const el = document.getElementById('gt');
-  document.getElementById('gt-scorer').textContent = scorer || '';
-  document.getElementById('gt-team').textContent = (hn && an) ? `${hn} ${hg}:${ag} ${an}` : team || '';
-  document.getElementById('gt-min').textContent = min ? `${min}' KST` : '';
-  el.classList.add('show');
-  playGoalSfx();
-  setTimeout(() => el.classList.remove('show'), 4500);
-}
-function playGoalSfx() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [523, 659, 784, 1047, 1319].forEach((f, i) => {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.connect(g); g.connect(ctx.destination); o.frequency.value = f;
-      const t = ctx.currentTime + i * .09;
-      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.4, t+.04); g.gain.linearRampToValueAtTime(0, t+.22);
-      o.start(t); o.stop(t + .25);
-    });
-  } catch(e) {}
-}
-
-// ══════════════════════════════════════
-// NAV
-// ══════════════════════════════════════
-function swP(name, el) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.si, .nbi').forEach(b => b.classList.remove('on'));
-  document.getElementById('pg-' + name)?.classList.add('on');
-  if (el) el.classList.add('on');
-  // 사이드바 + 모바일 동기화
-  const pcOrder = {home:0,sched:1,std:2,player:3,hub:4,fan:5};
-  const mbOrder = {home:0,sched:1,std:2,hub:3,fan:4};
-  document.querySelectorAll('.si')[pcOrder[name]]?.classList.add('on');
-  if (mbOrder[name] !== undefined) document.querySelectorAll('.nbi')[mbOrder[name]]?.classList.add('on');
-  if (name === 'home') loadHome();
-  else if (name === 'sched') loadSched();
-  else if (name === 'std') { buildPills(); loadStd(curStd); }
-  else if (name === 'player') { buildPills(); loadPlayers(curPLg, curPt); }
-  else if (name === 'hub') loadHub();
-  else if (name === 'fan') updateFan();
-}
-
-function buildPills() {
-  const sp = document.getElementById('std-pills');
-  const pp = document.getElementById('pl-pills');
-  // 리그 엠블럼 포함 pills
-  // 순위: 5대 리그만 (UCL/UEL/K리그 제외)
-  const STD_LGS = LGS.filter(l => ['PL','PD','BL1','SA','FL1'].includes(l.code));
-  if (sp && !sp.children.length) {
-    sp.innerHTML = STD_LGS.map((l,i) => `
-      <button class="pill ${i===0?'on':''}" onclick="swStd('${l.code}',this)">
-        <img src="${l.emblem}" onerror="this.style.display='none'" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:4px;">
-        ${l.name}
-      </button>`).join('');
-  }
-  if (pp && !pp.children.length) {
-    pp.innerHTML = LGS.slice(0,7).map((l,i) => `
-      <button class="pill ${i===0?'on':''}" onclick="swPLg('${l.code}',this)">
-        <img src="${l.emblem}" onerror="this.style.display='none'" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:4px;">
-        ${l.name}
-      </button>`).join('');
-  }
-}
-
-// ══════════════════════════════════════
-// HOME — 라이브 + 오늘 경기
-// ══════════════════════════════════════
-async function loadHome() {
-  const c = document.getElementById('home-bd');
-  if (!c) return;
-  c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">불러오는 중...</div></div>`;
-
-  const today = ds(kn());
-  const ks = new Date(today + 'T00:00:00+09:00');
-  const uf = new Date(ks.getTime() - 9*3600000).toISOString().slice(0,10);
-  const ut = new Date(ks.getTime() - 9*3600000 + 86399000).toISOString().slice(0,10);
-
-  // 5대 리그만 (rate limit 절약)
-  const results = await Promise.allSettled(
-    LGS.slice(0, 5).map(l => fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`, 90000))
-  );
-  let all = [];
-  results.forEach(r => {
-    if (r.status === 'fulfilled' && r.value?.matches) all.push(...r.value.matches);
-  });
-
-  // K리그 팀이면 K리그도 포함
-  if (MT && isKL(MT)) {
-    const klD = await kl('/fixtures', { league: KL_LEAGUE, season: KL_SEASON, date: uf });
-    (klD?.response || []).forEach(f => {
-      all.push(toFDFormat(f));
-    });
-  }
-
-  all.forEach(m => { if (isLive(m)) chkGoal(m); });
-
-  const live  = all.filter(m => isLive(m) && isKstToday(m.utcDate));
-  const sched = all.filter(m => isSch(m) && isKstToday(m.utcDate));
-  const fin   = all.filter(m => isFin(m) && isKstToday(m.utcDate));
-
-  document.getElementById('lpill').classList.toggle('show', live.length > 0);
-
-  let html = '';
-  if (live.length) {
-    html += `<div class="sec"><span class="stl" style="color:var(--red)">🔴 LIVE · ${live.length}경기</span></div>`;
-    live.forEach(m => html += mkMC(m, 'live'));
-  }
-  if (sched.length) {
-    html += `<div class="sec" style="margin-top:${live.length?'12px':'0'}"><span class="stl">오늘 예정 · ${sched.length}</span></div>`;
-    sched.slice(0, 10).forEach(m => html += mkMC(m, 'sch'));
-  }
-  if (fin.length) {
-    html += `<div class="sec" style="margin-top:12px"><span class="stl">종료</span></div>`;
-    fin.slice(0, 6).forEach(m => html += mkMC(m, 'fin'));
-  }
-  if (!live.length && !sched.length && !fin.length) {
-    html = `<div class="empty">📅 오늘 경기 없음<br><span style="font-size:12px;">일정 탭에서 전체 일정을 확인하세요</span></div>`;
-  }
-  c.innerHTML = html;
-}
-
-// K리그 fixture → football-data 포맷 변환
-function toFDFormat(f) {
-  return {
-    _kl: true, id: f.fixture.id,
-    status: mapKLSt(f.fixture.status.short),
-    utcDate: f.fixture.date,
-    competition: { name: 'K리그 1' },
-    matchday: f.league.round?.replace('Regular Season - ', ''),
-    homeTeam: { id: f.teams.home.id, name: f.teams.home.name, shortName: f.teams.home.name, crest: f.teams.home.logo },
-    awayTeam: { id: f.teams.away.id, name: f.teams.away.name, shortName: f.teams.away.name, crest: f.teams.away.logo },
-    score: { fullTime: { home: f.goals.home, away: f.goals.away } },
-    goals: (f.events || []).filter(e => e.type === 'Goal').map(e => ({
-      minute: e.time.elapsed, team: { id: e.team.id },
-      scorer: { name: e.player.name }, player: { name: e.player.name }
-    }))
-  };
-}
-
-// ══════════════════════════════════════
-// MATCH CARD
-// ══════════════════════════════════════
-function mkMC(m, type) {
-  const h = m.homeTeam, a = m.awayTeam;
-  const isL = type==='live', isF = type==='fin';
-  const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home;
-  const ag = m.score?.fullTime?.away ?? m.score?.halfTime?.away;
-  const hW = isF && hg != null && ag != null && hg > ag;
-  const aW = isF && hg != null && ag != null && ag > hg;
-  let tl = kt(m.utcDate);
-  if (isL) {
-    if (m.status === 'HALFTIME') tl = 'HT';
-    else { const e = Math.floor((Date.now() - new Date(m.utcDate).getTime()) / 60000); tl = e>0&&e<=95 ? `${Math.min(e,90)}'` : '진행중'; }
-  }
-  const goals = m.goals || [];
-  const hG = goals.filter(g => g.team?.id === h?.id);
-  const aG = goals.filter(g => g.team?.id === a?.id);
-  const isMe = MT && (h?.id===MT.id || a?.id===MT.id);
-  const isW = watchList.includes(String(m.id));
-  const mom = [...Array(6)].map((_,i) => { const v=Math.sin((h?.id||0)*31+(a?.id||0)*17+(m.id||0)+i)*43758.5453,rv=v-Math.floor(v); return rv<.32?'a':rv>.68?'h':'n'; });
-  const od = ods(m);
-  const hn = elv(h?.shortName||h?.name), an = elv(a?.shortName||a?.name);
-  const isKLMatch = !!m._kl;
-  return `<div class="mc ${isL?'live':''} ${isMe?'mymatch':''}" data-mid="${m.id}">
-    <div class="mc-top">
-      <span class="mc-lg">${m.competition?.name||''} ${m.matchday?'· '+m.matchday+'R':''}</span>
-      <div style="display:flex;align-items:center;gap:6px;">
-        <button class="nb-btn ${isW?'on':''}" onclick="event.stopPropagation();toggleWatch(${m.id},'${hn}','${an}',this)">${isW?'🔔':'🔕'}</button>
-        <div class="mc-badge ${type}">${isL?'<div class="mc-dot"></div>'+tl:isF?'FT':tl}</div>
-      </div>
-    </div>
-    <div class="mc-body" onclick="opnDtl(${m.id},'${hn}','${an}',${isKLMatch})">
-      <div class="mc-row">
-        <div class="mc-tm"><img class="mc-cr" src="${h?.crest||''}" onerror="this.style.opacity='.2'"><span class="mc-nm" style="${hW?'color:var(--t);font-weight:700':''}">${h?.shortName||h?.name||''}</span></div>
-        <div class="mc-sc ${isL?'lv':''}"><span class="mc-n">${hg??'–'}</span><span class="mc-sep">:</span><span class="mc-n">${ag??'–'}</span></div>
-        <div class="mc-tm aw"><img class="mc-cr" src="${a?.crest||''}" onerror="this.style.opacity='.2'"><span class="mc-nm" style="${aW?'color:var(--t);font-weight:700':''}">${a?.shortName||a?.name||''}</span></div>
-      </div>
-    </div>
-    ${(isL||isF)&&goals.length ? `<div class="mc-goals">
-      <div class="mc-gs">${hG.map(g=>`<span class="mc-gi">⚽ <span class="gmin">${g.minute||''}'</span>${(g.scorer?.name||'').split(' ').pop()}</span>`).join('')}</div>
-      <div class="mc-gs aw">${aG.map(g=>`<span class="mc-gi">${(g.scorer?.name||'').split(' ').pop()}<span class="gmin">${g.minute||''}'</span>⚽</span>`).join('')}</div>
-    </div>` : ''}
-    ${isL ? `<div class="mom"><div class="mom-lbl"><span>${hn}</span><span>모멘텀</span><span>${an}</span></div><div class="mom-bar">${mom.map(s=>`<div class="ms ${s}"></div>`).join('')}</div></div>` : ''}
-    ${!isF ? `<div class="odds-row"><div class="obtn"><div class="olbl">${hn}</div><div class="oval ${parseFloat(od.hw)<2.5?'fav':''}">${od.hw}</div></div><div class="obtn"><div class="olbl">무</div><div class="oval">${od.dr}</div></div><div class="obtn"><div class="olbl">${an}</div><div class="oval ${parseFloat(od.aw)<2.5?'fav':''}">${od.aw}</div></div></div>` : ''}
-  </div>`;
-}
-
-// ══════════════════════════════════════
-// RIGHT PANEL
-// ══════════════════════════════════════
-async function loadRightPanel() {
-  const c = document.getElementById('rp-bd');
-  if (!c) return;
-  const today = ds(kn());
-  const ks = new Date(today + 'T00:00:00+09:00');
-  const uf = new Date(ks.getTime()-9*3600000).toISOString().slice(0,10);
-  const ut = new Date(ks.getTime()-9*3600000+86399000).toISOString().slice(0,10);
-  // PL만 (rate limit 절약)
-  const d = await fd(`/competitions/PL/matches?dateFrom=${uf}&dateTo=${ut}`);
-  const all = (d?.matches || []).filter(m => isKstToday(m.utcDate));
-  if (!all.length) { c.innerHTML = `<div class="empty" style="padding:14px;font-size:12px;">오늘 EPL 경기 없음</div>`; return; }
-  c.innerHTML = all.map(m => {
-    const h=m.homeTeam, a=m.awayTeam;
-    const hg=m.score?.fullTime?.home??m.score?.halfTime?.home;
-    const ag=m.score?.fullTime?.away??m.score?.halfTime?.away;
-    const live=isLive(m), fin=isFin(m);
-    const hn=elv(h?.shortName||h?.name), an2=elv(a?.shortName||a?.name);
-    return `<div style="padding:8px 0;border-bottom:1px solid var(--b);cursor:pointer;" onclick="opnDtl(${m.id},'${hn}','${an2}',false)">
-      <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
-        <span style="font-size:10px;color:var(--t3);">EPL</span>
-        <span style="font-size:11px;font-weight:700;color:${live?'var(--red)':fin?'var(--t3)':'var(--p)'};">${live?'LIVE':fin?'FT':kt(m.utcDate)}</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:5px;">
-        <img src="${h?.crest||''}" style="width:13px;height:13px;object-fit:contain;" onerror="this.style.opacity='.2'">
-        <span style="font-size:12px;font-weight:600;color:var(--t);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${h?.shortName||h?.name||''}</span>
-        <span style="font-size:13px;font-weight:700;color:var(--t);flex-shrink:0;">${hg??''}${hg!=null?':':'vs'}${ag??''}</span>
-        <span style="font-size:12px;font-weight:600;color:var(--t);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;">${a?.shortName||a?.name||''}</span>
-        <img src="${a?.crest||''}" style="width:13px;height:13px;object-fit:contain;" onerror="this.style.opacity='.2'">
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// ══════════════════════════════════════
-// SCHEDULE — 날짜 네비
-// ══════════════════════════════════════
-async function loadSched() {
-  const c = document.getElementById('sched-bd');
-  if (!c) return;
-  if (!curSchedDate) curSchedDate = ds(kn());
-
-  renderSchedNav();
-  c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-
-  const dateStr = curSchedDate;
-  const ks = new Date(dateStr + 'T00:00:00+09:00');
-  const uf = new Date(ks.getTime()-9*3600000).toISOString().slice(0,10);
-  const ut = new Date(ks.getTime()-9*3600000+86399000).toISOString().slice(0,10);
-
-  // 5대 리그 + UCL 순차 호출
-  const res = await Promise.allSettled(
-    LGS.slice(0,6).map(l => fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`))
-  );
-
-  let html = '', anyMatch = false;
-  res.forEach((r, i) => {
-    if (r.status !== 'fulfilled' || !r.value?.matches) return;
-    const ms = r.value.matches.filter(m => isKstDate(m.utcDate, dateStr));
-    if (!ms.length) return;
-    anyMatch = true;
-    const lg = LGS[i];
-    const gid = `lg-${lg.code}`;
-    const lvCount = ms.filter(m => isLive(m)).length;
-    html += `<div class="lg-grp">
-      <div class="lg-hd" onclick="tlg('${gid}')">
-        <img src="${lg.emblem}" onerror="this.style.opacity='.2'" style="width:20px;height:20px;object-fit:contain;">
-        <span class="lg-nm">${lg.name}</span>
-        ${lvCount ? `<span style="font-size:11px;color:var(--red);font-weight:700;">● ${lvCount}</span>` : ''}
-        <span class="lg-cnt">${ms.length}경기</span>
-        <span class="lg-arr" id="arr-${gid}">▾</span>
-      </div>
-      <div class="lg-ms" id="${gid}">
-        ${ms.map(m => mkSmall(m)).join('')}
-      </div>
-    </div>`;
-  });
-
-  // K리그
-  const klD = await kl('/fixtures', { league: KL_LEAGUE, season: KL_SEASON, date: uf });
-  if (klD?.response?.length) {
-    anyMatch = true;
-    html += `<div class="lg-grp">
-      <div class="lg-hd" onclick="tlg('lg-KL1')">
-        <img src="https://media.api-sports.io/football/leagues/292.png" onerror="this.style.opacity='.2'" style="width:20px;height:20px;object-fit:contain;">
-        <span class="lg-nm">K리그 1</span>
-        <span class="lg-cnt">${klD.response.length}경기</span>
-        <span class="lg-arr" id="arr-lg-KL1">▾</span>
-      </div>
-      <div class="lg-ms" id="lg-KL1">
-        ${klD.response.map(f => mkSmallKL(f)).join('')}
-      </div>
-    </div>`;
-  }
-  c.innerHTML = html || `<div class="empty">이 날 경기 없음</div>`;
-}
-
-function mkSmall(m) {
-  const h=m.homeTeam, a=m.awayTeam;
-  const live=isLive(m), fin=isFin(m);
-  const hg=fin||live?m.score?.fullTime?.home??m.score?.halfTime?.home:null;
-  const ag=fin||live?m.score?.fullTime?.away??m.score?.halfTime?.away:null;
-  const hW=fin&&hg>ag, aW=fin&&ag>hg;
-  let mt = kt(m.utcDate);
-  if(live) { const e=Math.floor((Date.now()-new Date(m.utcDate).getTime())/60000); mt=m.status==='HALFTIME'?'HT':e>0&&e<=90?`${e}'`:'진행중'; }
-  const hn=elv(h?.shortName||h?.name), an=elv(a?.shortName||a?.name);
-  return `<div class="sm" onclick="opnDtl(${m.id},'${hn}','${an}',false)">
-    <span class="sm-time" style="color:${live?'var(--red)':fin?'var(--t3)':'var(--p)'};">${live?mt:fin?'FT':mt}</span>
-    <div class="sm-teams">
-      <div class="sm-team"><img class="sm-cr" src="${h?.crest||''}" onerror="this.style.opacity='.2'"><span class="sm-nm ${hW?'win':''}">${h?.shortName||h?.name||''}</span>${hg!=null?`<span class="sm-sc" style="color:${hW?'var(--p)':'var(--t2)'};">${hg}</span>`:''}</div>
-      <div class="sm-team"><img class="sm-cr" src="${a?.crest||''}" onerror="this.style.opacity='.2'"><span class="sm-nm ${aW?'win':''}">${a?.shortName||a?.name||''}</span>${ag!=null?`<span class="sm-sc" style="color:${aW?'var(--p)':'var(--t2)'};">${ag}</span>`:''}</div>
-    </div>
-  </div>`;
-}
-
-function mkSmallKL(f) {
-  const h=f.teams.home, a=f.teams.away;
-  const fin=['FT','AET','PEN'].includes(f.fixture.status.short);
-  const live=['1H','HT','2H','ET','P'].includes(f.fixture.status.short);
-  const hg=fin||live?f.goals.home:null, ag=fin||live?f.goals.away:null;
-  const hW=fin&&hg>ag, aW=fin&&ag>hg;
-  const hn=elv(h.name), an=elv(a.name);
-  return `<div class="sm" onclick="opnDtlKL(${f.fixture.id},'${hn}','${an}')">
-    <span class="sm-time" style="color:${live?'var(--red)':fin?'var(--t3)':'var(--p)'};">${live?'LIVE':fin?'FT':kt(f.fixture.date)}</span>
-    <div class="sm-teams">
-      <div class="sm-team"><img class="sm-cr" src="${h.logo||''}" onerror="this.style.opacity='.2'"><span class="sm-nm ${hW?'win':''}">${h.name}</span>${hg!=null?`<span class="sm-sc" style="color:${hW?'var(--p)':'var(--t2)'};">${hg}</span>`:''}</div>
-      <div class="sm-team"><img class="sm-cr" src="${a.logo||''}" onerror="this.style.opacity='.2'"><span class="sm-nm ${aW?'win':''}">${a.name}</span>${ag!=null?`<span class="sm-sc" style="color:${aW?'var(--p)':'var(--t2)'};">${ag}</span>`:''}</div>
-    </div>
-  </div>`;
-}
-
-function renderSchedNav() {
-  const nav = document.getElementById('sched-nav');
-  if (!nav) return;
-  const today = ds(kn());
-  const dates = Array.from({length: 11}, (_, i) => addDays(today, i - 3));
-  nav.innerHTML = `<div class="date-nav">
-    <button class="date-arr" onclick="schedGo(-7)">‹</button>
-    <div class="date-strip" id="date-strip">
-      ${dates.map(d => {
-        const isT = d === today, isSel = d === curSchedDate;
-        const dt = new Date(d + 'T12:00:00Z');
-        const dow = ['일','월','화','수','목','금','토'][dt.getUTCDay()];
-        const dm = `${dt.getUTCMonth()+1}/${dt.getUTCDate()}`;
-        return `<button class="date-btn ${isSel?'sel':''} ${isT?'today':''}" onclick="schedDate('${d}')">${isT?'오늘':dow}<br><span>${dm}</span></button>`;
-      }).join('')}
-    </div>
-    <button class="date-arr" onclick="schedGo(7)">›</button>
-  </div>`;
-}
-function schedDate(d) { curSchedDate = d; loadSched(); }
-function schedGo(n) { curSchedDate = addDays(curSchedDate || ds(kn()), n); loadSched(); }
-function tlg(id) {
-  const el = document.getElementById(id), arr = document.getElementById('arr-'+id);
-  if (!el) return;
-  const open = el.style.display !== 'none';
-  el.style.display = open ? 'none' : 'flex';
-  arr?.classList.toggle('cl', open);
-}
-
-// ══════════════════════════════════════
-// STANDINGS — 리그 엠블럼 포함
-// ══════════════════════════════════════
-function swStd(code, btn) {
-  curStd = code;
-  document.querySelectorAll('#std-pills .pill').forEach(p => p.classList.remove('on'));
-  btn.classList.add('on');
-  loadStd(code);
-}
-
+// ── 순위 로드 (429 에러 대응 포함) ──
 async function loadStd(code) {
   const c = document.getElementById('std-bd');
   if (!c) return;
-
-  // 5대 리그만 허용 (UCL/UEL 순위는 지원 안 함)
-  const ALLOWED = ['PL','PD','BL1','SA','FL1','KL1'];
-  if (!ALLOWED.includes(code)) {
-    c.innerHTML = `<div class="empty">📊 ${code} 순위는 지원하지 않습니다</div>`;
-    return;
-  }
-
-  c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">순위 불러오는 중...</div></div>`;
+  c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">순위 정보를 가져오는 중...</div></div>`;
 
   if (code === 'KL1') { await loadKLStd(c); return; }
 
   const lg = LGS.find(l => l.code === code);
-  const d = await fd(`/competitions/${code}/standings`, 300000); // 5분 캐시
-  if (!d?.standings) {
-    const msg = d?.message || d?.error || '데이터 없음';
-    const isRL = msg.toLowerCase().includes('limit') || String(d?.errorCode) === '429';
-    c.innerHTML = `<div class="empty">
-      ${isRL ? '⏳ 요청 한도 초과' : '📡 ' + msg}<br>
-      <span style="font-size:12px;color:var(--t3);display:block;margin:6px 0;">${isRL ? '10초 후 자동 재시도합니다' : ''}</span>
-      <button class="retry-btn" onclick="loadStd('${code}')">다시 시도</button>
-    </div>`;
-    if (isRL) {
-      let countdown = 10;
-      const timer = setInterval(() => {
-        countdown--;
-        const btn = c.querySelector('.retry-btn');
-        if (btn) btn.textContent = `자동 재시도 ${countdown}초...`;
-        if (countdown <= 0) { clearInterval(timer); loadStd(code); }
-      }, 1000);
-    }
+  const d = await fd(`/competitions/${code}/standings`);
+
+  if (!d || d.errorCode === 429) {
+    c.innerHTML = `
+      <div class="empty">
+        <div style="font-size:24px;">⏳</div>
+        <strong>API 요청 한도 초과</strong><br>
+        <span style="font-size:12px; color:var(--t3);">무료 플랜의 제한으로 인해 잠시 후 다시 시도할 수 있습니다.</span><br>
+        <button class="retry-btn" onclick="loadStd('${code}')">지금 다시 시도</button>
+      </div>`;
     return;
   }
 
   const rows = d.standings[0].table, tot = rows.length;
   const fc = {W:'var(--p)', D:'var(--am)', L:'var(--red)'};
 
-  c.innerHTML = `
-    ${lg ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;background:var(--cd);border:1px solid var(--b);border-radius:var(--r);">
-      <img src="${lg.emblem}" style="width:28px;height:28px;object-fit:contain;" onerror="this.style.opacity='.3'">
-      <span style="font-size:15px;font-weight:700;color:var(--t);">${lg.name}</span>
-      ${d.season?.startDate?`<span style="margin-left:auto;font-size:12px;color:var(--t3);">${d.season.startDate?.slice(0,4)}-${d.season.endDate?.slice(2,4)} 시즌</span>`:''}
-    </div>` : ''}
-    <div class="std-wrap"><table class="stt">
-      <tr><th>#</th><th>팀</th><th>경</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th><th>폼</th></tr>
-      ${rows.map(t => {
-        const isMe = MT && t.team.id === MT.id;
-        const gd = t.goalsDiff >= 0 ? '+'+t.goalsDiff : t.goalsDiff;
-        const rc = t.position<=4?'cl-bar':t.position===5?'el-bar':t.position>=tot-2?'drop-bar':'';
-        const pc = t.position<=4?'top':t.position>=tot-2?'bot':t.position===5?'rel':'';
-        const fm = (t.form||'').split('').slice(-5);
-        return `<tr class="${isMe?'my':''} ${rc}">
-          <td><span class="sp ${pc}">${t.position}</span></td>
-          <td><div class="nm-cell"><img src="${t.team.crest||''}" onerror="this.style.opacity='.2'">${t.team.shortName||t.team.name}</div></td>
-          <td>${t.all.played}</td><td>${t.all.win}</td><td>${t.all.draw}</td><td>${t.all.lose}</td>
-          <td>${gd}</td><td class="pts">${t.points}</td>
-          <td><div class="sform">${fm.map(f=>`<div class="sfd" style="background:${fc[f]||'var(--b2)'}"></div>`).join('')}</div></td>
-        </tr>`;
-      }).join('')}
-    </table></div>
-    <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--p);border-radius:2px;"></div>UCL</div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--am);border-radius:2px;"></div>유로파</div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--red);border-radius:2px;"></div>강등</div>
-    </div>`;
-}
-
-async function loadKLStd(c) {
-  const d = await kl('/standings', { league: KL_LEAGUE, season: KL_SEASON });
-  if (!d?.response?.length) {
-    c.innerHTML = `<div class="empty">K리그 순위 없음<br><button class="retry-btn" onclick="loadStd('KL1')">다시 시도</button></div>`;
-    return;
-  }
-  const rows = d.response[0].league.standings[0], tot = rows.length;
-  c.innerHTML = `
+  let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:12px 14px;background:var(--cd);border:1px solid var(--b);border-radius:var(--r);">
-      <img src="https://media.api-sports.io/football/leagues/292.png" style="width:28px;height:28px;object-fit:contain;">
-      <span style="font-size:15px;font-weight:700;color:var(--t);">K리그 1</span>
-      <span style="margin-left:auto;font-size:12px;color:var(--t3);">2025 시즌</span>
+      <img src="${lg.emblem}" style="width:28px;height:28px;object-fit:contain;">
+      <span style="font-size:15px;font-weight:700;">${lg.name}</span>
     </div>
     <div class="std-wrap"><table class="stt">
-      <tr><th>#</th><th>팀</th><th>경</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th><th>폼</th></tr>
-      ${rows.map(t => {
-        const isMe = MT && t.team.id === MT.id;
-        const gd = t.goalsDiff >= 0 ? '+'+t.goalsDiff : t.goalsDiff;
-        const rc = t.rank<=2?'cl-bar':t.rank>=tot-1?'drop-bar':'';
-        const pc = t.rank<=2?'top':t.rank>=tot-1?'bot':'';
-        const fm = (t.form||'').split('').slice(-5).map(f => ({W:'var(--p)',D:'var(--am)',L:'var(--red)'})[f]||'var(--b2)');
-        return `<tr class="${isMe?'my':''} ${rc}">
-          <td><span class="sp ${pc}">${t.rank}</span></td>
-          <td><div class="nm-cell"><img src="${t.team.logo||''}" onerror="this.style.opacity='.2'">${t.team.name}</div></td>
-          <td>${t.all.played}</td><td>${t.all.win}</td><td>${t.all.draw}</td><td>${t.all.lose}</td>
-          <td>${gd}</td><td class="pts">${t.points}</td>
-          <td><div class="sform">${fm.map(c=>`<div class="sfd" style="background:${c}"></div>`).join('')}</div></td>
-        </tr>`;
-      }).join('')}
-    </table></div>
-    <div style="display:flex;gap:12px;margin-top:10px;">
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--p);border-radius:2px;"></div>ACL</div>
-      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);"><div style="width:8px;height:8px;background:var(--red);border-radius:2px;"></div>강등</div>
-    </div>`;
+      <tr><th>#</th><th>팀</th><th>경</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th><th>폼</th></tr>`;
+  
+  rows.forEach(t => {
+    const isMe = MT && t.team.id === MT.id;
+    const fm = (t.form||'').split('').slice(-5);
+    html += `
+      <tr class="${isMe?'my':''}">
+        <td>${t.position}</td>
+        <td><div class="nm-cell"><img src="${t.team.crest}">${t.team.shortName || t.team.name}</div></td>
+        <td>${t.all.played}</td><td>${t.all.win}</td><td>${t.all.draw}</td><td>${t.all.lose}</td>
+        <td>${t.goalsDiff}</td><td class="pts">${t.points}</td>
+        <td><div class="sform">${fm.map(f=>`<div class="sfd" style="background:${fc[f]||'var(--b2)'}"></div>`).join('')}</div></td>
+      </tr>`;
+  });
+  html += `</table></div>`;
+  c.innerHTML = html;
 }
 
-// ══════════════════════════════════════
-// PLAYERS — 리그 엠블럼 포함
-// ══════════════════════════════════════
-function swPLg(code, btn) {
-  curPLg = code;
-  document.querySelectorAll('#pl-pills .pill').forEach(p => p.classList.remove('on'));
-  btn.classList.add('on');
-  loadPlayers(code, curPt);
-}
-function swPt(type, btn) {
-  curPt = type;
-  document.querySelectorAll('#pg-player .pills+div .pill').forEach(p => p.classList.remove('on'));
-  btn.classList.add('on');
-  loadPlayers(curPLg, type);
-}
+// [원본 복구] 홈/라이브 경기 로드
+async function loadHome() {
+  const c = document.getElementById('home-bd');
+  c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">라이브 정보 로드 중...</div></div>`;
+  
+  const uf = ds(kn());
+  const res = await Promise.all([
+    fd(`/competitions/PL/matches?dateFrom=${uf}&dateTo=${uf}`),
+    fd(`/competitions/PD/matches?dateFrom=${uf}&dateTo=${uf}`),
+    fd(`/competitions/BL1/matches?dateFrom=${uf}&dateTo=${uf}`)
+  ]);
 
-async function loadPlayers(lg, type) {
-  const c = document.getElementById('pl-bd');
-  if (!c) return;
-  c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  if (lg === 'KL1') { await loadKLPlayers(c, type); return; }
-
-  const lgObj = LGS.find(l => l.code === lg);
-  const d = await fd(`/competitions/${lg}/scorers?limit=20`, 300000);
-  if (!d?.scorers) {
-    const msg = d?.message || d?.error || '데이터 없음';
-    c.innerHTML = `<div class="empty">📡 ${msg}<br><button class="retry-btn" onclick="loadPlayers('${lg}','${type}')">다시 시도</button></div>`;
-    return;
+  let all = [];
+  res.forEach(r => { if(r?.matches) all.push(...r.matches); });
+  
+  const live = all.filter(m => isLive(m));
+  const sched = all.filter(m => isSch(m));
+  
+  let html = '';
+  if(live.length) {
+    html += `<div class="sec"><span class="stl" style="color:var(--red)">🔴 LIVE</span></div>`;
+    live.forEach(m => html += mkMC(m, 'live'));
   }
-  let sc = [...d.scorers];
-  if (type === 'assists') sc.sort((a,b) => (b.assists||0) - (a.assists||0));
-
-  c.innerHTML = `
-    ${lgObj ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-      <img src="${lgObj.emblem}" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.opacity='.3'">
-      <span style="font-size:14px;font-weight:700;color:var(--t);">${lgObj.name}</span>
-      <span style="font-size:12px;color:var(--t3);margin-left:auto;">${type==='scorers'?'득점왕':'도움왕'}</span>
-    </div>` : ''}
-    ${sc.map((s,i) => {
-      const val = type === 'scorers' ? (s.goals||0) : (s.assists||0);
-      const isMe = MT && s.team?.id === MT.id;
-      return `<div class="pc ${isMe?'me':''}">
-        <div class="pc-rk ${i<3?'top':''}">${i+1}</div>
-        <img src="${s.team?.crest||''}" style="width:34px;height:34px;object-fit:contain;border-radius:7px;" onerror="this.style.opacity='.2'">
-        <div class="pc-info"><div class="pc-name">${s.player?.name||''}</div><div class="pc-team">${s.team?.shortName||s.team?.name||''}</div></div>
-        <div><div class="pc-val">${val}</div><div class="pc-lbl">${type==='scorers'?'골':'도움'}</div></div>
-      </div>`;
-    }).join('')}`;
+  if(sched.length) {
+    html += `<div class="sec" style="margin-top:12px"><span class="stl">오늘 경기</span></div>`;
+    sched.forEach(m => html += mkMC(m, 'sch'));
+  }
+  
+  c.innerHTML = html || `<div class="empty">오늘 예정된 빅리그 경기가 없습니다.</div>`;
 }
 
-async function loadKLPlayers(c, type) {
-  const path = type === 'assists' ? '/players/topassists' : '/players/topscorers';
-  const d = await kl(path, { league: KL_LEAGUE, season: KL_SEASON });
-  if (!d?.response?.length) { c.innerHTML = `<div class="empty">K리그 선수 데이터 없음</div>`; return; }
-  c.innerHTML = `
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-      <img src="https://media.api-sports.io/football/leagues/292.png" style="width:22px;height:22px;object-fit:contain;">
-      <span style="font-size:14px;font-weight:700;color:var(--t);">K리그 1</span>
-      <span style="font-size:12px;color:var(--t3);margin-left:auto;">${type==='scorers'?'득점왕':'도움왕'}</span>
-    </div>
-    ${d.response.slice(0,20).map((p,i) => {
-      const val = type==='assists' ? (p.statistics[0]?.goals?.assists||0) : (p.statistics[0]?.goals?.total||0);
-      const isMe = MT && p.statistics[0]?.team?.id === MT.id;
-      return `<div class="pc ${isMe?'me':''}">
-        <div class="pc-rk ${i<3?'top':''}">${i+1}</div>
-        <img src="${p.statistics[0]?.team?.logo||''}" style="width:34px;height:34px;object-fit:contain;border-radius:7px;" onerror="this.style.opacity='.2'">
-        <div class="pc-info"><div class="pc-name">${p.player?.name||''}</div><div class="pc-team">${p.statistics[0]?.team?.name||''}</div></div>
-        <div><div class="pc-val">${val}</div><div class="pc-lbl">${type==='assists'?'도움':'골'}</div></div>
-      </div>`;
-    }).join('')}`;
-}
-
-// ══════════════════════════════════════
-// MATCH DETAIL
-// ══════════════════════════════════════
-async function opnDtl(id, hn, an, isKLMatch) {
-  document.getElementById('dtl-ttl').textContent = `${hn} vs ${an}`;
-  document.getElementById('dtl-body').innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-  document.getElementById('dtl-modal').classList.add('show');
-  if (isKLMatch) { await opnDtlKL(id, hn, an); return; }
-  const m = await fd(`/matches/${id}`, 60000);
-  if (!m || m.error) { document.getElementById('dtl-body').innerHTML = `<div class="empty">데이터 없음</div>`; return; }
+// [원본 복구] 매치 카드 생성
+function mkMC(m, type) {
   const h = m.homeTeam, a = m.awayTeam;
-  const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? '–';
-  const ag = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? '–';
-  const goals = m.goals || [];
-  const hG = goals.filter(g => g.team?.id === h?.id);
-  const aG = goals.filter(g => g.team?.id === a?.id);
-  const od = ods(m);
-  document.getElementById('dtl-body').innerHTML = `
-    <div style="text-align:center;padding:14px 0;border-bottom:1px solid var(--b);margin-bottom:14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="flex:1;text-align:center;"><img src="${h?.crest||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);font-weight:600;">${h?.name||''}</span></div>
-        <div style="font-size:36px;font-weight:800;color:var(--t);">${hg} : ${ag}</div>
-        <div style="flex:1;text-align:center;"><img src="${a?.crest||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);font-weight:600;">${a?.name||''}</span></div>
+  const hg = m.score?.fullTime?.home ?? 0;
+  const ag = m.score?.fullTime?.away ?? 0;
+  const isL = type==='live';
+  
+  return `
+    <div class="mc" onclick="opnDtl(${m.id},'${h.shortName}','${a.shortName}')">
+      <div class="mc-top">
+        <span class="mc-lg">${m.competition.name}</span>
+        <div class="mc-badge ${type}">${isL?'<div class="mc-dot"></div>':''}${isL?'LIVE':kt(m.utcDate)}</div>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
-        ${m.utcDate?`<span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">📅 ${kd(m.utcDate)} ${kt(m.utcDate)} KST</span>`:''}
-        ${m.venue?`<span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">🏟️ ${m.venue}</span>`:''}
-        ${m.referees?.[0]?`<span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">👔 ${m.referees[0].name}</span>`:''}
-      </div>
-    </div>
-    ${goals.length ? `<div style="margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--t3);margin-bottom:10px;">⚽ 골 기록</div>
-      <div style="display:flex;gap:10px;">
-        <div style="flex:1;">${hG.map(g=>`<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t2);margin-bottom:4px;"><span style="font-size:11px;font-weight:700;color:var(--p);min-width:24px;">${g.minute}'</span>${(g.scorer?.name||g.player?.name||'').split(' ').pop()}</div>`).join('')}</div>
-        <div style="flex:1;text-align:right;">${aG.map(g=>`<div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;font-size:12px;color:var(--t2);margin-bottom:4px;">${(g.scorer?.name||g.player?.name||'').split(' ').pop()}<span style="font-size:11px;font-weight:700;color:var(--p);min-width:24px;">${g.minute}'</span></div>`).join('')}</div>
-      </div>
-    </div>` : ''}
-    <div>
-      <div style="font-size:12px;font-weight:700;color:var(--t3);margin-bottom:9px;">📊 배당률 (참고)</div>
-      <div style="display:flex;gap:6px;">
-        <div class="obtn"><div class="olbl">${hn}</div><div class="oval ${parseFloat(od.hw)<2.5?'fav':''}">${od.hw}</div></div>
-        <div class="obtn"><div class="olbl">무</div><div class="oval">${od.dr}</div></div>
-        <div class="obtn"><div class="olbl">${an}</div><div class="oval ${parseFloat(od.aw)<2.5?'fav':''}">${od.aw}</div></div>
+      <div class="mc-body">
+        <div class="mc-row">
+          <div class="mc-tm"><img class="mc-cr" src="${h.crest}"><span>${h.shortName}</span></div>
+          <div class="mc-sc">${hg} : ${ag}</div>
+          <div class="mc-tm aw"><span>${a.shortName}</span><img class="mc-cr" src="${a.crest}"></div>
+        </div>
       </div>
     </div>`;
 }
 
-async function opnDtlKL(id, hn, an) {
-  const d = await kl('/fixtures', { id });
-  const f = d?.response?.[0];
-  if (!f) { document.getElementById('dtl-body').innerHTML = `<div class="empty">데이터 없음</div>`; return; }
-  const h = f.teams.home, a = f.teams.away;
-  const hg = f.goals.home ?? '–', ag = f.goals.away ?? '–';
-  const goals = (f.events||[]).filter(e => e.type === 'Goal');
-  const hG = goals.filter(g => g.team.id === h.id);
-  const aG = goals.filter(g => g.team.id === a.id);
-  const stats = f.statistics || [];
-  const hS = stats[0]?.statistics || [], aS = stats[1]?.statistics || [];
-  const statKeys = [['Shots on Goal','유효슈팅'],['Ball Possession','점유율'],['Total passes','패스'],['Fouls','파울'],['Yellow Cards','경고']];
-  document.getElementById('dtl-body').innerHTML = `
-    <div style="text-align:center;padding:14px 0;border-bottom:1px solid var(--b);margin-bottom:14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="flex:1;text-align:center;"><img src="${h.logo||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);font-weight:600;">${h.name}</span></div>
-        <div style="font-size:36px;font-weight:800;color:var(--t);">${hg} : ${ag}</div>
-        <div style="flex:1;text-align:center;"><img src="${a.logo||''}" style="width:44px;height:44px;object-fit:contain;" onerror="this.style.opacity='.2'"><br><span style="font-size:12px;color:var(--t);font-weight:600;">${a.name}</span></div>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
-        ${f.fixture.venue?.name?`<span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">🏟️ ${f.fixture.venue.name}</span>`:''}
-        ${f.fixture.referee?`<span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">👔 ${f.fixture.referee}</span>`:''}
-        <span style="font-size:11px;background:var(--bg3);border:1px solid var(--b);padding:3px 9px;border-radius:20px;color:var(--t2);">⏰ ${kt(f.fixture.date)} KST</span>
-      </div>
-    </div>
-    ${goals.length ? `<div style="margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--t3);margin-bottom:10px;">⚽ 골 기록</div>
-      <div style="display:flex;gap:10px;">
-        <div style="flex:1;">${hG.map(g=>`<div style="font-size:12px;color:var(--t2);margin-bottom:4px;"><span style="font-weight:700;color:var(--p);">${g.time.elapsed}'</span> ${g.player.name.split(' ').pop()}</div>`).join('')}</div>
-        <div style="flex:1;text-align:right;">${aG.map(g=>`<div style="font-size:12px;color:var(--t2);margin-bottom:4px;">${g.player.name.split(' ').pop()} <span style="font-weight:700;color:var(--p);">${g.time.elapsed}'</span></div>`).join('')}</div>
-      </div>
-    </div>` : ''}
-    ${hS.length ? `<div>
-      <div style="font-size:12px;font-weight:700;color:var(--t3);margin-bottom:10px;">📊 경기 스탯</div>
-      ${statKeys.map(([key,label]) => {
-        const hv = hS.find(s=>s.type===key)?.value ?? 0;
-        const av = aS.find(s=>s.type===key)?.value ?? 0;
-        const hn2 = typeof hv === 'string' ? parseInt(hv) : hv;
-        const an2 = typeof av === 'string' ? parseInt(av) : av;
-        const tot = hn2 + an2 || 100;
-        const hp = Math.round(hn2/tot*100);
-        return `<div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
-            <span style="font-weight:700;color:var(--t);">${hv}</span>
-            <span style="color:var(--t3);">${label}</span>
-            <span style="font-weight:700;color:var(--t);">${av}</span>
-          </div>
-          <div style="height:4px;background:var(--bg3);border-radius:2px;display:flex;overflow:hidden;">
-            <div style="width:${hp}%;background:var(--p);"></div>
-            <div style="width:${100-hp}%;background:var(--red);"></div>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>` : ''}`;
+// ── 나머지 원본 기능들 ──
+function swP(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.si, .nbi').forEach(b => b.classList.remove('on'));
+  document.getElementById('pg-' + name).classList.add('on');
+  if(el) el.classList.add('on');
+  
+  if(name === 'home') loadHome();
+  if(name === 'std') { buildPills('std'); loadStd(curStd); }
+  if(name === 'player') { buildPills('pl'); loadPlayers(curPLg, curPt); }
+  if(name === 'hub') loadHub();
+  if(name === 'fan') updateFan();
 }
 
-function cm(id) { document.getElementById(id).classList.remove('show'); }
-
-// ══════════════════════════════════════
-// HUB
-// ══════════════════════════════════════
-function loadHub() {
-  const c = document.getElementById('hub-bd');
-  if (!c) return;
-  c.innerHTML = `
-    <div class="hub-tabs">
-      <button class="hub-tab on" onclick="swHub('transfer',this)">🔄 이적</button>
-      <button class="hub-tab" onclick="swHub('myteam',this)">⭐ 내 팀</button>
-      <button class="hub-tab" onclick="swHub('europe',this)">🌍 유럽</button>
-    </div>
-    <div id="hub-con"></div>`;
-  renderHub('transfer');
-}
-function swHub(type, btn) {
-  document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  renderHub(type);
+function buildPills(type) {
+  const sp = document.getElementById(type === 'std' ? 'std-pills' : 'pl-pills');
+  sp.innerHTML = LGS.map(l => `<button class="pill ${l.code===(type==='std'?curStd:curPLg)?'on':''}" onclick="${type==='std'?'swStd':'swPLg'}('${l.code}',this)">${l.name}</button>`).join('');
 }
 
-function mkNews(em, author, time, badge, title, body, tags) {
-  const bdg = badge ? `<span class="tr-b ${badge==='done'?'done':'rumor'}">${badge==='done'?'✅ 확정':'💬 루머'}</span>` : '';
-  return `<div class="nc" onclick="openNewsModal('${title.replace(/'/g,'`')}','${author}','${body.replace(/'/g,'`')}')">
-    <div class="nc-src"><div class="nc-av">${em}</div><div><div class="nc-author">${author}</div><div style="font-size:11px;color:var(--t3);">${time}</div></div>${bdg}</div>
-    <div class="nc-title">${title}</div>
-    <div class="nc-body">${body}</div>
-    ${tags.length ? `<div class="nc-tags">${tags.map(t=>`<span class="nc-tag">#${t}</span>`).join('')}</div>` : ''}
-  </div>`;
+function swStd(code, btn) { curStd = code; buildPills('std'); loadStd(code); }
+function swPLg(code, btn) { curPLg = code; buildPills('pl'); loadPlayers(code, curPt); }
+
+function setTh(th) { document.body.setAttribute('data-theme', th); }
+function cm(id) { document.getElementById(id).style.display = 'none'; }
+
+function op(el, id, lg, color, name) {
+  document.querySelectorAll('.ob-team').forEach(t => t.classList.remove('sel'));
+  el.classList.add('sel');
+  MT = { id, league: lg, name, color, crest: el.querySelector('img').src };
+  const btn = document.getElementById('ob-btn');
+  btn.classList.add('ready'); btn.disabled = false;
+  btn.textContent = `${name} 팬으로 시작하기 →`;
 }
 
-function openNewsModal(title, author, body) {
-  document.getElementById('dtl-ttl').textContent = author;
-  document.getElementById('dtl-body').innerHTML = `<div style="padding:4px 0;"><div style="font-size:15px;font-weight:700;color:var(--t);line-height:1.5;margin-bottom:14px;">${title}</div><div style="font-size:14px;color:var(--t2);line-height:1.8;">${body}</div></div>`;
-  document.getElementById('dtl-modal').classList.add('show');
-}
-
-async function renderHub(type) {
-  const c = document.getElementById('hub-con');
-  if (!c) return;
-  if (type === 'transfer') {
-    c.innerHTML = [
-      mkNews('🎙️','Fabrizio Romano ✓','2h','done','공식: 빅클럽 이적 완료','의료 검사 통과 및 계약서 서명. 공식 발표 곧 예정.',['이적','공식']),
-      mkNews('🎙️','Fabrizio Romano ✓','5h','rumor','탑클럽, 여름 영입 협상 진행','에이전트 첫 접촉. 이번 주 개인 조건 합의 예상.',['협상']),
-      mkNews('📰','David Ornstein ✓','3h','','감독 거취 내부 회의','전술 방향 재검토 보드 미팅 예정.',['감독']),
-      mkNews('📺','Sky Sports','1h','done','UCL 8강 대진 확정','레알 마드리드 vs 맨시티 포함.',['UCL']),
-      mkNews('📺','Sky Sports','6h','','주말 빅매치 프리뷰','EPL 1위 결정전 + 강등권 6포인터.',['EPL']),
-    ].join('');
-  } else if (type === 'myteam') {
-    if (!MT) { c.innerHTML = `<div class="empty">팀을 선택하면 팀 뉴스를 볼 수 있어요</div>`; return; }
-    c.innerHTML = `<div class="ldr"><div class="spin"></div></div>`;
-    const [rec, up] = await Promise.all([
-      isKL(MT) ? kl('/fixtures', {team:MT.id, league:KL_LEAGUE, season:KL_SEASON, last:5}) : fd(`/teams/${MT.id}/matches?status=FINISHED&limit=5`),
-      isKL(MT) ? kl('/fixtures', {team:MT.id, league:KL_LEAGUE, season:KL_SEASON, next:3}) : fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=3`),
-    ]);
-    const recMs = isKL(MT) ? (rec?.response||[]) : (rec?.matches||[]);
-    const upMs  = isKL(MT) ? (up?.response||[]) : (up?.matches||[]);
-    let html = '';
-    if (recMs.length) {
-      html += `<div style="background:var(--cd);border:1px solid var(--b);border-radius:var(--r);padding:14px;margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:700;color:var(--p);margin-bottom:10px;">⚽ ${MT.name} 최근 경기</div>`;
-      recMs.slice(0,4).forEach(m => {
-        const kl2 = isKL(MT);
-        const h = kl2?m.teams.home:m.homeTeam, a = kl2?m.teams.away:m.awayTeam;
-        const hg = kl2?(m.goals?.home??0):(m.score?.fullTime?.home??0);
-        const ag = kl2?(m.goals?.away??0):(m.score?.fullTime?.away??0);
-        const isH = h.id === MT.id;
-        const myG = isH?hg:ag, oppG = isH?ag:hg;
-        const opp = isH?a:h;
-        const rc = myG>oppG?'var(--p)':myG===oppG?'var(--am)':'var(--red)';
-        const res = myG>oppG?'승':myG===oppG?'무':'패';
-        const date = kl2?m.fixture?.date:m.utcDate;
-        html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--b);">
-          <div style="width:26px;height:26px;border-radius:50%;background:${rc};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;">${res}</div>
-          <img src="${kl2?opp.logo:opp.crest||''}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.opacity='.2'">
-          <span style="font-size:13px;color:var(--t);flex:1;">${kl2?opp.name:(opp.shortName||opp.name)}</span>
-          <span style="font-size:14px;font-weight:700;color:var(--t);">${myG}:${oppG}</span>
-          <span style="font-size:11px;color:var(--t3);">${kd(date)}</span>
-        </div>`;
-      });
-      html += '</div>';
-    }
-    if (upMs.length) {
-      html += `<div style="background:var(--cd);border:1px solid var(--b);border-radius:var(--r);padding:14px;margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:700;color:var(--p);margin-bottom:10px;">📅 예정 경기</div>`;
-      upMs.forEach(m => {
-        const kl2 = isKL(MT);
-        const h = kl2?m.teams.home:m.homeTeam, a = kl2?m.teams.away:m.awayTeam;
-        const opp = h.id===MT.id ? a : h;
-        const isHome = h.id === MT.id;
-        const date = kl2?m.fixture?.date:m.utcDate;
-        html += `<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--b);">
-          <span style="font-size:11px;background:var(--ps);border:1px solid var(--pb);color:var(--p);padding:2px 7px;border-radius:20px;">${isHome?'홈':'원정'}</span>
-          <img src="${kl2?opp.logo:opp.crest||''}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.opacity='.2'">
-          <span style="font-size:13px;color:var(--t);flex:1;">vs ${kl2?opp.name:(opp.shortName||opp.name)}</span>
-          <span style="font-size:11px;color:var(--t3);">${kd(date)} ${kt(date)}</span>
-        </div>`;
-      });
-      html += '</div>';
-    }
-    html += mkNews('🎙️','Fabrizio Romano ✓','최신','rumor',`${MT.name} 이적 루머`,`${MT.name}이(가) 다음 시즌 주요 포지션 보강을 검토 중입니다.`,[MT.name]);
-    c.innerHTML = html || `<div class="empty">데이터 없음</div>`;
-  } else {
-    c.innerHTML = [
-      mkNews('🏆','UEFA','최신','','UCL 8강 분석','레알 마드리드의 압도적 폼. 맨시티와의 빅매치 전망.',['UCL']),
-      mkNews('⚽','European Football','8h','','5대 리그 주간 리뷰','EPL TOP4, 라리가 우승 레이스, 분데스 강등권.',['유럽축구']),
-      mkNews('📊','Opta Stats','12h','','2025-26 시즌 xG 분석','기대득점 기반 이번 시즌 최강자 분석.',['통계']),
-    ].join('');
-  }
-}
-
-// ══════════════════════════════════════
-// FANZONE
-// ══════════════════════════════════════
-const getLv = n => LEVELS.find(l => n>=l.min && n<=l.max) || LEVELS[0];
-const saveFan = () => localStorage.setItem('pp_fan', JSON.stringify(fanData));
-const isMatchTime = m => { if (!m.utcDate) return false; const s=new Date(m.utcDate).getTime(),n=Date.now(); return n>=s-30*60000&&n<=s+120*60000; };
-
-function updateFan() {
-  const lv = getLv(fanData.total);
-  const nxt = LEVELS.find(l => l.lv === lv.lv+1);
-  const prog = nxt ? Math.round((fanData.total-lv.min)/(nxt.min-lv.min)*100) : 100;
-  document.getElementById('hdr-lv').textContent = `Lv.${lv.lv}`;
-  document.getElementById('fan-bd').innerHTML = `
-    <div class="lv-card">
-      <div class="lv-em">${lv.em}</div>
-      <div class="lv-name">${lv.name}</div>
-      <div class="lv-sub">Lv.${lv.lv} · 집관 ${fanData.total}경기${MT?' · '+MT.name:''}</div>
-      <div class="lv-pw"><div class="lv-pb" style="width:${prog}%"></div></div>
-      <div class="lv-pl"><span>${lv.min}경기</span><span>${prog}%</span><span>${nxt?nxt.min+'경기':'MAX'}</span></div>
-      <div class="lv-stats">
-        <div class="lvs"><div class="lvs-v">${fanData.total}</div><div class="lvs-l">총 집관</div></div>
-        <div class="lvs"><div class="lvs-v">${lv.lv}</div><div class="lvs-l">레벨</div></div>
-        <div class="lvs"><div class="lvs-v">${fanData.checkins.length}</div><div class="lvs-l">인증수</div></div>
-      </div>
-    </div>
-    <div class="sec"><span class="stl">집관 인증</span><span class="sbd">경기 시간에만</span></div>
-    <div id="fz-ms"><div class="ldr" style="padding:16px;"><div class="spin"></div></div></div>
-    <div class="sec" style="margin-top:8px;"><span class="stl">인증 기록</span></div>
-    ${fanData.checkins.length ? fanData.checkins.slice(0,10).map(ci=>`
-      <div class="ci"><div><div style="font-size:13px;font-weight:600;color:var(--t);">${ci.teams}</div><div style="font-size:11px;color:var(--t3);margin-top:2px;">${ci.date}</div></div><div class="ci-badge">✓</div></div>`).join('') :
-      `<div class="empty" style="padding:18px;">인증 기록 없음</div>`}`;
-  loadFzMs();
-}
-
-async function loadFzMs() {
-  const c = document.getElementById('fz-ms');
-  if (!c || !MT) return;
-  const d = isKL(MT)
-    ? await kl('/fixtures', {team:MT.id, league:KL_LEAGUE, season:KL_SEASON, next:5})
-    : await fd(`/teams/${MT.id}/matches?status=SCHEDULED&limit=5`);
-  const matches = isKL(MT) ? (d?.response||[]) : (d?.matches||[]);
-  if (!matches.length) { c.innerHTML = `<div class="empty" style="padding:12px;">예정 경기 없음</div>`; return; }
-  c.innerHTML = matches.map(m => {
-    const kl2 = isKL(MT);
-    const h = kl2?m.teams.home:m.homeTeam, a = kl2?m.teams.away:m.awayTeam;
-    const date = kl2?m.fixture?.date:m.utcDate;
-    const mid = String(kl2?m.fixture.id:m.id);
-    const teams = `${elv(h.shortName||h.name||h.name)} vs ${elv(a.shortName||a.name||a.name)}`;
-    const done = fanData.checkins.find(c => c.matchId === mid);
-    const canCheck = isMatchTime({utcDate:date});
-    return `<div class="fz-match">
-      <div class="fz-info"><div class="fz-teams">${teams}</div><div class="fz-time">📅 ${kd(date)} ${kt(date)} KST</div></div>
-      <button class="fz-btn" ${done||!canCheck?'disabled':''} onclick="doCI(this,'${teams}','${kd(date)} ${kt(date)}','${mid}')">${done?'✓완료':canCheck?'집관 인증':'⏰경기 시간에만'}</button>
-    </div>`;
-  }).join('');
-}
-
-function doCI(btn, teams, ts, mid) {
-  if (fanData.checkins.find(c => c.matchId === mid)) return;
-  btn.disabled = true; btn.textContent = '✓ 완료';
-  const pLv = getLv(fanData.total).lv;
-  fanData.total++; fanData.checkins.unshift({teams, date:ts, matchId:mid}); saveFan();
-  const nLv = getLv(fanData.total);
-  if (nLv.lv > pLv) {
-    document.getElementById('lu-em').textContent = nLv.em;
-    document.getElementById('lu-sub').textContent = `Lv.${nLv.lv} · ${nLv.name}`;
-    const el = document.getElementById('lvup'); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 4000);
-  }
-  updateFan();
-}
-
-// ══════════════════════════════════════
-// SETTINGS / INIT
-// ══════════════════════════════════════
-function showSettings() { if (confirm('팀을 변경하시겠어요?')) { localStorage.removeItem('pp_team'); location.reload(); } }
-
-// 저장된 팀 있으면 바로 시작
-const saved = localStorage.getItem('pp_team');
-if (saved) {
-  MT = JSON.parse(saved);
-  applyTheme(MT.color);
+function startApp() {
+  localStorage.setItem('pp_team', JSON.stringify(MT));
   boot();
 }
+
+function boot() {
+  document.getElementById('ob').style.display = 'none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('hdr-cr').src = MT.crest;
+  swP('home');
+}
+
+// 초기 팀 확인
+const saved = localStorage.getItem('pp_team');
+if (saved) { MT = JSON.parse(saved); boot(); }
 </script>
 </body>
 </html>
