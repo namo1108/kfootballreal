@@ -3,103 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>PITCH Pro | Global Football Hub</title>
+<title>PITCH Pro | Global Hub</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2305070a'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%2310b981' stroke-width='2.5'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Poppins,Arial Black' font-weight='900' font-size='26' fill='%2310b981'%3EP%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-/* ── [1. Design System & Dynamic Theme] ── */
+/* ── [DESIGN SYSTEM: CINEMATIC NEON] ── */
 :root {
   --f: 'Poppins', sans-serif; --f-h: 'Bebas Neue', sans-serif;
   --bg:#05070a; --bg2:#0d1117; --bg3:#161b22; --cd:rgba(20,24,31,0.95);
   --p:#10b981; --ps:rgba(16,185,129,0.12); --pb:rgba(16,185,129,0.28);
   --s:#3b82f6; --t:#f0f6fc; --t2:#8b949e; --t3:#30363d;
-  --red:#ef4444; --am:#f59e0b; --br:24px; --sh:0 16px 40px rgba(0,0,0,0.6);
+  --red:#ef4444; --br:24px; --sh:0 20px 40px rgba(0,0,0,0.6);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
 html,body { height:100%; background:var(--bg); color:var(--t); font-family:var(--f); overflow:hidden; -webkit-font-smoothing:antialiased; }
-body { 
-    background-image: radial-gradient(ellipse at 0% 0%, var(--ps) 0%, transparent 40%), 
-                      radial-gradient(ellipse at 100% 100%, rgba(59,130,246,0.04) 0%, transparent 40%);
-    transition: background 0.8s ease;
-}
+body { background-image: radial-gradient(ellipse at 0% 0%, var(--ps) 0%, transparent 40%); transition: background 0.8s ease; }
 
-/* ── [2. Onboarding: Full Multi-League UI] ── */
-#ob { position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; padding:60px 24px; }
-.ob-container { max-width:1100px; margin:0 auto; }
+/* ── [ONBOARDING] ── */
+#ob { position:fixed; inset:0; background:var(--bg); z-index:9999; overflow-y:auto; padding:60px 24px; display:block; }
 .ob-header { text-align:center; margin-bottom:50px; }
 .ob-header h1 { font-family:var(--f-h); font-size:64px; letter-spacing:4px; margin-bottom:10px; background:linear-gradient(135deg, #fff, var(--p)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.ob-counter { display:inline-flex; align-items:center; gap:10px; background:var(--bg2); border:1px solid var(--t3); border-radius:100px; padding:8px 24px; margin-top:10px; color:var(--t2); font-weight:600; }
-.ob-counter b { color:var(--p); font-size:18px; }
-.league-section { margin-bottom:50px; }
+.league-section { max-width:1100px; margin:0 auto 50px; }
 .league-title { font-family:var(--f-h); font-size:28px; color:var(--p); margin-bottom:24px; border-left:5px solid var(--p); padding-left:18px; letter-spacing:1px; }
 .ob-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:18px; }
 .ob-team { background:var(--bg2); border:1.5px solid var(--t3); border-radius:20px; padding:25px 10px; text-align:center; cursor:pointer; transition:0.3s; position:relative; }
-.ob-team:hover { border-color:var(--pb); transform:translateY(-5px); }
 .ob-team.sel { border-color:var(--p); background:var(--ps); box-shadow:0 15px 30px rgba(16,185,129,0.2); }
-.ob-team.sel::after { content:'✓'; position:absolute; top:10px; right:12px; color:var(--p); font-weight:900; font-size:18px; }
-.ob-team img { width:55px; height:55px; object-fit:contain; margin-bottom:15px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); }
-.ob-team span { font-size:13px; font-weight:800; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ob-team img { width:55px; height:55px; object-fit:contain; margin-bottom:12px; }
+.ob-team span { font-size:12px; font-weight:800; display:block; }
+.start-btn { display:block; margin:40px auto; padding:22px 100px; border-radius:100px; border:none; background:var(--p); color:#000; font-weight:900; font-size:20px; cursor:pointer; box-shadow:0 15px 50px var(--ps); }
 
-.start-btn-wrap { position:sticky; bottom:20px; text-align:center; padding:30px; pointer-events:none; }
-.start-btn { 
-    pointer-events:auto; padding:22px 100px; border-radius:100px; border:none; 
-    background:linear-gradient(135deg, var(--p), #059669); color:#000; 
-    font-weight:900; font-size:20px; cursor:pointer; box-shadow:0 15px 50px var(--ps);
-    transition:0.3s; letter-spacing:1px;
-}
-.start-btn:disabled { opacity:0.2; cursor:not-allowed; filter:grayscale(1); }
-
-/* ── [3. Main App Layout] ── */
+/* ── [APP LAYOUT] ── */
 #app { display:none; height:100vh; flex-direction:column; }
 #app.show { display:flex; }
 .hdr { height:76px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; background:rgba(13, 17, 23, 0.95); backdrop-filter:blur(30px); border-bottom:1px solid var(--t3); z-index:1000; }
 .hdr-logo { font-family:var(--f-h); font-size:32px; letter-spacing:2px; background: linear-gradient(135deg, var(--p), var(--s)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .main-body { flex:1; display:flex; overflow:hidden; }
 .sidebar { width:260px; background:var(--bg2); padding:30px 16px; border-right:1px solid var(--t3); display:flex; flex-direction:column; }
-.si { display:flex; align-items:center; gap:16px; padding:18px 22px; border-radius:18px; cursor:pointer; color:var(--t2); font-weight:700; margin-bottom:10px; transition:0.3s; font-size:14px; }
-.si:hover { background:var(--bg3); color:#fff; }
+.si { display:flex; align-items:center; gap:16px; padding:18px; border-radius:18px; cursor:pointer; color:var(--t2); font-weight:700; margin-bottom:10px; transition:0.3s; }
 .si.on { background:var(--ps); color:var(--p); border:1px solid var(--pb); }
-.pages { flex:1; overflow-y:auto; padding:40px; scroll-behavior: smooth; background: transparent; }
-.page { display:none; animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.page.on { display:block; }
-@keyframes fadeUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+.pages { flex:1; overflow-y:auto; padding:40px; scrollbar-width: none; }
 
-/* ── [4. Match & Data Components] ── */
-.mc { background:var(--cd); border:1px solid var(--t3); border-radius:var(--br); margin-bottom:24px; overflow:hidden; box-shadow:var(--sh); transition:0.3s; cursor:pointer; }
-.mc:hover { border-color:var(--pb); transform:translateY(-4px); }
-.mc-top { padding:14px 24px; background:rgba(255,255,255,0.03); display:flex; justify-content:space-between; font-size:11px; font-weight:900; color:var(--t2); text-transform:uppercase; letter-spacing:1px; }
-.mc-body { padding:40px 24px; display:flex; align-items:center; justify-content:center; gap:30px; }
-.mc-tm { flex:1; text-align:center; font-family:var(--f-h); font-weight:900; font-size:24px; letter-spacing:1px; }
-.mc-sc-box { background:#000; padding:15px 35px; border-radius:20px; border:1.5px solid var(--pb); font-family:var(--f-h); font-size:48px; font-weight:900; letter-spacing:6px; color:var(--t); }
-.mc-sc-box.live { color:var(--p); border-color:var(--p); box-shadow:0 0 30px var(--ps); }
-
-.lg-hd { padding:22px 28px; background:var(--bg2); border-radius:20px; cursor:pointer; margin-top:20px; border:1px solid var(--t3); display:flex; justify-content:space-between; font-weight:900; font-family:var(--f-h); font-size:22px; letter-spacing:1px; transition:0.2s; }
-.lg-ms { display:none; flex-direction:column; padding:10px 0; }
+/* ── [COMPONENTS: SCHEDULE & CARDS] ── */
+.mc { background:var(--cd); border:1px solid var(--t3); border-radius:var(--br); margin-bottom:24px; overflow:hidden; box-shadow:var(--sh); transition:0.3s; }
+.lg-hd { padding:22px 28px; background:var(--bg2); border-radius:20px; cursor:pointer; margin-top:20px; border:1px solid var(--t3); display:flex; justify-content:space-between; font-weight:900; font-family:var(--f-h); font-size:22px; }
+.lg-ms { display:none; flex-direction:column; }
 .lg-ms.open { display:flex; }
+.pills { display:flex; gap:10px; overflow-x:auto; padding-bottom:15px; margin-bottom:30px; scrollbar-width: none; }
+.pill { padding:14px 28px; border-radius:100px; border:1px solid var(--t3); background:var(--bg2); color:var(--t2); cursor:pointer; font-weight:800; white-space:nowrap; transition:0.3s; }
+.pill.on { background:var(--p); color:#000; box-shadow:0 0 25px var(--ps); }
 
-/* ── [5. Stats & Table Styles] ── */
-.stt { width:100%; border-collapse:separate; border-spacing:0 12px; }
-.stt th { padding:15px; color:var(--t3); font-size:11px; font-weight:900; text-transform:uppercase; }
-.stt td { padding:20px 15px; background:var(--bg2); text-align:center; font-weight:700; font-size:15px; border-top:1px solid rgba(255,255,255,0.02); }
-.stt td:first-child { border-radius:18px 0 0 18px; }
-.stt td:last-child { border-radius:0 18px 18px 0; }
-.nm-cell { display:flex; align-items:center; gap:20px; text-align:left; }
-.nm-cell img { width:36px; height:36px; object-fit:contain; }
-
-.pills { display:flex; gap:12px; overflow-x:auto; padding-bottom:15px; margin-bottom:30px; scrollbar-width: none; }
-.pill { padding:14px 28px; border-radius:100px; border:1px solid var(--t3); background:var(--bg2); color:var(--t2); cursor:pointer; font-weight:800; white-space:nowrap; transition:0.3s; font-size:14px; text-transform:uppercase; letter-spacing:1px; }
-.pill.on { background:var(--p); color:#000; border-color:var(--p); box-shadow:0 0 25px var(--ps); }
-
-/* ── [6. AI Predict & FanZone] ── */
+/* AI & STATS */
 .ai-card { background:linear-gradient(165deg, #0d1117 0%, #05070a 100%); border:1px solid var(--pb); border-radius:30px; padding:35px; margin-bottom:30px; position:relative; overflow:hidden; }
-.prob-bar { height:16px; background:rgba(255,255,255,0.05); border-radius:100px; margin:25px 0; overflow:hidden; display:flex; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
-.prob-h { background:linear-gradient(90deg, #059669, var(--p)); box-shadow:0 0 20px var(--p); }
-.prob-a { background:linear-gradient(90deg, #dc2626, var(--red)); box-shadow:0 0 20px var(--red); }
-
-/* ── [7. Goal Overlay & Sounds] ── */
-#gt { position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.92); backdrop-filter:blur(30px); pointer-events:none; }
-.gt-word { font-family:var(--f-h); font-size:140px; font-weight:900; color:var(--p); letter-spacing:25px; filter:drop-shadow(0 0 50px var(--p)); animation: gtCinema 0.8s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards; }
-@keyframes gtCinema { 0%{transform:scale(2.5); opacity:0} 100%{transform:scale(1); opacity:1} }
+.stt { width:100%; border-collapse:separate; border-spacing:0 12px; }
+.stt td { padding:20px 15px; background:var(--bg2); text-align:center; font-weight:700; border-top:1px solid rgba(255,255,255,0.02); }
+.nm-cell { display:flex; align-items:center; gap:20px; text-align:left; }
+.nm-cell img { width:32px; height:32px; object-fit:contain; }
 </style>
 </head>
 <body>
@@ -108,22 +66,18 @@ body {
   <div class="ob-container">
     <div class="ob-header">
       <h1>PITCH PRO</h1>
-      <p style="color:var(--t2); font-weight:600; font-size:18px;">Welcome. Sync your club and experience cinematic football hub.</p>
-      <div class="ob-counter">SELECTED CLUBS: <b id="sel-cnt">0</b> / 2</div>
+      <p style="color:var(--t2); font-weight:600;">Choose your clubs to experience global football hub.</p>
     </div>
-    <div id="ob-list">
-        </div>
-    <div class="start-btn-wrap">
-      <button class="start-btn" id="ob-btn" onclick="startApp()" disabled>SELECT AT LEAST 1 TEAM</button>
-    </div>
+    <div id="ob-list"></div>
+    <button class="start-btn" id="ob-btn" onclick="startApp()" disabled>SELECT TEAM</button>
   </div>
 </div>
 
 <div id="app">
   <header class="hdr">
-    <div class="hdr-logo">PITCH PRO</div>
+    <div class="hdr-logo" onclick="location.reload()">PITCH PRO</div>
     <div style="display:flex; align-items:center; gap:20px;">
-        <div id="lpill" style="display:none; color:var(--red); font-weight:900; font-size:13px; text-shadow:0 0 10px var(--red); letter-spacing:1px;">● LIVE ACTION</div>
+        <div id="lpill" style="display:none; color:var(--red); font-weight:900; font-size:12px; text-shadow:0 0 10px var(--red);">● LIVE ACTION</div>
         <div id="team-display" style="display:flex; gap:12px;"></div>
     </div>
   </header>
@@ -139,59 +93,22 @@ body {
     </aside>
 
     <main class="pages">
-      <div class="page on" id="pg-home">
-        <h1 style="font-family:var(--f-h); font-weight:900; font-size:36px; margin-bottom:40px; letter-spacing:1px;">⚡ REAL-TIME TRACKING</h1>
-        <div id="home-bd"></div>
-      </div>
-      
+      <div class="page on" id="pg-home"><div id="home-bd"></div></div>
       <div class="page" id="pg-sched">
-        <h1 style="font-family:var(--f-h); font-weight:900; font-size:36px; margin-bottom:15px;">GLOBAL FIXTURES</h1>
+        <h1 style="font-family:var(--f-h); font-size:32px; margin-bottom:10px;">APRIL FIXTURES</h1>
         <div id="date-nav" class="pills"></div>
         <div id="sched-bd"></div>
       </div>
-
-      <div class="page" id="pg-ai">
-        <h1 style="font-family:var(--f-h); font-weight:900; font-size:36px; margin-bottom:40px;">🤖 AI SUPERCOMPUTER ANALYSIS</h1>
-        <div id="ai-bd"></div>
-      </div>
-
-      <div class="page" id="pg-std">
-        <h1 style="font-family:var(--f-h); font-weight:900; font-size:36px; margin-bottom:15px;">LEAGUE TABLES</h1>
-        <div id="std-pills" class="pills"></div>
-        <div id="std-bd"></div>
-      </div>
-
-      <div class="page" id="pg-player">
-        <h1 style="font-family:var(--f-h); font-weight:900; font-size:36px; margin-bottom:15px;">TOP PERFORMERS</h1>
-        <div id="pl-pills" class="pills"></div>
-        <div id="pl-bd"></div>
-      </div>
-
-      <div class="page" id="pg-fan">
-          <div class="ai-card" style="text-align:center;">
-              <div style="font-size:12px; font-weight:900; color:var(--p); letter-spacing:2px; margin-bottom:15px;">AUTHENTICATION HUB</div>
-              <h2 id="fan-team-name" style="color:#fff; font-family:var(--f-h); font-size:42px; letter-spacing:2px;">CONNECTED</h2>
-              <p style="margin:25px 0; color:var(--t2); font-size:16px;">Fan authentication is active during live matches only.</p>
-              <button class="pill on" style="padding:18px 60px; font-size:18px; font-weight:900;" onclick="alert('FAN AUTHENTICATED! +10XP')">CHECK-IN NOW</button>
-          </div>
-          <h2 style="font-family:var(--f-h); font-size:28px; margin:40px 0 20px; letter-spacing:1px;">MY CLUB CALENDAR</h2>
-          <div id="fan-bd"></div>
-      </div>
+      <div class="page" id="pg-ai"><h1 style="font-family:var(--f-h); font-size:32px; margin-bottom:40px;">🤖 AI ANALYSIS</h1><div id="ai-bd"></div></div>
+      <div class="page" id="pg-std"><div class="pills" id="std-pills"></div><div id="std-bd"></div></div>
+      <div class="page" id="pg-player"><div class="pills" id="pl-pills"></div><div id="pl-bd"></div></div>
+      <div class="page" id="pg-fan"><div id="fan-bd"></div></div>
     </main>
   </div>
 </div>
 
-<div id="gt"><div class="gt-box"><div class="gt-word">GOAL!</div><div id="gt-info" style="font-size:32px; font-weight:900; color:#fff; text-align:center; margin-top:30px; font-family:var(--f-h); letter-spacing:2px;"></div></div></div>
-
-<div id="modal" style="display:none; position:fixed; inset:0; z-index:2000; align-items:center; justify-content:center; padding:30px; background:rgba(0,0,0,0.85); backdrop-filter:blur(15px);">
-  <div class="modal-content" style="background:var(--bg2); width:100%; max-width:600px; border-radius:35px; border:1px solid var(--pb); padding:50px; position:relative; box-shadow:var(--sh);">
-    <button onclick="closeModal()" style="position:absolute; top:25px; right:30px; background:none; border:none; color:var(--t2); font-size:40px; cursor:pointer;">&times;</button>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
 <script>
-// ── [JS ENGINE: TOTAL CUMULATIVE CORE] ──
+// ── [JS ENGINE: REAL-TIME & 4-MONTH DATA] ──
 const API = '/api/football';
 const LEAGUES = [
   {n:'Premier League', c:'PL', cr:'https://crests.football-data.org/PL.png'},
@@ -202,250 +119,158 @@ const LEAGUES = [
   {n:'K League 1', c:'KL1', cr:'https://media.api-sports.io/football/leagues/292.png'}
 ];
 
-// Complete Team Database Search and Integrated
-const FULL_TEAMS_DB = [
-  {lg:'K League 1 & 2', teams:[
+const TEAMS_DB = [
+  {lg:'K League 2', teams:[
     {id:764, n:'Hwaseong FC', col:'#FF5E00', cr:'https://crests.football-data.org/764.png'},
     {id:2756, n:'Suwon Samsung', col:'#003DA5', cr:'https://media.api-sports.io/football/teams/2756.png'},
-    {id:2762, n:'Jeonbuk Hyundai', col:'#006738', cr:'https://media.api-sports.io/football/teams/2762.png'},
-    {id:2759, n:'Ulsan HD', col:'#1E4799', cr:'https://media.api-sports.io/football/teams/2759.png'},
-    {id:2763, n:'FC Seoul', col:'#E2002D', cr:'https://media.api-sports.io/football/teams/2763.png'},
-    {id:2758, n:'Seongnam FC', col:'#000000', cr:'https://media.api-sports.io/football/teams/2758.png'},
-    {id:2774, n:'Jeonnam Dragons', col:'#006A38', cr:'https://media.api-sports.io/football/teams/2774.png'}
+    {id:2758, n:'Seongnam FC', col:'#000000', cr:'https://media.api-sports.io/football/teams/2758.png'}
   ]},
   {lg:'Premier League', teams:[
     {id:57, n:'Arsenal', col:'#EF0107', cr:'https://crests.football-data.org/57.png'},
     {id:65, n:'Man City', col:'#6CABDD', cr:'https://crests.football-data.org/65.png'},
-    {id:64, n:'Liverpool', col:'#C8102E', cr:'https://crests.football-data.org/64.png'},
-    {id:73, n:'Tottenham', col:'#132257', cr:'https://crests.football-data.org/73.png'},
-    {id:66, n:'Man United', col:'#DA291C', cr:'https://crests.football-data.org/66.png'},
-    {id:61, n:'Chelsea', col:'#034694', cr:'https://crests.football-data.org/61.png'}
-  ]},
-  {lg:'La Liga', teams:[
-    {id:86, n:'Real Madrid', col:'#FEBE10', cr:'https://crests.football-data.org/86.png'},
-    {id:81, n:'Barcelona', col:'#A50044', cr:'https://crests.football-data.org/81.png'},
-    {id:78, n:'Atletico Madrid', col:'#CB3524', cr:'https://crests.football-data.org/78.png'},
-    {id:558, n:'Girona', col:'#E23221', cr:'https://crests.football-data.org/558.png'}
+    {id:64, n:'Liverpool', col:'#C8102E', cr:'https://crests.football-data.org/64.png'}
   ]}
 ];
 
-let SELECTED_TEAMS = [];
-let prevScores = {};
+let MY_TEAMS = [];
 const cache = {};
 
-// [1] Robust Data Fetcher
-async function fetchData(path, isStatic = false) {
+// [API CORE]
+async function fd(path, isStatic = false) {
   const k = path + isStatic;
   if(cache[k] && (Date.now() - cache[k].ts < (isStatic?3600000:60000))) return cache[k].data;
   try {
     const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`);
     const d = await r.json();
-    if(d.errorCode === 429) return cache[k]?.data || d;
     cache[k] = { data: d, ts: Date.now() };
     return d;
   } catch(e) { return null; }
 }
 
-// [2] Onboarding & Dynamic Theme
-function initOnboarding() {
-  const container = document.getElementById('ob-list');
-  container.innerHTML = FULL_TEAMS_DB.map(section => `
+// [1. ONBOARDING & THEME]
+function initOb() {
+  const c = document.getElementById('ob-list');
+  c.innerHTML = TEAMS_DB.map(sec => `
     <div class="league-section">
-      <div class="league-title">${section.lg}</div>
+      <div class="league-title">${sec.lg}</div>
       <div class="ob-grid">
-        ${section.teams.map(t => `
-          <div class="ob-team" onclick="handleTeamSelect(this, ${JSON.stringify(t).replace(/"/g, '&quot;')})">
-            <img src="${t.cr}" onerror="this.style.opacity=0.3">
-            <span>${t.n}</span>
+        ${sec.teams.map(t => `
+          <div class="ob-team" onclick="selectTeam(this, ${JSON.stringify(t).replace(/"/g, '&quot;')})">
+            <img src="${t.cr}"><span>${t.n}</span>
           </div>`).join('')}
       </div>
     </div>`).join('');
 }
 
-function handleTeamSelect(el, team) {
-  const idx = SELECTED_TEAMS.findIndex(t => t.id === team.id);
-  if(idx > -1) { 
-      SELECTED_TEAMS.splice(idx, 1); el.classList.remove('sel'); 
-  } else {
-      if(SELECTED_TEAMS.length >= 2) return alert("System limit: Max 2 clubs.");
-      SELECTED_TEAMS.push(team); el.classList.add('sel');
+function selectTeam(el, team) {
+  const idx = MY_TEAMS.findIndex(t => t.id === team.id);
+  if(idx > -1) { MY_TEAMS.splice(idx,1); el.classList.remove('sel'); }
+  else {
+    if(MY_TEAMS.length >= 2) return;
+    MY_TEAMS.push(team); el.classList.add('sel');
   }
-  document.getElementById('sel-cnt').textContent = SELECTED_TEAMS.length;
-  document.getElementById('ob-btn').disabled = SELECTED_TEAMS.length === 0;
-  document.getElementById('ob-btn').textContent = SELECTED_TEAMS.length > 0 ? 'SYNC & LAUNCH' : 'SELECT CLUBS';
-  if(SELECTED_TEAMS.length > 0) updateSystemTheme(SELECTED_TEAMS[0].color);
+  if(MY_TEAMS.length > 0) applyTheme(MY_TEAMS[0].color);
+  document.getElementById('ob-btn').disabled = MY_TEAMS.length === 0;
+  document.getElementById('ob-btn').textContent = MY_TEAMS.length > 0 ? 'SYNC & START' : 'SELECT TEAM';
 }
 
-function updateSystemTheme(color) {
-  const r = document.documentElement.style;
-  r.setProperty('--p', color);
-  r.setProperty('--ps', color + '26');
-  r.setProperty('--pb', color + '4d');
+function applyTheme(col) {
+  document.documentElement.style.setProperty('--p', col);
+  document.documentElement.style.setProperty('--ps', col + '26');
 }
 
 function startApp() {
-  localStorage.setItem('pp_teams', JSON.stringify(SELECTED_TEAMS));
+  localStorage.setItem('pp_teams', JSON.stringify(MY_TEAMS));
   document.getElementById('ob').style.display = 'none';
   document.getElementById('app').classList.add('show');
-  document.getElementById('team-display').innerHTML = SELECTED_TEAMS.map(t => `<img src="${t.cr}" style="width:28px; height:28px; object-fit:contain;">`).join('');
-  document.getElementById('fan-team-name').textContent = SELECTED_TEAMS[0].n.toUpperCase() + " HUB";
+  document.getElementById('team-display').innerHTML = MY_TEAMS.map(t => `<img src="${t.cr}" style="width:24px;">`).join('');
   swP('home');
 }
 
-// [3] Real-time Action & Goals
-async function loadHome() {
-  const c = document.getElementById('home-bd');
-  const d = await fetchData('/matches');
-  if(!d?.matches) return;
-
-  const live = d.matches.filter(m => ['IN_PLAY','HALFTIME','PAUSED'].includes(m.status));
-  document.getElementById('lpill').style.display = live.length ? 'block' : 'none';
-
-  live.forEach(m => {
-    const sc = `${m.score.fullTime.home}-${m.score.fullTime.away}`;
-    if(prevScores[m.id] && prevScores[m.id] !== sc) triggerGoalAction(m.homeTeam.shortName || m.homeTeam.name);
-    prevScores[m.id] = sc;
-  });
-
-  c.innerHTML = live.map(m => `
-    <div class="mc" onclick="showMatchDtl(${m.id})">
-      <div class="mc-top"><span>${m.competition.name}</span><span style="color:var(--red); font-weight:900;">● LIVE</span></div>
-      <div class="mc-body">
-        <div class="mc-tm">${m.homeTeam.shortName}</div>
-        <div class="mc-sc-box live">${m.score.fullTime.home} : ${m.score.fullTime.away}</div>
-        <div class="mc-tm">${m.awayTeam.shortName}</div>
-      </div>
-    </div>`).join('') || '<div style="text-align:center; padding:100px; color:var(--t3); font-weight:700;">NO LIVE ACTION AT THE MOMENT.</div>';
-}
-
-function triggerGoalAction(team) {
-  const gt = document.getElementById('gt');
-  document.getElementById('gt-info').textContent = team.toUpperCase() + " SCORED";
-  gt.style.display = 'flex';
-  const audio = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
-  audio.play().catch(()=>{});
-  setTimeout(() => { gt.style.display = 'none'; }, 4500);
-}
-
-// [4] Accordion Schedule
-async function loadSched(date = new Date().toISOString().split('T')[0]) {
+// [2. SCHEDULE: APRIL FULL + ACCORDION]
+async function loadSched(date = "2026-04-12") {
   const c = document.getElementById('sched-bd');
-  c.innerHTML = '<div style="text-align:center; padding:50px; color:var(--p);">SYNCING GLOBAL FIXTURES...</div>';
-  const d = await fetchData(`/matches?dateFrom=${date}&dateTo=${date}`);
-  if(!d.matches?.length) { c.innerHTML = '<div style="padding:100px; text-align:center; color:var(--t3);">NO SCHEDULED FIXTURES.</div>'; return; }
+  c.innerHTML = '<div style="text-align:center; padding:50px;">FETCHING FIXTURES...</div>';
+  const d = await fd(`/matches?dateFrom=${date}&dateTo=${date}`);
+  if(!d?.matches?.length) { c.innerHTML = '<div style="padding:100px; text-align:center; color:var(--t2);">No matches found.</div>'; return; }
 
   const groups = d.matches.reduce((acc, m) => {
     acc[m.competition.name] = acc[m.competition.name] || [];
-    acc[m.competition.name].push(m);
-    return acc;
+    acc[m.competition.name].push(m); return acc;
   }, {});
 
   c.innerHTML = Object.entries(groups).map(([name, ms], i) => `
     <div class="lg-hd" onclick="this.nextElementSibling.classList.toggle('open')">
-      <span>${name}</span><span>${ms.length} FIXTURES ▾</span>
+      <span>${name.toUpperCase()}</span><span>${ms.length} ▾</span>
     </div>
-    <div class="lg-ms">
+    <div class="lg-ms open">
       ${ms.map(m => `
-        <div class="mc" style="margin-top:10px; padding:20px 35px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:12px; color:var(--t3); font-family:var(--f-h);">${m.utcDate.slice(11,16)}</span>
-          <span style="flex:1; text-align:center; font-weight:800; font-size:16px;">${m.homeTeam.shortName} vs ${m.awayTeam.shortName}</span>
-          <span style="font-family:var(--f-h); font-weight:900; color:var(--p); font-size:24px;">${m.score.fullTime.home??'-'} : ${m.score.fullTime.away??'-'}</span>
+        <div class="mc" style="margin-top:10px; padding:20px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; color:var(--t3);">${m.utcDate.slice(11,16)}</span>
+          <span style="flex:1; text-align:center; font-weight:800;">${m.homeTeam.shortName} vs ${m.awayTeam.shortName}</span>
+          <span style="color:var(--p); font-weight:900;">${m.score.fullTime.home??'-'}:${m.score.fullTime.away??'-'}</span>
         </div>`).join('')}
     </div>`).join('');
 }
 
-// [5] Standings & Stats Engine
-async function loadStandings(code) {
+function initDateNav() {
+  const nav = document.getElementById('date-nav');
+  if(nav.innerHTML) return;
+  for(let i=1; i<=30; i++) {
+    const ds = `2026-04-${String(i).padStart(2,'0')}`;
+    const btn = document.createElement('button');
+    btn.className = `pill ${i===12?'on':''}`;
+    btn.textContent = `4/${i}`;
+    btn.onclick = () => { document.querySelectorAll('#date-nav .pill').forEach(p=>p.classList.remove('on')); btn.classList.add('on'); loadSched(ds); };
+    nav.appendChild(btn);
+  }
+}
+
+// [3. LIVE & OTHER TABS]
+async function loadHome() {
+  const c = document.getElementById('home-bd');
+  const d = await fd('/matches');
+  if(!d?.matches) return;
+  const live = d.matches.filter(m => ['IN_PLAY','HALFTIME'].includes(m.status));
+  document.getElementById('lpill').style.display = live.length ? 'block' : 'none';
+  c.innerHTML = live.map(m => `<div class="mc" style="padding:40px 20px; text-align:center;">
+    <div style="font-size:11px; color:var(--p); font-weight:800; margin-bottom:15px;">${m.competition.name}</div>
+    <div style="display:flex; justify-content:space-around; align-items:center;">
+      <b style="font-size:24px;">${m.homeTeam.shortName}</b>
+      <div style="font-size:48px; font-weight:900; font-family:var(--f-h);">${m.score.fullTime.home}:${m.score.fullTime.away}</div>
+      <b style="font-size:24px;">${m.awayTeam.shortName}</b>
+    </div>
+  </div>`).join('') || '<div style="text-align:center; padding:100px; color:var(--t3);">NO LIVE ACTION.</div>';
+}
+
+async function loadStd(code) {
   const c = document.getElementById('std-bd');
-  c.innerHTML = '<div style="text-align:center; padding:50px;">FETCHING TABLES...</div>';
-  const d = await fetchData(`/competitions/${code}/standings`, true);
+  const d = await fd(`/competitions/${code}/standings`, true);
   if(!d.standings) return;
   const rows = d.standings[0].table;
-  c.innerHTML = `<table class="stt"><tr><th>#</th><th>CLUB</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr>` + 
-    rows.map(r => `<tr><td>${r.position}</td><td class="nm-cell"><img src="${r.team.crest}">${r.team.shortName}</td><td>${r.playedGames}</td><td>${r.won}</td><td>${r.draw}</td><td>${r.lost}</td><td style="color:var(--p); font-weight:900; font-family:var(--f-h); font-size:18px;">${r.points}</td></tr>`).join('') + `</table>`;
+  c.innerHTML = `<table class="stt"><tr><th>#</th><th>CLUB</th><th>PTS</th></tr>` + 
+    rows.map(r => `<tr><td>${r.position}</td><td class="nm-cell"><img src="${r.team.crest}">${r.team.shortName}</td><td style="color:var(--p);">${r.points}</td></tr>`).join('') + `</table>`;
 }
 
-async function loadPlayerStats(lg) {
-  const c = document.getElementById('pl-bd');
-  const d = await fetchData(`/competitions/${lg}/scorers`, true);
-  if(!d.scorers) return;
-  c.innerHTML = d.scorers.slice(0, 12).map((s, i) => `
-    <div style="display:flex; align-items:center; gap:25px; padding:25px; background:var(--bg2); border-radius:22px; margin-bottom:15px; border:1px solid rgba(255,255,255,0.02);">
-      <span style="font-family:var(--f-h); font-size:28px; font-weight:900; color:var(--p); opacity:0.3;">${i+1}</span>
-      <div style="flex:1;"><div style="font-weight:800; font-size:18px;">${s.player.name}</div><div style="font-size:13px; color:var(--t3); font-weight:600;">${s.team.name}</div></div>
-      <div style="font-family:var(--f-h); font-size:26px; font-weight:900; color:var(--p);">${s.goals} <small style="font-size:12px; color:var(--t2);">GOALS</small></div>
-    </div>`).join('');
-}
-
-// [6] AI Prediction Engine
-async function loadAI() {
-  const c = document.getElementById('ai-bd');
-  const d = await fetchData('/matches');
-  c.innerHTML = d.matches?.slice(0, 8).map(m => {
-    const h = 40 + (m.id % 35); const a = 100 - h - 10;
-    return `
-      <div class="ai-card">
-        <div style="font-size:11px; font-weight:900; color:var(--s); margin-bottom:15px; letter-spacing:2px;">AI TACTICAL HUB</div>
-        <div style="display:flex; justify-content:space-between; font-family:var(--f-h); font-size:26px; font-weight:900; letter-spacing:1px;">
-          <span>${m.homeTeam.shortName}</span><span>${m.awayTeam.shortName}</span>
-        </div>
-        <div class="prob-bar"><div class="prob-h" style="width:${h}%"></div><div class="prob-a" style="width:${a}%"></div></div>
-        <div style="display:flex; justify-content:space-between; font-family:var(--f-h); color:var(--t2); font-size:16px;">
-          <span>WIN PROB. ${h}%</span><span>WIN PROB. ${a}%</span>
-        </div>
-      </div>`;
-  }).join('') || '<div class="empty">NOT ENOUGH DATA FOR AI ANALYTICS.</div>';
-}
-
-// [7] Nav & Global Interface
 function swP(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + name).classList.add('on');
   document.querySelectorAll('.si').forEach(s => s.classList.remove('on'));
   if(el) el.classList.add('on');
-  
   if(name === 'home') loadHome();
-  if(name === 'sched') {
-      const dnav = document.getElementById('date-nav');
-      if(!dnav.innerHTML) {
-          for(let i=0; i<7; i++) {
-              const d = new Date(); d.setDate(d.getDate() + i);
-              const ds = d.toISOString().split('T')[0];
-              const btn = document.createElement('button');
-              btn.className = `pill ${i===0?'on':''}`;
-              btn.textContent = i===0 ? 'TODAY' : `${d.getMonth()+1}/${d.getDate()}`;
-              btn.onclick = () => { document.querySelectorAll('#date-nav .pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); loadSched(ds); };
-              dnav.appendChild(btn);
-          }
-      }
-      loadSched();
-  }
-  if(name === 'ai') loadAI();
+  if(name === 'sched') { initDateNav(); loadSched(); }
   if(name === 'std') {
-      const sp = document.getElementById('std-pills');
-      if(!sp.innerHTML) sp.innerHTML = LEAGUES.map(l => `<button class="pill" onclick="loadStandings('${l.c}')">${l.n}</button>`).join('');
-      loadStandings('PL');
-  }
-  if(name === 'player') {
-      const pp = document.getElementById('pl-pills');
-      if(!pp.innerHTML) pp.innerHTML = LEAGUES.map(l => `<button class="pill" onclick="loadPlayerStats('${l.c}')">${l.n}</button>`).join('');
-      loadPlayerStats('PL');
+    const sp = document.getElementById('std-pills');
+    if(!sp.innerHTML) sp.innerHTML = LEAGUES.map(l => `<button class="pill" onclick="loadStd('${l.c}')">${l.n}</button>`).join('');
+    loadStd('PL');
   }
 }
 
-function closeModal() { document.getElementById('modal').style.display = 'none'; }
-function showMatchDtl(id) { alert("Match detail functionality is connected to API ID: " + id); }
-
-// Bootstrap
+// INITIAL CHECK
 window.onload = () => {
-    const saved = localStorage.getItem('pp_teams');
-    if(saved) {
-        SELECTED_TEAMS = JSON.parse(saved);
-        updateSystemTheme(SELECTED_TEAMS[0].color);
-        startApp();
-    } else {
-        initOnboarding();
-    }
+  const saved = localStorage.getItem('pp_teams');
+  if(saved) { MY_TEAMS = JSON.parse(saved); applyTheme(MY_TEAMS[0].color); startApp(); }
+  else { initOb(); }
 };
 </script>
 </body>
