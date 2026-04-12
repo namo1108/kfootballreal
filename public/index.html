@@ -912,8 +912,10 @@ function buildPills() {
   const sp = document.getElementById('std-pills');
   const pp = document.getElementById('pl-pills');
   // 리그 엠블럼 포함 pills
+  // 순위: 5대 리그만 (UCL/UEL/K리그 제외)
+  const STD_LGS = LGS.filter(l => ['PL','PD','BL1','SA','FL1'].includes(l.code));
   if (sp && !sp.children.length) {
-    sp.innerHTML = LGS.map((l,i) => `
+    sp.innerHTML = STD_LGS.map((l,i) => `
       <button class="pill ${i===0?'on':''}" onclick="swStd('${l.code}',this)">
         <img src="${l.emblem}" onerror="this.style.display='none'" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:4px;">
         ${l.name}
@@ -1226,6 +1228,14 @@ function swStd(code, btn) {
 async function loadStd(code) {
   const c = document.getElementById('std-bd');
   if (!c) return;
+
+  // 5대 리그만 허용 (UCL/UEL 순위는 지원 안 함)
+  const ALLOWED = ['PL','PD','BL1','SA','FL1','KL1'];
+  if (!ALLOWED.includes(code)) {
+    c.innerHTML = `<div class="empty">📊 ${code} 순위는 지원하지 않습니다</div>`;
+    return;
+  }
+
   c.innerHTML = `<div class="ldr"><div class="spin"></div><div class="spin-t">순위 불러오는 중...</div></div>`;
 
   if (code === 'KL1') { await loadKLStd(c); return; }
@@ -1240,7 +1250,15 @@ async function loadStd(code) {
       <span style="font-size:12px;color:var(--t3);display:block;margin:6px 0;">${isRL ? '10초 후 자동 재시도합니다' : ''}</span>
       <button class="retry-btn" onclick="loadStd('${code}')">다시 시도</button>
     </div>`;
-    if (isRL) setTimeout(() => loadStd(code), 10000);
+    if (isRL) {
+      let countdown = 10;
+      const timer = setInterval(() => {
+        countdown--;
+        const btn = c.querySelector('.retry-btn');
+        if (btn) btn.textContent = `자동 재시도 ${countdown}초...`;
+        if (countdown <= 0) { clearInterval(timer); loadStd(code); }
+      }, 1000);
+    }
     return;
   }
 
