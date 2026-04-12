@@ -5,153 +5,119 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PITCH Pro: Cinematic Neon</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='100%25' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M20 10h16a12 12 0 0 1 0 24H20v18h-6V10zm6 6v12h10a6 6 0 1 0 0-12H26z' fill='url(%23g)'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── [시네마틱 네온 디자인 시스템] ── */
+/* ── [1. 시네마틱 디자인 시스템] ── */
 :root{
-  --f-h:'Poppins', sans-serif; /* 헤더용 포핀스 */
-  --f-b:'Noto Sans KR', sans-serif; /* 본문용 노토산스 */
-  --bg:#05070a; /* 깊은 블랙 */
-  --bg2:#0d1117; /* 약간 밝은 블랙 */
-  
-  /* 색상 조화: 에메랄드 그린 + 스카이 블루 네온 */
-  --p:#10b981; /* 네온 그린 */
-  --ps:rgba(16, 185, 129, 0.1);
-  --s:#3b82f6; /* 네온 블루 */
-  
-  --t:#ffffff;
-  --t2:#a1a1aa;
-  --t3:#3f3f46;
-  --red:#ef4444;
-  --br:20px;
+  --f-h:'Poppins', sans-serif; --f-b:'Noto Sans KR', sans-serif;
+  --bg:#05070a; --bg2:#0d1117; --cd:rgba(20, 24, 31, 0.9);
+  --p:#10b981; --ps:rgba(16, 185, 129, 0.15); --pb:rgba(16, 185, 129, 0.3);
+  --s:#3b82f6; --ss:rgba(59, 130, 246, 0.15);
+  --t:#ffffff; --t2:#a1a1aa; --t3:#3f3f46;
+  --red:#ef4444; --br:24px; --sh:0 20px 40px rgba(0,0,0,0.6);
 }
-
-*,*::before,*::after{box-sizing:border-box; margin:0; padding:0;}
+*,*::before,*::after{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
 body{
   background:var(--bg); color:var(--t); font-family:var(--f-b); 
-  -webkit-font-smoothing:antialiased; overflow:hidden;
-  background-image: radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                    radial-gradient(at 90% 90%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+  background-image: radial-gradient(at 0% 0%, var(--ss) 0px, transparent 40%),
+                    radial-gradient(at 100% 100%, var(--ps) 0px, transparent 40%);
+  overflow:hidden; height:100vh;
 }
 
-/* ── [레이아웃 & 비정형 헤더] ── */
+/* ── [2. 레이아웃] ── */
 #app{display:flex; height:100vh; flex-direction:column;}
 .hdr{
-  height:70px; display:flex; align-items:center; justify-content:space-between; 
-  padding:0 30px; background:rgba(13, 17, 23, 0.8); backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,0.03); z-index:100;
+  height:72px; display:flex; align-items:center; justify-content:space-between; 
+  padding:0 32px; background:rgba(13, 17, 23, 0.85); backdrop-filter:blur(25px);
+  border-bottom:1px solid rgba(255,255,255,0.04); z-index:1000;
 }
 .hdr-logo{
-  font-family:var(--f-h); font-size:24px; font-weight:900; letter-spacing:-1px;
+  font-family:var(--f-h); font-size:22px; font-weight:900; letter-spacing:-1px;
   background: linear-gradient(135deg, var(--p) 0%, var(--s) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-
 .main-body{flex:1; display:flex; overflow:hidden;}
-.sidebar{
-  width:260px; background:var(--bg2); padding:30px 15px;
-  border-right:1px solid rgba(255,255,255,0.03);
-}
+.sidebar{width:260px; background:var(--bg2); padding:30px 16px; border-right:1px solid rgba(255,255,255,0.03);}
 @media(max-width:1024px){.sidebar{display:none;}}
 
 .si{
-  display:flex; align-items:center; gap:15px; padding:16px 20px; border-radius:14px;
-  cursor:pointer; color:var(--t2); font-weight:700; margin-bottom:10px; transition:0.3s;
-  font-family:var(--f-h); font-size:15px;
+  display:flex; align-items:center; gap:14px; padding:16px 20px; border-radius:16px;
+  cursor:pointer; color:var(--t2); font-weight:700; transition:0.3s; margin-bottom:8px;
 }
-.si:hover{background:rgba(255,255,255,0.02); color:var(--t);}
-.si.on{
-  background:linear-gradient(135deg, var(--ps) 0%, rgba(59,130,246,0.05) 100%);
-  color:var(--t); box-shadow:0 4px 15px rgba(0,0,0,0.2);
-  border:1px solid rgba(16, 185, 129, 0.1);
-}
+.si.on{background:var(--ps); color:var(--p); border:1px solid rgba(16, 185, 129, 0.1);}
 
-.pages{flex:1; overflow-y:auto; padding:40px; background:transparent;}
-.page{display:none;}
+.pages{flex:1; overflow-y:auto; padding:40px; scroll-behavior: smooth;}
+.page{display:none; animation: fadeIn 0.4s ease-out;}
 .page.on{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
 
-/* ── [비정형 시네마틱 매치 레이아웃] ── */
-.home-grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap:25px;}
-
+/* ── [3. 컴포넌트: 매치 카드 & 리스트] ── */
 .mc{
-  background:var(--bg2); border:1px solid rgba(255,255,255,0.03); border-radius:var(--br);
-  overflow:hidden; transition:0.3s; position:relative;
-  box-shadow:0 15px 35px rgba(0,0,0,0.4);
+  background:var(--cd); border:1px solid rgba(255,255,255,0.05); border-radius:var(--br);
+  margin-bottom:20px; overflow:hidden; position:relative; transition:0.3s; box-shadow:var(--sh);
 }
-.mc:hover{transform:translateY(-5px); border-color:rgba(16,185,129,0.2);}
+.mc:hover{border-color:var(--p); transform:translateY(-4px);}
+.mc-top{padding:12px 20px; background:rgba(255,255,255,0.02); display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--t3); letter-spacing:1px;}
+.mc-body{padding:30px 20px; display:flex; align-items:center; justify-content:center; gap:15px;}
+.mc-tm{flex:1; text-align:center; font-family:var(--f-h); font-weight:900; font-size:20px;}
+.mc-sc-box{background:rgba(0,0,0,0.6); padding:12px 24px; border-radius:14px; border:1px solid var(--pb);}
+.mc-sc{font-family:var(--f-h); font-size:42px; font-weight:900; letter-spacing:4px;}
 
-/* 시네마틱 탑 바 */
-.mc-top{
-  padding:12px 20px; background:rgba(255,255,255,0.01); display:flex; 
-  justify-content:space-between; align-items:center; font-size:11px; 
-  text-transform:uppercase; letter-spacing:1px; color:var(--t3);
-  font-family:var(--f-h);
-}
-.mc-badge.live{
-  color:var(--red); font-weight:800; animation:pulse 1.5s infinite;
-  text-shadow:0 0 10px var(--red);
-}
-@keyframes pulse{0,100%{opacity:1} 50%{opacity:0.5}}
+/* ── [4. 리그 아코디언 & 일정] ── */
+.lg-hd{display:flex; align-items:center; gap:12px; padding:18px 24px; background:var(--bg2); border:1px solid rgba(255,255,255,0.03); border-radius:18px; cursor:pointer; margin-top:15px; transition:0.2s;}
+.lg-hd:hover{background:rgba(255,255,255,0.02);}
+.lg-ms{display:flex; flex-direction:column; padding:10px 0;}
 
-/* 비정형 바디: 팀 엠블럼을 배경처럼 활용 */
-.mc-body{padding:30px 20px; position:relative; display:flex; align-items:center; justify-content:center; gap:10px;}
-.mc-tm{
-  flex:1; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px;
-  z-index:1;
-}
-.mc-crest-bg{
-  position:absolute; width:120px; height:120px; opacity:0.05; 
-  filter:grayscale(1) blur(2px); z-index:0; pointer-events:none;
-}
-.mc-tm span{font-family:var(--f-h); font-weight:900; font-size:18px; letter-spacing:-0.5px;}
-.mc-sc-box{
-  background:rgba(0,0,0,0.5); padding:10px 20px; border-radius:12px;
-  border:1px solid rgba(255,255,255,0.05); z-index:1;
-}
-.mc-sc{
-  font-family:var(--f-h); font-size:48px; font-weight:900; color:var(--t);
-  letter-spacing:4px; font-variant-numeric: tabular-nums;
-  background:linear-gradient(to bottom, #fff 50%, #aaa 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
+/* ── [5. 순위표 & 선수] ── */
+.stt{width:100%; border-collapse:separate; border-spacing:0 8px;}
+.stt th{padding:12px; color:var(--t3); font-size:11px; font-weight:800; text-transform:uppercase; text-align:center;}
+.stt td{padding:16px 12px; background:var(--bg2); text-align:center; transition:0.2s;}
+.stt tr:hover td{background:var(--ps);}
+.stt td:first-child{border-radius:12px 0 0 12px;}
+.stt td:last-child{border-radius:0 12px 12px 0;}
+.nm-cell{display:flex; align-items:center; gap:12px; text-align:left; font-weight:700;}
+.nm-cell img{width:28px; height:28px; object-fit:contain;}
 
-/* ── [AI PITCH: 미래형 분석 카운터] ── */
-.ai-section{display:flex; flex-direction:column; gap:20px;}
+/* ── [6. 필터링 버튼 (Pills)] ── */
+.pills{display:flex; gap:10px; overflow-x:auto; padding-bottom:15px; margin-bottom:20px;}
+.pill{padding:10px 20px; border-radius:100px; border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02); color:var(--t2); cursor:pointer; font-weight:700; white-space:nowrap; transition:0.3s;}
+.pill.on{background:var(--p); color:var(--bg); border-color:var(--p); box-shadow:0 0 15px var(--p);}
+
+/* ── [7. AI PITCH] ── */
 .ai-card{
-  background:linear-gradient(135deg, #0d1117 0%, #05070a 100%);
-  border:1px solid rgba(59,130,246,0.1); border-radius:25px; padding:30px;
-  position:relative; overflow:hidden;
+  background:linear-gradient(165deg, #0d1117 0%, #05070a 100%);
+  border:1px solid var(--pb); border-radius:25px; padding:30px; margin-bottom:24px; position:relative;
 }
-.ai-card::before{
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-}
-.ai-header{font-family:var(--f-h); color:var(--s); font-size:12px; font-weight:800; letter-spacing:2px; margin-bottom:15px;}
-.prob-row{display:flex; align-items:center; gap:15px; margin:20px 0;}
-.prob-num{font-family:var(--f-h); font-size:36px; font-weight:900;}
-.prob-bar-cinematic{
-  flex:1; height:12px; background:rgba(255,255,255,0.03); border-radius:100px;
-  overflow:hidden; display:flex; position:relative;
-  box-shadow:inset 0 2px 5px rgba(0,0,0,0.5);
-}
-.prob-h{background:linear-gradient(90deg, #059669, var(--p)); box-shadow:0 0 15px var(--p);}
-.prob-a{background:linear-gradient(90deg, #dc2626, var(--red)); box-shadow:0 0 15px var(--red);}
+.prob-bar-wrap{height:14px; background:rgba(255,255,255,0.04); border-radius:100px; margin:20px 0; overflow:hidden; display:flex;}
+.prob-h{background:linear-gradient(90deg, #059669, var(--p)); box-shadow:0 0 20px var(--p);}
+.prob-a{background:linear-gradient(90deg, #dc2626, var(--red)); box-shadow:0 0 20px var(--red);}
 
-/* ── [시네마틱 애니메이션 레이어] ── */
-#gt{
-  position:fixed; inset:0; z-index:9999; display:none; align-items:center; 
-  justify-content:center; background:rgba(0,0,0,0.9); backdrop-filter:blur(15px);
+/* ── [8. 팬존 레벨 시스템] ── */
+.fan-card{
+  background:linear-gradient(135deg, var(--ps) 0%, rgba(59,130,246,0.1) 100%);
+  border:2px solid var(--pb); border-radius:24px; padding:40px; text-align:center; margin-bottom:30px;
 }
-.gt-content{text-align:center;}
-.gt-word{
-  font-family:var(--f-h); font-size:120px; font-weight:900; text-transform:uppercase;
-  letter-spacing:20px; 
-  background:linear-gradient(to bottom, #fff, var(--p));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  filter:drop-shadow(0 0 30px var(--p));
-  animation:gtCinema 0.8s cubic-bezier(0.17,0.89,0.32,1.2) forwards;
+.fan-lv-num{font-family:var(--f-h); font-size:64px; font-weight:900; color:var(--p); line-height:1;}
+.btn-ci{
+  padding:18px 40px; border-radius:16px; border:none; background:var(--p); color:var(--bg);
+  font-weight:900; font-size:18px; cursor:pointer; box-shadow:0 10px 25px var(--ps); transition:0.3s;
 }
-@keyframes gtCinema{0%{transform:scale(2) translateY(50px); opacity:0} 100%{transform:scale(1) translateY(0); opacity:1}}
+.btn-ci:disabled{background:var(--t3); color:var(--t2); cursor:not-allowed; box-shadow:none;}
+
+/* ── [9. 시네마틱 애니메이션 레이어] ── */
+#gt{position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.9); backdrop-filter:blur(20px); pointer-events:none;}
+.gt-word{font-family:var(--f-h); font-size:120px; font-weight:900; letter-spacing:20px; color:var(--p); filter:drop-shadow(0 0 30px var(--p)); animation: gtCinema 0.8s cubic-bezier(0.17,0.89,0.32,1.2) forwards;}
+@keyframes gtCinema{0%{transform:scale(2); opacity:0} 100%{transform:scale(1); opacity:1}}
+
+/* ── [10. 모바일 네비] ── */
+.bnav{height:72px; display:none; background:rgba(13, 17, 23, 0.95); border-top:1px solid rgba(255,255,255,0.05); padding-bottom:env(safe-area-inset-bottom);}
+@media(max-width:1024px){.bnav{display:flex;}}
+.nbi{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; color:var(--t2); cursor:pointer;}
+.nbi.on{color:var(--p);}
+
+/* 상세 모달 */
+#modal{display:none; position:fixed; inset:0; z-index:2000; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px);}
+.modal-content{background:var(--bg2); width:100%; max-width:550px; border-radius:30px; border:1px solid var(--pb); padding:40px; position:relative;}
 </style>
 </head>
 <body>
@@ -159,119 +125,341 @@ body{
 <div id="app">
   <header class="hdr">
     <div class="hdr-logo">PITCH PRO</div>
-    <div style="font-size:11px; font-family:var(--f-h); background:var(--ps); color:var(--p); padding:6px 15px; border-radius:100px; font-weight:800; border:1px solid rgba(16,185,129,0.2); letter-spacing:1px;">LV.3 MASTER</div>
+    <div class="hdr-r" style="display:flex; align-items:center; gap:15px;">
+      <div id="lpill" style="display:none; color:var(--red); font-weight:900; font-size:12px; text-shadow:0 0 10px var(--red);">● LIVE</div>
+      <div style="font-family:var(--f-h); font-size:11px; background:var(--ps); color:var(--p); padding:6px 16px; border-radius:100px; font-weight:800; border:1px solid var(--pb);">LV.3 MASTER</div>
+    </div>
   </header>
 
   <div class="main-body">
     <aside class="sidebar">
-      <div class="si on" onclick="swP('home',this)">⚡ LIVE MATCH</div>
+      <div class="si on" onclick="swP('home',this)">⚡ LIVE STREAM</div>
+      <div class="si" onclick="swP('sched',this)">📅 SCHEDULE</div>
       <div class="si" onclick="swP('ai',this)">🤖 AI PREDICT</div>
       <div class="si" onclick="swP('std',this)">📊 STANDINGS</div>
-      <button onclick="testGoal()" style="margin-top:30px; width:100%; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); background:var(--bg); color:var(--t2); cursor:pointer; font-family:var(--f-h); font-weight:700; font-size:12px;">⚽ SIMULATE GOAL</button>
+      <div class="si" onclick="swP('player',this)">👟 TOP STATS</div>
+      <div class="si" onclick="swP('fan',this)">⭐ FAN ZONE</div>
+      <div style="margin-top:auto; padding:20px; border-radius:20px; background:rgba(255,255,255,0.02); font-size:12px; color:var(--t3);">
+        <p>COMIT 점검 모드 활성 중</p>
+        <button onclick="testGoal()" style="margin-top:10px; width:100%; padding:10px; border-radius:10px; border:none; background:var(--p); color:#000; font-weight:800; cursor:pointer;">⚽ GOAL TEST</button>
+      </div>
     </aside>
 
     <main class="pages">
       <div class="page on" id="pg-home">
-        <h1 style="margin-bottom:30px; font-family:var(--f-h); font-weight:900; font-size:32px; letter-spacing:-1px;">⚡ 실시간 중계</h1>
-        <div class="home-grid" id="home-bd"></div>
+        <h1 style="font-family:var(--f-h); font-weight:900; font-size:32px; margin-bottom:30px;">⚡ 실시간 매치</h1>
+        <div id="home-bd"></div>
       </div>
+
+      <div class="page" id="pg-sched">
+        <div id="date-nav" class="pills"></div>
+        <div id="sched-bd"></div>
+      </div>
+
       <div class="page" id="pg-ai">
-        <h1 style="margin-bottom:30px; font-family:var(--f-h); font-weight:900; font-size:32px; letter-spacing:-1px;">🤖 AI 슈퍼컴퓨터 예측</h1>
-        <div class="ai-section" id="ai-bd"></div>
+        <h1 style="font-family:var(--f-h); font-weight:900; font-size:32px; margin-bottom:30px;">🤖 AI 슈퍼컴퓨터 분석</h1>
+        <div id="ai-bd"></div>
       </div>
+
       <div class="page" id="pg-std">
-        <h1 style="margin-bottom:30px; font-family:var(--f-h); font-weight:900; font-size:32px; letter-spacing:-1px;">📊 리그 통합 순위</h1>
-        <div id="std-bd">데이터 통합 중...</div>
+        <div id="std-pills" class="pills"></div>
+        <div id="std-bd"></div>
+      </div>
+
+      <div class="page" id="pg-player">
+        <div id="pl-pills" class="pills"></div>
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+          <button class="pill on" id="btn-scorers" onclick="swPt('scorers')">GOALS</button>
+          <button class="pill" id="btn-assists" onclick="swPt('assists')">ASSISTS</button>
+        </div>
+        <div id="pl-bd"></div>
+      </div>
+
+      <div class="page" id="pg-fan">
+        <div class="fan-card">
+          <div style="font-size:12px; font-weight:800; color:var(--p); letter-spacing:2px; margin-bottom:10px;">CURRENT RANK</div>
+          <div class="fan-lv-num">LV.3</div>
+          <div style="font-weight:800; margin-top:10px;">집관 마스터</div>
+          <p style="color:var(--t2); font-size:13px; margin-top:5px;">다음 레벨까지 3경기 남음</p>
+        </div>
+        <div id="fan-bd"></div>
       </div>
     </main>
   </div>
+
+  <nav class="bnav">
+    <div class="nbi on" onclick="swP('home',this)">⚡</div>
+    <div class="nbi" onclick="swP('sched',this)">📅</div>
+    <div class="nbi" onclick="swP('ai',this)">🤖</div>
+    <div class="nbi" onclick="swP('fan',this)">⭐</div>
+  </nav>
 </div>
 
-<div id="gt">
-  <div class="gt-content">
-    <div class="gt-word">GOAL!</div>
-    <div id="gt-team" style="color:#fff; font-size:28px; font-weight:700; margin-top:30px; font-family:var(--f-h); letter-spacing:2px; text-transform:uppercase;"></div>
+<div id="gt"><div class="gt-content"><div class="gt-word">GOAL!</div><div id="gt-team" style="font-size:24px; font-weight:800; margin-top:20px; font-family:var(--f-h);"></div></div></div>
+
+<div id="modal">
+  <div class="modal-content">
+    <button onclick="closeModal()" style="position:absolute; top:25px; right:25px; background:none; border:none; color:var(--t2); font-size:32px; cursor:pointer;">&times;</button>
+    <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
-// ── [점검용 설정 및 더미 데이터] ──
-const IS_TEST_MODE = true; 
+// ── [JS ENGINE: ALL-IN-ONE] ──
 
-const mockData = {
-  matches: [
-    {id:1, competition:{name:'Premier League'}, homeTeam:{name:'Arsenal', shortName:'ARS', crest:'https://crests.football-data.org/57.png'}, awayTeam:{name:'Man City', shortName:'MCI', crest:'https://crests.football-data.org/65.png'}, score:{fullTime:{home:3, away:2}}, status:'IN_PLAY'},
-    {id:2, competition:{name:'Champions League'}, homeTeam:{name:'Bayern', shortName:'FCB', crest:'https://crests.football-data.org/5.png'}, awayTeam:{name:'Real Madrid', shortName:'RMA', crest:'https://crests.football-data.org/86.png'}, score:{fullTime:{home:1, away:1}}, status:'IN_PLAY'},
-    {id:3, competition:{name:'La Liga'}, homeTeam:{name:'Barcelona', shortName:'BAR', crest:'https://crests.football-data.org/81.png'}, awayTeam:{name:'Atleti', shortName:'ATM', crest:'https://crests.football-data.org/78.png'}, score:{fullTime:{home:0, away:1}}, status:'FINISHED'}
-  ]
-};
+const IS_TEST_MODE = true; // 점검 완료 후 false로 변경하세요.
+const API = '/api/football';
+const LGS = [
+  {code:'PL', name:'프리미어리그', emblem:'https://crests.football-data.org/PL.png'},
+  {code:'LA', name:'라리가', emblem:'https://crests.football-data.org/LA.png'},
+  {code:'BL1',name:'분데스리가', emblem:'https://crests.football-data.org/BL1.png'},
+  {code:'SA', name:'세리에A', emblem:'https://crests.football-data.org/SA.png'},
+  {code:'KL1',name:'K리그 1', emblem:'https://media.api-sports.io/football/leagues/292.png'}
+];
 
-// ── [JS 엔진] ──
-function loadHome() {
+const cache = {};
+let prevScores = {};
+let curPLg = 'PL', curPt = 'scorers';
+
+// [1] 스마트 캐시
+async function fetchData(path, isStatic = false) {
+  if(IS_TEST_MODE) return getMockData(path);
+  const ttl = isStatic ? 1800000 : 90000;
+  if(cache[path] && (Date.now() - cache[path].ts < ttl)) return cache[path].data;
+  try {
+    const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`);
+    const d = await r.json();
+    if(d.errorCode === 429) return cache[path]?.data || d;
+    cache[path] = { data: d, ts: Date.now() };
+    return d;
+  } catch(e) { return null; }
+}
+
+// [2] 라이브 로드 & 골 감지
+async function loadHome() {
   const c = document.getElementById('home-bd');
+  const d = await fetchData('/matches');
+  if(!d?.matches) return;
+
+  const live = d.matches.filter(m => ['IN_PLAY','HALFTIME'].includes(m.status));
+  document.getElementById('lpill').style.display = live.length ? 'block' : 'none';
+
+  live.forEach(m => {
+    const sc = `${m.score.fullTime.home}-${m.score.fullTime.away}`;
+    if(prevScores[m.id] && prevScores[m.id] !== sc) triggerGoal(m.homeTeam.shortName || m.homeTeam.name);
+    prevScores[m.id] = sc;
+  });
+
   let html = '';
-  mockData.matches.forEach(m => {
-    const isLive = m.status === 'IN_PLAY';
+  live.forEach(m => {
     html += `
-      <div class="mc">
-        <div class="mc-top"><span>${m.competition.name}</span>${isLive?'<span class="mc-badge live">● LIVE</span>':''}</div>
+      <div class="mc" onclick="showDtl(${m.id})">
+        <div class="mc-top"><span>${m.competition.name}</span><span style="color:var(--red);">● LIVE</span></div>
         <div class="mc-body">
-          <img src="${m.homeTeam.crest}" class="mc-crest-bg" style="left:10px;">
-          <img src="${m.awayTeam.crest}" class="mc-crest-bg" style="right:10px;">
           <div class="mc-tm"><span>${m.homeTeam.shortName}</span></div>
           <div class="mc-sc-box"><div class="mc-sc">${m.score.fullTime.home} : ${m.score.fullTime.away}</div></div>
           <div class="mc-tm"><span>${m.awayTeam.shortName}</span></div>
         </div>
       </div>`;
   });
+  c.innerHTML = live.length ? html : '<div style="padding:100px; text-align:center; color:var(--t3);">현재 진행 중인 경기가 없습니다.</div>';
+}
+
+function triggerGoal(team) {
+  const gt = document.getElementById('gt');
+  document.getElementById('gt-team').textContent = `${team} GOAL!`;
+  gt.style.display = 'flex';
+  new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3').play().catch(()=>{});
+  setTimeout(() => gt.style.display = 'none', 3500);
+}
+
+// [3] 일정 (아코디언)
+async function loadSched(date = new Date().toISOString().split('T')[0]) {
+  const c = document.getElementById('sched-bd');
+  c.innerHTML = '<div style="text-align:center; padding:50px;">불러오는 중...</div>';
+  const d = await fetchData(`/matches?dateFrom=${date}&dateTo=${date}`);
+  if(!d.matches?.length) { c.innerHTML = '<div style="padding:100px; text-align:center;">경기가 없습니다.</div>'; return; }
+
+  const groups = d.matches.reduce((acc, m) => {
+    acc[m.competition.name] = acc[m.competition.name] || [];
+    acc[m.competition.name].push(m);
+    return acc;
+  }, {});
+
+  let html = '';
+  Object.entries(groups).forEach(([name, matches], i) => {
+    const id = `lg-${i}`;
+    html += `
+      <div class="lg-hd" onclick="toggleLg('${id}')">
+        <span style="flex:1; font-weight:800; font-family:var(--f-h);">${name}</span>
+        <span style="font-size:12px; color:var(--t2);">${matches.length} MATCHES</span>
+      </div>
+      <div class="lg-ms" id="${id}">
+        ${matches.map(m => `
+          <div class="mc" style="margin-top:10px;" onclick="showDtl(${m.id})">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:15px 25px;">
+              <span style="font-family:var(--f-h); color:var(--t3); font-size:12px;">${m.utcDate.slice(11,16)}</span>
+              <span style="flex:1; text-align:center; font-weight:700;">${m.homeTeam.shortName} vs ${m.awayTeam.shortName}</span>
+              <span style="font-family:var(--f-h); font-weight:900; color:var(--p);">${m.score.fullTime.home??'-'} : ${m.score.fullTime.away??'-'}</span>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  });
   c.innerHTML = html;
 }
 
-function loadAI() {
+function toggleLg(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+}
+
+// [4] AI PITCH
+async function loadAI() {
   const c = document.getElementById('ai-bd');
+  const d = await fetchData('/matches');
   let html = '';
-  mockData.matches.slice(0,2).forEach(m => {
-    const seed = m.id % 2;
-    const hp = seed === 0 ? 68 : 42;
-    const ap = 100 - hp - 8;
+  d.matches?.slice(0, 4).forEach(m => {
+    const h = 40 + (m.id % 30); const a = 100 - h - 10;
     html += `
       <div class="ai-card">
-        <div class="ai-header">MATCHDAY PROBABILITY ANALYSIS</div>
-        <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-          <div><div style="font-family:var(--f-h); font-size:24px; font-weight:900; letter-spacing:-1px;">${m.homeTeam.name}</div></div>
-          <div><div style="font-family:var(--f-h); font-size:24px; font-weight:900; letter-spacing:-1px; text-align:right;">${m.awayTeam.name}</div></div>
+        <div style="color:var(--s); font-family:var(--f-h); font-size:12px; font-weight:800; margin-bottom:15px;">AI ANALYSIS</div>
+        <div style="display:flex; justify-content:space-between; font-family:var(--f-h); font-size:22px; font-weight:900;">
+          <span>${m.homeTeam.shortName}</span><span>${m.awayTeam.shortName}</span>
         </div>
-        <div class="prob-row">
-          <div class="prob-num" style="color:var(--p);">${hp}%</div>
-          <div class="prob-bar-cinematic"><div class="prob-h" style="width:${hp}%"></div><div style="width:8%; background:rgba(255,255,255,0.05);"></div><div class="prob-a" style="width:${ap}%"></div></div>
-          <div class="prob-num" style="color:var(--red);">${ap}%</div>
-        </div>
-        <div style="font-size:13px; color:var(--t2); line-height:1.6; background:rgba(0,0,0,0.3); padding:15px; border-radius:12px;">
-          📌 <b style="color:#fff;">전술 분석 결과:</b> ${m.homeTeam.name}팀의 홈 승률이 통계적으로 매우 우세합니다. 최근 ${m.awayTeam.name}팀의 수비 균열을 공략할 확률이 높습니다.
+        <div class="prob-bar-wrap"><div class="prob-h" style="width:${h}%"></div><div style="width:10%; background:rgba(255,255,255,0.05);"></div><div class="prob-a" style="width:${a}%"></div></div>
+        <div style="display:flex; justify-content:space-between; font-family:var(--f-h); font-size:14px; color:var(--t2);">
+          <span>WIN ${h}%</span><span>WIN ${a}%</span>
         </div>
       </div>`;
   });
   c.innerHTML = html;
 }
 
-// ── [테스트 시뮬레이션] ──
-function testGoal() {
-  const gt = document.getElementById('gt');
-  document.getElementById('gt-team').textContent = "Arsenal Scored";
-  gt.style.display = 'flex';
-  setTimeout(() => { gt.style.display = 'none'; }, 3500);
+// [5] 순위 & 선수 스탯
+async function loadStd(code) {
+  const c = document.getElementById('std-bd');
+  const d = await fetchData(`/competitions/${code}/standings`, true);
+  if(!d.standings) return;
+  const rows = d.standings[0].table;
+  let html = `<table class="stt"><tr><th>#</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr>`;
+  rows.forEach(r => {
+    html += `<tr><td>${r.position}</td><td class="nm-cell"><img src="${r.team.crest}">${r.team.shortName}</td><td>${r.playedGames}</td><td>${r.won}</td><td>${r.draw}</td><td>${r.lost}</td><td style="font-weight:900; color:var(--p); font-family:var(--f-h);">${r.points}</td></tr>`;
+  });
+  c.innerHTML = html + '</table>';
 }
 
+async function loadPlayers(lg) {
+  const c = document.getElementById('pl-bd');
+  const d = await fetchData(`/competitions/${lg}/scorers`, true);
+  if(!d.scorers) return;
+  let html = '';
+  d.scorers.slice(0, 10).forEach((s, i) => {
+    html += `
+      <div style="display:flex; align-items:center; gap:20px; padding:20px; background:var(--bg2); border-radius:18px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.02);">
+        <span style="font-family:var(--f-h); font-size:24px; font-weight:900; color:var(--p); opacity:0.5;">${i+1}</span>
+        <div style="flex:1;">
+          <div style="font-weight:800; font-size:16px;">${s.player.name}</div>
+          <div style="font-size:12px; color:var(--t3);">${s.team.name}</div>
+        </div>
+        <div style="font-family:var(--f-h); font-size:22px; font-weight:900; color:var(--p);">${s.goals} <small style="font-size:11px; color:var(--t2);">GOALS</small></div>
+      </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function swPt(type) {
+  curPt = type;
+  document.getElementById('btn-scorers').className = type === 'scorers' ? 'pill on' : 'pill';
+  document.getElementById('btn-assists').className = type === 'assists' ? 'pill on' : 'pill';
+  loadPlayers(curPLg);
+}
+
+// [6] 상세 모달
+async function showDtl(id) {
+  const matches = IS_TEST_MODE ? mockData.matches : [];
+  const m = matches.find(match => match.id === id) || {homeTeam:{name:'Unknown'}, awayTeam:{name:'Unknown'}, competition:{name:'Football'}, score:{fullTime:{home:0,away:0}}, utcDate: new Date().toISOString()};
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <div style="text-align:center;">
+      <div style="font-family:var(--f-h); color:var(--p); font-size:12px; font-weight:800; letter-spacing:2px; margin-bottom:20px;">MATCH DETAILS</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+        <div style="flex:1;"><img src="${m.homeTeam.crest}" style="width:80px;"><br><b style="font-family:var(--f-h); font-size:20px;">${m.homeTeam.name}</b></div>
+        <div style="font-family:var(--f-h); font-size:48px; font-weight:900;">${m.score.fullTime.home??0} : ${m.score.fullTime.away??0}</div>
+        <div style="flex:1;"><img src="${m.awayTeam.crest}" style="width:80px;"><br><b style="font-family:var(--f-h); font-size:20px;">${m.awayTeam.name}</b></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:18px; font-size:14px; color:var(--t2); line-height:2;">
+        🏆 COMPETITION: ${m.competition.name}<br>
+        🏟️ VENUE: National Stadium<br>
+        📅 KICK OFF: ${new Date(m.utcDate).toLocaleString('ko-KR')}
+      </div>
+    </div>
+  `;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+// [7] 팬존
+function loadFan() {
+  const c = document.getElementById('fan-bd');
+  c.innerHTML = `
+    <h2 style="margin-bottom:20px; font-family:var(--f-h); font-weight:900;">⚡ 집관 라이브 인증</h2>
+    <div style="background:var(--cd); border:1px solid rgba(255,255,255,0.03); border-radius:24px; padding:30px; text-align:center;">
+      <p style="color:var(--t2); font-size:14px; margin-bottom:20px;">현재 진행 중인 경기가 없습니다.<br>인증은 킥오프 30분 전부터 종료 시까지 가능합니다.</p>
+      <button class="btn-ci" disabled>인증하기 (OFFLINE)</button>
+    </div>
+  `;
+}
+
+// [공통 인터페이스]
 function swP(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.getElementById('pg-' + name).classList.add('on');
-  document.querySelectorAll('.si').forEach(s => s.classList.remove('on'));
-  if(el) el.classList.add('on');
+  if(el) { document.querySelectorAll('.si, .nbi').forEach(b => b.classList.remove('on')); el.classList.add('on'); }
   if(name === 'home') loadHome();
-  if(name === 'ai') loadAI();
+  if(name === 'sched') {
+    const dnav = document.getElementById('date-nav');
+    if(!dnav.innerHTML) {
+      for(let i=-1; i<=3; i++) {
+        const d = new Date(); d.setDate(d.getDate() + i);
+        const ds = d.toISOString().split('T')[0];
+        const btn = document.createElement('button');
+        btn.className = i===0 ? 'pill on' : 'pill';
+        btn.textContent = i===0 ? 'TODAY' : `${d.getMonth()+1}/${d.getDate()}`;
+        btn.onclick = () => { document.querySelectorAll('#date-nav .pill').forEach(p => p.classList.remove('on')); btn.classList.add('on'); loadSched(ds); };
+        dnav.appendChild(btn);
+      }
+    }
+    loadSched();
+  }
+  if(name === 'std') {
+    const sp = document.getElementById('std-pills');
+    if(!sp.innerHTML) sp.innerHTML = LGS.map(l => `<button class="pill" onclick="loadStd('${l.code}')">${l.name}</button>`).join('');
+    loadStd('PL');
+  }
+  if(name === 'player') {
+    const pp = document.getElementById('pl-pills');
+    if(!pp.innerHTML) pp.innerHTML = LGS.map(l => `<button class="pill" onclick="curPLg='${l.code}';loadPlayers('${l.code}')">${l.name}</button>`).join('');
+    loadPlayers('PL');
+  }
+  if(name === 'fan') loadFan();
 }
 
-window.onload = () => { loadHome(); };
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+function testGoal() { triggerGoal('Arsenal'); }
+
+// [Mock Data For Preview]
+function getMockData(path) {
+  if(path.includes('standings')) return {standings:[{table:Array.from({length:20},(_,i)=>({position:i+1, team:{shortName:'Team '+i, crest:''}, playedGames:30, won:15, draw:5, lost:10, points:50}))}]};
+  if(path.includes('scorers')) return {scorers:Array.from({length:10},(_,i)=>({player:{name:'Player '+i}, team:{name:'Team X'}, goals:25-i}))};
+  return mockData;
+}
+const mockData = {
+  matches: [
+    {id:1, competition:{name:'Premier League'}, homeTeam:{shortName:'ARS', name:'Arsenal', crest:'https://crests.football-data.org/57.png'}, awayTeam:{shortName:'MCI', name:'Man City', crest:'https://crests.football-data.org/65.png'}, score:{fullTime:{home:3, away:2}}, status:'IN_PLAY', utcDate:new Date().toISOString()},
+    {id:2, competition:{name:'La Liga'}, homeTeam:{shortName:'RMA', name:'Real Madrid', crest:'https://crests.football-data.org/86.png'}, awayTeam:{shortName:'BAR', name:'Barcelona', crest:'https://crests.football-data.org/81.png'}, score:{fullTime:{home:1, away:1}}, status:'IN_PLAY', utcDate:new Date().toISOString()}
+  ]
+};
+
+window.onload = () => { swP('home'); setInterval(loadHome, 30000); };
 </script>
 </body>
 </html>
