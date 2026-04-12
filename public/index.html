@@ -664,16 +664,38 @@ function isKLeague(team){return team?.league==='KL1'||team?.league==='KL2';}
 function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return ds(d);}
 
 // ── API ───────────────────────────────────────
+// Rate limit 큐 관리
+let _fdQueue = Promise.resolve();
+let _fdLastCall = 0;
+const FD_MIN_INTERVAL = 700; // 700ms 간격 (분당 약 85회, 10회 제한 안전하게)
+
 async function fd(path){
-  if(cache[path]&&Date.now()-cache[path].ts<90000)return cache[path].data;
+  // standings/scorers는 5분 캐시 (rate limit 절약)
+  const ttl = (path.includes('standings')||path.includes('scorers')) ? 300000 : 90000;
+  if(cache[path]&&Date.now()-cache[path].ts<ttl) return cache[path].data;
+
+  // 요청 직렬화 + 간격 보장
+  _fdQueue = _fdQueue.then(async ()=>{
+    const now = Date.now();
+    const wait = _fdLastCall + FD_MIN_INTERVAL - now;
+    if(wait > 0) await new Promise(r=>setTimeout(r, wait));
+    _fdLastCall = Date.now();
+  });
+  await _fdQueue;
+
   const ctrl=new AbortController();
   const timer=setTimeout(()=>ctrl.abort(),8000);
   try{
     const r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:ctrl.signal});
     clearTimeout(timer);
-    if(!r.ok)return null;
+    if(!r.ok){console.warn('HTTP',r.status,path);return null;}
     const d=await r.json();
-    if(d.errorCode||d.error)return d;
+    if(d.errorCode===429||d.message?.includes('limit')){
+      console.warn('Rate limit hit, waiting 12s...');
+      await new Promise(r=>setTimeout(r,12000));
+      return fd(path); // 재시도
+    }
+    if(d.errorCode||d.error) return d;
     cache[path]={data:d,ts:Date.now()};
     return d;
   }catch(e){clearTimeout(timer);return null;}
@@ -772,30 +794,35 @@ function startLivePoller(){
 }
 
 async function pollLiveGoals(){
-  // 현재 라이브 경기만 빠르게 체크
   const today=ds(kn());
   const ks=new Date(today+'T00:00:00+09:00');
   const uf=new Date(ks.getTime()-9*3600000).toISOString().slice(0,10);
   const ut=new Date(ks.getTime()-9*3600000+86399000).toISOString().slice(0,10);
 
-  // 캐시 무효화하고 실시간 데이터 가져오기
-  const livePaths=LGS.slice(0,7).map(l=>`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`);
-  livePaths.forEach(p=>delete cache[p]);
+  // 라이브 가능성 있는 5개 리그만 폴링 (rate limit 절약)
+  const POLL_LGS = LGS.slice(0,5);
+  // 캐시 무효화 (라이브 경기만)
+  POLL_LGS.forEach(l=>{ delete cache[`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`]; });
 
-  const res=await Promise.allSettled(livePaths.map(p=>fd(p)));
+  const res=await Promise.allSettled(POLL_LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
   const liveMatches=[];
   res.forEach(r=>{
     if(r.status==='fulfilled'&&r.value?.matches){
       r.value.matches.filter(m=>isMatchLive(m)).forEach(m=>liveMatches.push(m));
     }
   });
-
-  // 골 감지
   liveMatches.forEach(m=>chkGoal(m));
 
-  // 홈 탭이 열려있으면 라이브 경기 부분만 갱신
-  if(document.getElementById('pg-home').classList.contains('on')&&liveMatches.length>0){
-    refreshLiveSection(liveMatches);
+  // 라이브 경기 없으면 폴링 간격 늘리기
+  if(liveMatches.length===0){
+    if(livePoller){clearInterval(livePoller);}
+    livePoller=setInterval(pollLiveGoals, 60000); // 라이브 없으면 1분
+  } else {
+    if(livePoller){clearInterval(livePoller);}
+    livePoller=setInterval(pollLiveGoals, 15000); // 라이브 있으면 15초
+    if(document.getElementById('pg-home').classList.contains('on')){
+      refreshLiveSection(liveMatches);
+    }
   }
 }
 
@@ -878,7 +905,11 @@ function swP(name,el){
   if(mbMap[name]!==undefined)document.querySelectorAll('.nbi')[mbMap[name]]?.classList.add('on');
   if(name==='home')loadHome();
   else if(name==='sched')loadSched();
-  else if(name==='std'){buildPills();loadStd(curStd);}
+  else if(name==='std'){
+    buildPills();
+    // 이전 요청 완료 후 로드 (500ms 딜레이)
+    setTimeout(()=>loadStd(curStd), 500);
+  }
   else if(name==='player'){buildPills();loadPlayers(curPLg,curPt);}
   else if(name==='hub')loadHub();
   else if(name==='fan')updateFan();
@@ -900,7 +931,9 @@ async function loadHome(){
   const uf=new Date(ks.getTime()-9*3600000).toISOString().slice(0,10);
   const ut=new Date(ks.getTime()-9*3600000+86399000).toISOString().slice(0,10);
 
-  const res=await Promise.allSettled(LGS.slice(0,7).map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
+  // Rate limit 절약: 5대 리그만 홈에서 호출 (CL/UEL은 별도)
+  const HOME_LGS = LGS.slice(0,5); // PL, PD, BL1, SA, FL1
+  const res=await Promise.allSettled(HOME_LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
   let all=[];
   res.forEach(r=>{if(r.status==='fulfilled'&&r.value?.matches)all.push(...r.value.matches);});
 
@@ -1065,10 +1098,17 @@ async function loadSched(){
     }
   }
 
-  const res=await Promise.allSettled(LGS.slice(0,7).map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
+  // Rate limit 절약: 5대 리그만 홈에서 호출 (CL/UEL은 별도)
+  const HOME_LGS = LGS.slice(0,5); // PL, PD, BL1, SA, FL1
+  const res=await Promise.allSettled(HOME_LGS.map(l=>fd(`/competitions/${l.code}/matches?dateFrom=${uf}&dateTo=${ut}`)));
   let anyMatch=false;
   res.forEach((r,i)=>{
-    if(r.status!=='fulfilled'||!r.value?.matches)return;
+    // rate limit 등으로 실패한 리그는 조용히 스킵
+    if(r.status!=='fulfilled')return;
+    if(!r.value?.matches){
+      if(r.value?.message?.includes('limit')) console.warn('Rate limit:', LGS[i]?.code);
+      return;
+    }
     const ms=r.value.matches.filter(m=>isKstDate(m.utcDate,dateStr));
     if(!ms.length)return;
     anyMatch=true;
@@ -1185,7 +1225,13 @@ async function loadStd(code){
   const d=await fd(`/competitions/${code}/standings`);
   if(!d?.standings){
     const msg=d?.message||d?.error||'데이터 없음';
-    c.innerHTML=`<div class="empty">📡 ${msg}<br><button class="retry-btn" onclick="loadStd('${code}')">다시 시도</button></div>`;
+    const isRateLimit = msg.includes('limit')||msg.includes('429');
+    c.innerHTML=`<div class="empty">
+      ${isRateLimit?'⏳ API 요청 한도 초과':'📡 데이터 없음'}<br>
+      <span style="font-size:12px;color:var(--t3);display:block;margin:6px 0;">${isRateLimit?'잠시 후 자동으로 다시 시도합니다':msg}</span>
+      <button class="retry-btn" onclick="loadStd('${code}')">다시 시도</button>
+    </div>`;
+    if(isRateLimit) setTimeout(()=>loadStd('${code}'), 12000); // 12초 후 자동 재시도
     return;
   }
   const rows=d.standings[0].table,tot=rows.length;
