@@ -195,56 +195,35 @@ function md5(str) {
         a = safeAdd(a, aa); b = safeAdd(b, bb); c = safeAdd(c, cc); d = safeAdd(d, dd);
     }
     function hex(n) { var s='',v; for(var i=0;i<4;i++){v=(n>>>(i*8))&0xff; s+=(v<16?'0':'')+v.toString(16);} return s; }
-    return hex(a)+hex(b)+hex(c)+hex(d);
+    return hex(a)+hex(b)+hex(d)+hex(c);
 }
 const LEAGUES = [
     { n: 'Premier League', c: 'PL', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', icon: 'Premier_League_Logo.svg', teams: [
-        {img:'Arsenal_FC.svg', n:'Arsenal', col:'#EF0107'}, {img:'Manchester_City_FC_badge.svg', n:'Man City', col:'#6CABDD'},
-        {img:'Liverpool_FC.svg', n:'Liverpool', col:'#C8102E'}, {img:'Manchester_United_FC_crest.svg', n:'Man Utd', col:'#DA291C'},
-        {img:'Chelsea_FC.svg', n:'Chelsea', col:'#034694'}, {img:'Tottenham_Hotspur.svg', n:'Tottenham', col:'#132257'},
-        {img:'Aston_Villa_FC_crest_(2016).svg', n:'Aston Villa', col:'#95BFE5'}, {img:'Brighton_&_Hove_Albion_logo.svg', n:'Brighton', col:'#0057B8'},
-        {img:'Brentford_FC_crest.svg', n:'Brentford', col:'#E30613'}, {img:'Everton_FC_logo.svg', n:'Everton', col:'#003399'},
-        {img:'Fulham_FC_(shield).svg', n:'Fulham', col:'#CC0000'}, {img:'Newcastle_United_Logo.svg', n:'Newcastle', col:'#241F20'},
-        {img:'Crystal_Palace_FC_logo_(2022).svg', n:'Crystal Palace', col:'#1B458F'}, {img:'Nottingham_Forest_FC_logo.svg', n:"Nott'm Forest", col:'#DD0000'},
-        {img:'West_Ham_United_FC_logo.svg', n:'West Ham', col:'#7A263A'}, {img:'Wolverhampton_Wanderers.svg', n:'Wolves', col:'#FDB913'},
-        {img:'Leicester_City_crest.svg', n:'Leicester', col:'#003090'}, {img:'Ipswich_Town.svg', n:'Ipswich', col:'#0044A9'},
-        {img:'Sunderland_AFC_logo.svg', n:'Sunderland', col:'#EB172B'}, {img:'Burnley_FC_badge.svg', n:'Burnley', col:'#6C1D45'}
-    ]},
-    { n: 'K League 1', c: 'KL1', flag: '🇰🇷', icon: 'K_League_logo.svg', teams: [
-        {img:'Ulsan_HD_FC_logo.svg', n:'Ulsan HD', col:'#003DA5'}, {img:'FC_Seoul_logo.svg', n:'FC Seoul', col:'#E2002D'},
-        {img:'Jeonbuk_Hyundai_Motors_FC_logo.svg', n:'Jeonbuk', col:'#006738'}, {img:'Pohang_Steelers_logo.svg', n:'Pohang', col:'#C8102E'},
-        {img:'Incheon_United_FC_logo.svg', n:'Incheon Utd', col:'#004B9D'}, {img:'Gimcheon_Sangmu_FC_logo.svg', n:'Gimcheon', col:'#003DA5'},
-        {img:'Gwangju_FC_logo.svg', n:'Gwangju FC', col:'#FFD700'}, {img:'Jeju_United_FC_logo.svg', n:'Jeju Utd', col:'#FF6600'},
-        {img:'Gangwon_FC_logo.svg', n:'Gangwon FC', col:'#00A651'}, {img:'Daejeon_Hana_Citizen_FC_logo.svg', n:'Daejeon', col:'#FF6600'},
-        {img:'FC_Anyang_logo.svg', n:'FC Anyang', col:'#FF0000'}, {img:'Bucheon_FC_1995_logo.svg', n:'Bucheon FC', col:'#0033A0'}
-    ]},
-    { n: 'K League 2', c: 'KL2', flag: '🇰🇷', icon: 'K_League_logo.svg', teams: [
-        {img:'Suwon_Samsung_Bluewings_logo.svg', n:'Suwon Samsung', col:'#003DA5'}, {img:'Daegu_FC_logo.svg', n:'Daegu FC', col:'#6ABDD8'},
-        {img:'Seongnam_FC_logo.svg', n:'Seongnam FC', col:'#000000'}, {img:'Seoul_E-Land_FC_logo.svg', n:'Seoul E-Land', col:'#00204E'},
-        {img:'Busan_IPark_logo.svg', n:'Busan IPark', col:'#003DA5'}, {img:'Jeonnam_Dragons_logo.svg', n:'Jeonnam', col:'#FFD700'},
-        {img:'Gimpo_FC_logo.svg', n:'Gimpo FC', col:'#FF0000'}, {img:'Chungnam_Asan_FC_logo.svg', n:'Chungnam Asan', col:'#003DA5'},
-        {img:'Chungbuk_Cheongju_FC_logo.svg', n:'Chungbuk', col:'#006400'}, {img:'Gyeongnam_FC_logo.svg', n:'Gyeongnam FC', col:'#003DA5'},
-        {img:'Ansan_Greeners_FC_logo.svg', n:'Ansan', col:'#006400'}, {img:'Hwaseong_FC_logo.svg', n:'Hwaseong FC', col:'#FF5E00'},
-        {img:'Suwon_FC_logo.svg', n:'Suwon FC', col:'#003DA5'}, {img:'Paju_Frontier_FC_logo.svg', n:'Paju', col:'#CC0000'},
-        {img:'Cheonan_City_FC_logo.svg', n:'Cheonan', col:'#003DA5'}, {img:'Yongin_FC_logo.svg', n:'Yongin FC', col:'#003DA5'},
-        {img:'Gimhae_FC_2008_logo.svg', n:'Gimhae FC', col:'#003DA5'}
+        {img:'Nottingham_Forest_FC_logo.svg', n:'Nott\'m Forest', col:'#DD0000'}, {img:'Newcastle_United_Logo.svg', n:'Newcastle', col:'#241F20'}, {img:'Liverpool_FC.svg', n:'Liverpool', col:'#C8102E'}, {img:'Leeds_United_F.C._logo.svg', n:'Leeds United', col:'#FFCD00'},
+        {img:'Manchester_City_FC_badge.svg', n:'Man City', col:'#6CABDD'}, {img:'Manchester_United_FC_crest.svg', n:'Man Utd', col:'#DA291C'}, {img:'Burnley_FC_badge.svg', n:'Burnley', col:'#6C1D45'}, {img:'AFC_Bournemouth_(2013).svg', n:'Bournemouth', col:'#B50E12'},
+        {img:'Brighton_&_Hove_Albion_logo.svg', n:'Brighton', col:'#0057B8'}, {img:'Brentford_FC_crest.svg', n:'Brentford', col:'#E30613'}, {img:'Sunderland_AFC_logo.svg', n:'Sunderland', col:'#EB172B'}, {img:'Arsenal_FC.svg', n:'Arsenal', col:'#EF0107'},
+        {img:'Aston_Villa_FC_crest_(2016).svg', n:'Aston Villa', col:'#95BFE5'}, {img:'Everton_FC_logo.svg', n:'Everton', col:'#003399'}, {img:'Wolverhampton_Wanderers.svg', n:'Wolves', col:'#FDB913'}, {img:'West_Ham_United_FC_logo.svg', n:'West Ham', col:'#7A263A'},
+        {img:'Chelsea_FC.svg', n:'Chelsea', col:'#034694'}, {img:'Tottenham_Hotspur.svg', n:'Tottenham', col:'#132257'}, {img:'Crystal_Palace_FC_logo_(2022).svg', n:'Crystal Palace', col:'#1B458F'}, {img:'Fulham_FC_(shield).svg', n:'Fulham', col:'#CC0000'}
     ]},
     { n: 'La Liga', c: 'PD', flag: '🇪🇸', icon: 'LaLiga_logo_2023.svg', teams: [
-        {img:'Real_Madrid_CF.svg', n:'Real Madrid', col:'#FEBE10'}, {img:'FC_Barcelona_(crest).svg', n:'Barcelona', col:'#A50044'},
-        {img:'Club_Atletico_de_Madrid.svg', n:'Atletico', col:'#CB3524'}, {img:'Athletic_Club_logo.svg', n:'Athletic', col:'#EE2523'},
-        {img:'Villarreal_CF_logo.svg', n:'Villarreal', col:'#FFE135'}, {img:'Girona_FC_logo.svg', n:'Girona', col:'#E23221'},
-        {img:'Sevilla_FC_logo.svg', n:'Sevilla', col:'#D40511'}, {img:'Valencia_CF.svg', n:'Valencia', col:'#FF7F00'},
-        {img:'Real_Betis_logo.svg', n:'Real Betis', col:'#00954C'}, {img:'Real_Sociedad_logo.svg', n:'Real Sociedad', col:'#0067B1'}
+        {img:'Rayo_Vallecano_logo.svg', n:'Rayo Vallecano', col:'#CC0000'}, {img:'Levante_Unión_Deportiva_logo.svg', n:'Levante', col:'#004B9D'}, {img:'Real_Madrid_CF.svg', n:'Real Madrid', col:'#FEBE10'}, {img:'RCD_Mallorca_logo.svg', n:'Mallorca', col:'#E2001A'},
+        {img:'FC_Barcelona_(crest).svg', n:'Barcelona', col:'#A50044'}, {img:'Valencia_CF.svg', n:'Valencia', col:'#FF7F00'}, {img:'Real_Betis_logo.svg', n:'Real Betis', col:'#00954C'}, {img:'Villarreal_CF_logo.svg', n:'Villarreal', col:'#FFE135'},
+        {img:'Sevilla_FC_logo.svg', n:'Sevilla', col:'#D40511'}, {img:'Celta_de_Vigo_logo.svg', n:'Celta Vigo', col:'#8BBEE8'}, {img:'Real_Sociedad_logo.svg', n:'Real Sociedad', col:'#0067B1'}, {img:'Club_Atletico_de_Madrid.svg', n:'Atletico', col:'#CB3524'},
+        {img:'Athletic_Club_logo.svg', n:'Athletic Club', col:'#EE2523'}, {img:'Deportivo_Alaves_logo.svg', n:'Alaves', col:'#1B5E9E'}, {img:'RCD_Espanyol_logo.svg', n:'Espanyol', col:'#0070B8'}, {img:'Elche_CF_logo.svg', n:'Elche', col:'#008C45'},
+        {img:'Real_Oviedo_logo.svg', n:'Real Oviedo', col:'#0044A9'}, {img:'CA_Osasuna_logo.svg', n:'Osasuna', col:'#C8102E'}, {img:'Girona_FC_logo.svg', n:'Girona', col:'#E23221'}, {img:'Getafe_CF_logo.svg', n:'Getafe', col:'#005CA9'}
     ]},
     { n: 'Bundesliga', c: 'BL1', flag: '🇩🇪', icon: 'Bundesliga_logo_(2017).svg', teams: [
-        {img:'FC_Bayern_Muenchen_logo_(2002–present).svg', n:'Bayern', col:'#DC052D'}, {img:'Borussia_Dortmund_logo.svg', n:'Dortmund', col:'#FDE100'},
-        {img:'Bayer_04_Leverkusen_logo.svg', n:'Leverkusen', col:'#E32221'}, {img:'RB_Leipzig_2014_logo.svg', n:'Leipzig', col:'#DD013F'},
-        {img:'VfB_Stuttgart_1893_logo.svg', n:'Stuttgart', col:'#E32221'}, {img:'Eintracht_Frankfurt_Logo.svg', n:'Frankfurt', col:'#E1000F'}
+        {img:'Borussia_Dortmund_logo.svg', n:'Dortmund', col:'#FDE100'}, {img:'RB_Leipzig_2014_logo.svg', n:'Leipzig', col:'#DD013F'}, {img:'Bayer_04_Leverkusen_logo.svg', n:'Leverkusen', col:'#E32221'},
+        {img:'1._FSV_Mainz_05_logo.svg', n:'Mainz', col:'#C3141E'}, {img:'Borussia_Mönchengladbach_logo.svg', n:'Gladbach', col:'#000000'}, {img:'FC_Bayern_Muenchen_logo_(2002–present).svg', n:'Bayern', col:'#DC052D'},
+        {img:'Werder_Bremen_logo.svg', n:'Werder Bremen', col:'#1D9053'}, {img:'VfL_Wolfsburg_Logo.svg', n:'Wolfsburg', col:'#65B32E'}, {img:'VfB_Stuttgart_1893_logo.svg', n:'Stuttgart', col:'#E32221'},
+        {img:'FC_Augsburg_logo.svg', n:'Augsburg', col:'#BA3733'}, {img:'1._FC_Union_Berlin_logo.svg', n:'Union Berlin', col:'#EB1923'}, {img:'FC_St._Pauli_logo.svg', n:'St. Pauli', col:'#6E1E0C'},
+        {img:'1._FC_Köln_logo.svg', n:'Köln', col:'#FF0000'}, {img:'SC_Freiburg_logo.svg', n:'Freiburg', col:'#CC0000'}, {img:'Eintracht_Frankfurt_Logo.svg', n:'Frankfurt', col:'#E1000F'},
+        {img:'1._FC_Heidenheim_1846_logo.svg', n:'Heidenheim', col:'#CC0000'}, {img:'Holstein_Kiel_logo.svg', n:'Holstein Kiel', col:'#003DA5'}, {img:'TSG_1899_Hoffenheim_logo_(2007).svg', n:'Hoffenheim', col:'#1961AC'}
     ]},
-    { n: 'Serie A', c: 'SA', flag: '🇮🇹', icon: 'Serie_A_logo_2019.svg', teams: [
-        {img:'FC_Internazionale_Milano_2021.svg', n:'Inter', col:'#0068A8'}, {img:'A.C._Milan_logo.svg', n:'AC Milan', col:'#FB090B'},
-        {img:'Juventus_FC_-_pictogram_black_(2017).svg', n:'Juventus', col:'#000000'}, {img:'SSC_Napoli_2007.svg', n:'Napoli', col:'#00BFFF'},
-        {img:'Atalanta_BC_logo.svg', n:'Atalanta', col:'#1C5FA8'}, {img:'Bologna_FC_logo.svg', n:'Bologna', col:'#003DA5'}
+    { n: 'K League 1', c: 'KL1', flag: '🇰🇷', icon: 'K_League_logo.svg', teams: [
+        {img:'Gangwon_FC_logo.svg', n:'Gangwon', col:'#00A651'}, {img:'Gwangju_FC_logo.svg', n:'Gwangju', col:'#FFD700'}, {img:'Gimcheon_Sangmu_FC_logo.svg', n:'Gimcheon', col:'#003DA5'}, {img:'Daejeon_Hana_Citizen_FC_logo.svg', n:'Daejeon', col:'#FF6600'},
+        {img:'Bucheon_FC_1995_logo.svg', n:'Bucheon', col:'#0033A0'}, {img:'FC_Seoul_logo.svg', n:'Seoul', col:'#E2002D'}, {img:'FC_Anyang_logo.svg', n:'Anyang', col:'#FF0000'}, {img:'Ulsan_HD_FC_logo.svg', n:'Ulsan', col:'#003DA5'},
+        {img:'Incheon_United_FC_logo.svg', n:'Incheon', col:'#004B9D'}, {img:'Jeonbuk_Hyundai_Motors_FC_logo.svg', n:'Jeonbuk', col:'#006738'}, {img:'Jeju_United_FC_logo.svg', n:'Jeju', col:'#FF6600'}, {img:'Pohang_Steelers_logo.svg', n:'Pohang', col:'#C8102E'}
     ]}
 ];
 let SELECTED_TEAMS = [];
