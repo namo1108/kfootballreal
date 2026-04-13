@@ -162,6 +162,31 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
 .ni-lb{font-size:10px;font-weight:700;color:var(--t2);}
 .nbi.on .ni-lb{color:var(--p);}
 
+/* PC 최적화 */
+@media(min-width:1200px){
+  .pages{padding:0;}
+  .page{padding:36px 40px;}
+  .ob-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+}
+@media(min-width:768px) and (max-width:1199px){
+  .sidebar{width:200px;}
+  .page{padding:24px;}
+}
+/* 태블릿 */
+@media(max-width:900px){
+  .ob-grid{grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:8px;}
+  .ob-crest img{width:42px;height:42px;}
+}
+/* 모바일 */
+@media(max-width:480px){
+  .ob-grid{grid-template-columns:repeat(4,1fr);gap:7px;}
+  .ob-crest img{width:38px;height:38px;}
+  .ob-team span{font-size:10px;}
+  .mc-sc{padding:8px 12px;font-size:22px;}
+  .hdr{padding:0 16px;}
+  .hdr-logo{font-size:18px;}
+}
+
 /* 섹션 타이틀 */
 .stl{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
 .stl h2{font-size:20px;font-weight:800;color:var(--t);}
@@ -527,23 +552,37 @@ const LEAGUES = [
     {n:'Lorient',id:553},{n:'Paris FC',id:593},{n:'Metz',id:542}
   ]},
   { n:'K League 1', c:'KL1', logo:'https://media.api-sports.io/football/leagues/292.png', kl:true, teams:[
-    {n:'전북현대',id:2762,col:'#006738'},{n:'울산HD',id:2759,col:'#1E4799'},
-    {n:'FC서울',id:2763,col:'#E2002D'},{n:'포항스틸러스',id:2764,col:'#C8102E'},
-    {n:'강원FC',id:2766,col:'#003DA5'},{n:'제주유나이티드',id:2760,col:'#FF6600'},
-    {n:'광주FC',id:2765,col:'#E5061A'},{n:'김천상무',id:2769,col:'#1D3461'},
-    {n:'대전하나',id:2767,col:'#004EA2'},{n:'FC안양',id:2770,col:'#003DA5'},
-    {n:'인천유나이티드',id:2757,col:'#1A3172'},{n:'부천FC',id:2771,col:'#CC0000'}
+    {n:'강원FC',    id:2766, col:'#FF6B00'},
+    {n:'광주FC',    id:2765, col:'#E5061A'},
+    {n:'김천상무',  id:2769, col:'#003882'},
+    {n:'대전하나',  id:2767, col:'#004EA2'},
+    {n:'부천FC',    id:2771, col:'#CC0000'},
+    {n:'FC서울',    id:2763, col:'#E2002D'},
+    {n:'FC안양',    id:2770, col:'#6B4AC4'},
+    {n:'울산HD',    id:2759, col:'#1E4799'},
+    {n:'인천유나이티드',id:2757, col:'#1A3172'},
+    {n:'전북현대',  id:2762, col:'#006738'},
+    {n:'제주유나이티드',id:2760, col:'#FF6600'},
+    {n:'포항스틸러스',id:2764, col:'#C8102E'}
   ]},
   { n:'K League 2', c:'KL2', logo:'https://media.api-sports.io/football/leagues/293.png', kl:true, teams:[
-    {n:'수원FC',id:2772,col:'#004B8D'},{n:'대구FC',id:2761,col:'#6ABDD8'},
-    {n:'수원삼성',id:2756,col:'#003DA5'},{n:'서울이랜드',id:2773,col:'#00204E'},
-    {n:'성남FC',id:2768,col:'#231F20'},{n:'전남드래곤즈',id:2774,col:'#006A38'},
-    {n:'김포FC',id:2775,col:'#FFD700'},{n:'부산아이파크',id:2776,col:'#003399'},
-    {n:'충남아산',id:2777,col:'#1D3461'},{n:'화성FC',id:2778,col:'#FF6600'},
-    {n:'충북청주',id:2779,col:'#003DA5'},{n:'천안시티',id:2780,col:'#003DA5'},
-    {n:'안산그리너스',id:2781,col:'#009900'},{n:'김해FC',id:2782,col:'#CC0000'},
-    {n:'파주프런티어',id:2783,col:'#004B8D'},{n:'용인FC',id:2784,col:'#8B0000'},
-    {n:'경남FC',id:2785,col:'#CC0000'}
+    {n:'경남FC',     id:2785, col:'#003DA5'},
+    {n:'김포FC',     id:2775, col:'#E8B400'},
+    {n:'김해FC',     id:2782, col:'#CC0000'},
+    {n:'대구FC',     id:2761, col:'#6ABDD8'},
+    {n:'부산아이파크',id:2776, col:'#003399'},
+    {n:'서울이랜드', id:2773, col:'#00204E'},
+    {n:'성남FC',     id:2768, col:'#231F20'},
+    {n:'수원삼성',   id:2756, col:'#003DA5'},
+    {n:'수원FC',     id:2772, col:'#004B8D'},
+    {n:'충남아산',   id:2777, col:'#C8102E'},
+    {n:'안산그리너스',id:2781, col:'#009900'},
+    {n:'용인FC',     id:2784, col:'#8B0000'},
+    {n:'전남드래곤즈',id:2774, col:'#006A38'},
+    {n:'천안시티',   id:2780, col:'#005BAC'},
+    {n:'충북청주',   id:2779, col:'#003DA5'},
+    {n:'파주프런티어',id:2783, col:'#004B8D'},
+    {n:'화성FC',     id:2778, col:'#FF6600'}
   ]}
 ];
 
@@ -595,15 +634,38 @@ function crestUrl(team) {
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',2800);}
 
 // ── API ──
-async function fd(path,ttl=90000){
-  const c=gc(path,ttl);if(c)return c;
-  try{
-    const r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(10000)});
-    if(!r.ok)return null;
-    const d=await r.json();
-    if(d.errorCode||(d.message&&d.message.toLowerCase().includes('limit')))return d;
-    sc(path,d);return d;
-  }catch(e){return null;}
+// Rate limit 안전 요청 (동시 요청 제한)
+let _fdQ = Promise.resolve();
+let _fdLast = 0;
+const FD_GAP = 800; // 800ms 간격
+
+async function fd(path, ttl=90000) {
+  const c = gc(path, ttl);
+  if (c) return c;
+  // 직렬화
+  const result = await (_fdQ = _fdQ.then(async () => {
+    const wait = _fdLast + FD_GAP - Date.now();
+    if (wait > 0) await new Promise(r=>setTimeout(r,wait));
+    _fdLast = Date.now();
+    try {
+      const r = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`, {signal:AbortSignal.timeout(12000)});
+      if (!r.ok) return null;
+      const d = await r.json();
+      if (d.errorCode === 429 || (d.message && d.message.toLowerCase().includes('limit'))) {
+        console.warn('Rate limit - waiting 12s:', path);
+        await new Promise(r=>setTimeout(r,12000));
+        // 한번 더 시도
+        const r2 = await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`, {signal:AbortSignal.timeout(12000)});
+        const d2 = await r2.json();
+        if (!d2.errorCode) sc(path, d2);
+        return d2;
+      }
+      if (d.errorCode || d.error) return d;
+      sc(path, d);
+      return d;
+    } catch(e) { return null; }
+  }));
+  return result;
 }
 async function kl(path,params={}){
   const qs=new URLSearchParams(params).toString();
@@ -618,17 +680,99 @@ async function kl(path,params={}){
 }
 
 // ── PUSH NOTIF ──
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+// Service Worker 등록 + 메시지 채널
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    console.log('SW registered:', reg.scope);
+  }).catch(e => console.warn('SW registration failed:', e));
+
+  // SW 메시지 받기 (SW → 앱)
+  navigator.serviceWorker.addEventListener('message', e => {
+    if (e.data?.type === 'notification-click') {
+      swP('home', document.querySelector('.si'));
+    }
+  });
+}
+
+function pushNotif(title, body, tag='p') {
+  if (Notification.permission !== 'granted') return;
+  // SW를 통해 알림 (백그라운드에서도 동작)
+  if (navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'show-notification',
+      title, body, tag,
+      icon: '/favicon.ico',
+      vibrate: [200, 100, 200]
+    });
+  } else {
+    // fallback: 직접 알림
+    try { new Notification(title, {body, icon:'/favicon.ico', tag, silent:false}); } catch(e) {}
+  }
+}
 async function reqNotif(){if(!('Notification'in window))return false;if(Notification.permission==='granted')return true;if(Notification.permission==='denied')return false;return(await Notification.requestPermission())==='granted';}
 function pushNotif(title,body,tag='p'){if(Notification.permission!=='granted')return;try{new Notification(title,{body,icon:'/favicon.ico',tag});}catch(e){}}
 function toggleWatch(id,hn,an,btn){
   const sid=String(id);const idx=watchList.indexOf(sid);
-  if(idx===-1){reqNotif().then(ok=>{if(!ok){toast('🔔 알림 권한을 허용해주세요');return;}watchList.push(sid);localStorage.setItem('pi_watch',JSON.stringify(watchList));btn.classList.add('on');btn.textContent='🔔';toast(`🔔 ${hn} vs ${an} 알림 ON`);});}
-  else{watchList.splice(idx,1);localStorage.setItem('pi_watch',JSON.stringify(watchList));btn.classList.remove('on');btn.textContent='🔕';toast('알림 해제');}
+  if(idx===-1){
+    reqNotif().then(ok=>{
+      if(!ok){toast('🔔 알림 권한을 허용해주세요');return;}
+      watchList.push(sid);localStorage.setItem('pi_watch',JSON.stringify(watchList));
+      btn.classList.add('on');btn.textContent='🔔';
+      toast(`🔔 ${hn} vs ${an} — 골·카드·킥오프 알림 ON`);
+    });
+  } else {
+    watchList.splice(idx,1);localStorage.setItem('pi_watch',JSON.stringify(watchList));
+    btn.classList.remove('on');btn.textContent='🔕';toast('알림 해제');
+  }
+}
+
+// 이벤트별 Push 알림
+function sendEventNotif(type, matchId, data) {
+  if (!watchList.includes(String(matchId))) return;
+  const icons = {goal:'⚽',card:'🟨',redcard:'🟥',kickoff:'🏁',halftime:'⏸️',fulltime:'🏆'};
+  const icon = icons[type] || '📢';
+  const titles = {
+    goal: `${icon} GOAL! ${data.team}`,
+    card: `${icon} 경고 ${data.player}`,
+    redcard: `🟥 퇴장 ${data.player}`,
+    kickoff: `${icon} 킥오프!`,
+    halftime: `${icon} 하프타임`,
+    fulltime: `${icon} 경기 종료`
+  };
+  const bodies = {
+    goal: `${data.hn} ${data.hg}:${data.ag} ${data.an}${data.scorer?' | '+data.scorer:''}${data.min?' ('+data.min+"')":""}`,
+    card: `${data.hn} vs ${data.an}`,
+    redcard: `${data.hn} vs ${data.an}`,
+    kickoff: `${data.hn} vs ${data.an}`,
+    halftime: `${data.hn} ${data.hg}:${data.ag} ${data.an}`,
+    fulltime: `최종 ${data.hn} ${data.hg}:${data.ag} ${data.an}`
+  };
+  pushNotif(titles[type]||'PITCH IN', bodies[type]||'', 'pi-'+type+'-'+matchId);
 }
 
 // ── THEME ──
-function applyTheme(col){const c=col||'#10b981';document.documentElement.style.setProperty('--p',c);document.documentElement.style.setProperty('--ps',`rgba(${parseInt(c.slice(1,3),16)},${parseInt(c.slice(3,5),16)},${parseInt(c.slice(5,7),16)},.12)`);document.documentElement.style.setProperty('--pb',`rgba(${parseInt(c.slice(1,3),16)},${parseInt(c.slice(3,5),16)},${parseInt(c.slice(5,7),16)},.3)`);}
+function applyTheme(col) {
+  const c = col || '#10b981';
+  const r=parseInt(c.slice(1,3),16), g=parseInt(c.slice(3,5),16), b=parseInt(c.slice(5,7),16);
+  document.documentElement.style.setProperty('--p', c);
+  document.documentElement.style.setProperty('--ps', `rgba(${r},${g},${b},.13)`);
+  document.documentElement.style.setProperty('--pb', `rgba(${r},${g},${b},.32)`);
+  // 로고 그라디언트 + 헤더 강조
+  const logo = document.querySelector('.hdr-logo');
+  if(logo) logo.style.background = `linear-gradient(135deg,${c},${lightenColor(c,40)})`;
+  if(logo) { logo.style.webkitBackgroundClip='text'; logo.style.webkitTextFillColor='transparent'; }
+}
+function lightenColor(hex, amt) {
+  let r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+  r=Math.min(255,r+amt); g=Math.min(255,g+amt); b=Math.min(255,b+amt);
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+function changeTeam() {
+  if(confirm('팀을 변경하시겠어요?')) {
+    localStorage.removeItem('pi_sel');
+    location.reload();
+  }
+}
 
 // ── ONBOARDING ──
 function initOb(){
@@ -666,7 +810,7 @@ function startApp(){
   document.getElementById('ob').style.display='none';
   document.getElementById('app').classList.add('on');
   applyTheme(SEL[0].col);
-  document.getElementById('hdr-teams').innerHTML=SEL.map(t=>`<div class="hdr-team"><img src="${t.crest}" onerror="this.style.display='none'"><span>${t.name}</span></div>`).join('');
+  document.getElementById('hdr-teams').innerHTML=SEL.map(t=>`<div class="hdr-team" onclick="changeTeam()" title="팀 변경"><img src="${t.crest}" onerror="this.src='https://ui-avatars.com/api/?name=${t.name.slice(0,2)}&background=1e2328&color=fff&size=44'"><span>${t.name}</span></div>`).join('');
   buildPills();
   curDay=ds(kn());
   loadHome();
@@ -703,19 +847,42 @@ function showGoal(scorer,team,min,hn,an,hg,ag){
   playGoalSfx();
   setTimeout(()=>el.classList.remove('on'),4800);
 }
-function chkGoal(m){
-  const id=m.id;
-  const hg=m.score?.fullTime?.home??m.score?.halfTime?.home??0;
-  const ag=m.score?.fullTime?.away??m.score?.halfTime?.away??0;
-  const s=`${hg}:${ag}`;
-  if(prevSc[id]!==undefined&&prevSc[id]!==s){
-    const isH=parseInt(hg)>parseInt((prevSc[id]||'0').split(':')[0]);
-    const team=isH?(m.homeTeam?.shortName||m.homeTeam?.name):(m.awayTeam?.shortName||m.awayTeam?.name);
-    const goals=m.goals||[];const last=goals[goals.length-1];
-    showGoal(last?.scorer?.name||last?.player?.name||'',team,last?.minute,m.homeTeam?.shortName,m.awayTeam?.shortName,hg,ag);
-    if(watchList.includes(String(id))) pushNotif(`⚽ GOAL! ${team}`,`${m.homeTeam?.shortName} ${hg}:${ag} ${m.awayTeam?.shortName}`,'g'+id);
+// 이벤트 이전 상태 저장
+const prevEvents = {};
+
+function chkGoal(m) {
+  const id = m.id;
+  const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home ?? 0;
+  const ag = m.score?.fullTime?.away ?? m.score?.halfTime?.away ?? 0;
+  const sc2 = `${hg}:${ag}`;
+  const hn = m.homeTeam?.shortName || m.homeTeam?.name || '';
+  const an = m.awayTeam?.shortName || m.awayTeam?.name || '';
+
+  // 골 감지
+  if (prevSc[id] !== undefined && prevSc[id] !== sc2) {
+    const isH = parseInt(hg) > parseInt((prevSc[id]||'0').split(':')[0]);
+    const team = isH ? hn : an;
+    const goals = m.goals || [];
+    const last = goals[goals.length-1];
+    const scorer = last?.scorer?.name || last?.player?.name || '';
+    const min = last?.minute;
+    showGoal(scorer, team, min, hn, an, hg, ag);
+    // 푸시 알림 (골)
+    sendEventNotif('goal', id, {team, hn, an, hg, ag, scorer, min});
   }
-  prevSc[id]=s;
+  prevSc[id] = sc2;
+
+  // 킥오프 감지
+  if (!prevEvents[id]) prevEvents[id] = {};
+  const pe = prevEvents[id];
+  if (!pe.status) {
+    pe.status = m.status;
+  } else if (pe.status !== m.status) {
+    if (m.status === 'IN_PLAY' && pe.status === 'SCHEDULED') sendEventNotif('kickoff', id, {hn, an});
+    if (m.status === 'HALFTIME') sendEventNotif('halftime', id, {hn, an, hg, ag});
+    if (m.status === 'FINISHED' || m.status === 'AWARDED') sendEventNotif('fulltime', id, {hn, an, hg, ag});
+    pe.status = m.status;
+  }
 }
 
 // ── NAV ──
@@ -730,8 +897,8 @@ function swP(name,el){
   if(mbM[name]!==undefined)document.querySelectorAll('.nbi')[mbM[name]]?.classList.add('on');
   if(name==='home')loadHome();
   else if(name==='sched')loadSched();
-  else if(name==='std'){buildPills();loadStd(curStd);}
-  else if(name==='player'){buildPills();loadPlayers(curPLg,curPt);}
+  else if(name==='std'){buildPills();setTimeout(()=>loadStd(curStd),300);}
+  else if(name==='player'){buildPills();setTimeout(()=>loadPlayers(curPLg,curPt),300);}
   else if(name==='ai')loadAI();
   else if(name==='fan')updateFan();
 }
@@ -901,7 +1068,14 @@ function monthGo(v){viewDt.setMonth(viewDt.getMonth()+v);renderMonthDays();}
 function tlg(id){const el=document.getElementById(id),arr=document.getElementById('arr-'+id);if(!el)return;const o=el.style.display!=='none';el.style.display=o?'none':'flex';arr?.classList.toggle('cl',o);}
 
 // ── STANDINGS ──
-function swStd(code,btn){curStd=code;document.querySelectorAll('#std-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadStd(code);}
+let _stdTimer=null;
+function swStd(code,btn){
+  curStd=code;
+  document.querySelectorAll('#std-pills .pill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  if(_stdTimer) clearTimeout(_stdTimer);
+  _stdTimer=setTimeout(()=>loadStd(code),400);
+}
 async function loadStd(code){
   const c=document.getElementById('std-bd');if(!c)return;
   c.innerHTML=`<div class="ldr"><div class="spin"></div><div class="spin-t">순위 불러오는 중...</div></div>`;
@@ -909,13 +1083,18 @@ async function loadStd(code){
   if(code==='KL2'){await loadKLStd(c,293,'K리그 2','https://media.api-sports.io/football/leagues/293.png');return;}
   const lg=LEAGUES.find(l=>l.c===code);
   const d=await fd(`/competitions/${code}/standings`,300000);
-  if(!d?.standings){
-    const msg=d?.message||'데이터 없음';const isRL=msg.toLowerCase().includes('limit')||String(d?.errorCode)==='429';
-    c.innerHTML=`<div class="empty">${isRL?'⏳ 잠시 후 다시 시도':'📡 '+msg}<br><button class="retry" onclick="loadStd('${code}')">다시 시도</button></div>`;
-    if(isRL){let n=12;const t=setInterval(()=>{n--;const b=c.querySelector('.retry');if(b)b.textContent=`자동 재시도 ${n}초`;if(n<=0){clearInterval(t);loadStd(code);}},1000);}
+  if (!d?.standings?.length || !d.standings[0]?.table?.length) {
+    const msg = d?.message || d?.error || '데이터 없음';
+    const isRL = String(d?.errorCode)==='429' || msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('rate');
+    c.innerHTML=`<div class="empty" style="padding:40px;">
+      ${isRL ? '⏳ API 요청 한도 초과' : '📡 ' + msg}<br>
+      <span style="font-size:12px;color:var(--t2);display:block;margin:8px 0;">${isRL?'잠시 후 자동으로 다시 시도합니다':'순위 데이터를 불러올 수 없습니다'}</span>
+      <button class="retry" onclick="loadStd('${code}')">다시 시도</button>
+    </div>`;
+    if(isRL){let n=15;const t=setInterval(()=>{n--;const b=c.querySelector('.retry');if(b)b.textContent=`⏳ 자동 재시도 ${n}초...`;if(n<=0){clearInterval(t);loadStd(code);}},1000);}
     return;
   }
-  const rows=d.standings[0].table,tot=rows.length;
+  const rows=d.standings[0].table, tot=rows.length;
   const fc={W:'var(--p)',D:'var(--am)',L:'var(--red)'};
   c.innerHTML=`${lg?`<div class="std-hdr"><img src="${lg.logo}" onerror="this.style.opacity='.3'"><h3>${lg.n}</h3><small>2025-26 시즌</small></div>`:''}
   <table class="stt">
@@ -944,7 +1123,13 @@ async function loadStd(code){
 async function loadKLStd(c,lgId,lgNm,lgLogo){
   const d=await kl('/standings',{league:lgId,season:KL_SEASON});
   if(!d?.response?.length){c.innerHTML=`<div class="empty">K리그 순위 없음<br><button class="retry" onclick="loadStd('${lgId===292?'KL1':'KL2'}')">다시 시도</button></div>`;return;}
-  const rows=d.response[0].league.standings[0],tot=rows.length;
+  // api-football standings 구조: response[0].league.standings[0]
+  const standingsData = d.response[0]?.league?.standings;
+  if (!standingsData || !standingsData.length) {
+    c.innerHTML=`<div class="empty">순위 데이터 형식 오류<br><button class="retry" onclick="loadStd('${lgId===292?'KL1':'KL2'}')">다시 시도</button></div>`;
+    return;
+  }
+  const rows=standingsData[0],tot=rows.length;
   c.innerHTML=`<div class="std-hdr"><img src="${lgLogo}"><h3>${lgNm}</h3><small>2026 시즌</small></div>
   <table class="stt">
     <tr><th>#</th><th>팀</th><th>경</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th></tr>
@@ -964,7 +1149,14 @@ async function loadKLStd(c,lgId,lgNm,lgLogo){
 }
 
 // ── PLAYERS ──
-function swPLg(c,btn){curPLg=c;document.querySelectorAll('#pl-pills .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadPlayers(c,curPt);}
+let _plTimer=null;
+function swPLg(c,btn){
+  curPLg=c;
+  document.querySelectorAll('#pl-pills .pill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  if(_plTimer) clearTimeout(_plTimer);
+  _plTimer=setTimeout(()=>loadPlayers(c,curPt),400);
+}
 function swPt(type,btn){curPt=type;document.querySelectorAll('#pg-player>div:nth-child(2) .pill').forEach(p=>p.classList.remove('on'));btn.classList.add('on');loadPlayers(curPLg,type);}
 async function loadPlayers(lg,type){
   const c=document.getElementById('pl-bd');if(!c)return;
@@ -972,7 +1164,17 @@ async function loadPlayers(lg,type){
   if(lg==='KL1'||lg==='KL2'){await loadKLPlayers(c,lg==='KL1'?292:293,type);return;}
   const lgObj=LEAGUES.find(l=>l.c===lg);
   const d=await fd(`/competitions/${lg}/scorers?limit=20`,300000);
-  if(!d?.scorers){const msg=d?.message||'데이터 없음';c.innerHTML=`<div class="empty">📡 ${msg}<br><button class="retry" onclick="loadPlayers('${lg}','${type}')">다시 시도</button></div>`;return;}
+  if (!d?.scorers?.length) {
+    const msg = d?.message || d?.error || '데이터 없음';
+    const isRL = String(d?.errorCode)==='429' || msg.toLowerCase().includes('limit');
+    c.innerHTML=`<div class="empty" style="padding:40px;">
+      ${isRL ? '⏳ API 요청 한도 초과' : '📡 ' + msg}<br>
+      <span style="font-size:12px;color:var(--t2);display:block;margin:8px 0;">${isRL?'잠시 후 자동으로 다시 시도합니다':''}</span>
+      <button class="retry" onclick="loadPlayers('${lg}','${type}')">다시 시도</button>
+    </div>`;
+    if(isRL){let n=15;const t=setInterval(()=>{n--;const b=c.querySelector('.retry');if(b)b.textContent=`⏳ 자동 재시도 ${n}초...`;if(n<=0){clearInterval(t);loadPlayers('${lg}','${type}');}},1000);}
+    return;
+  }
   let sc=[...d.scorers];
   if(type==='assists')sc.sort((a,b)=>(b.assists||0)-(a.assists||0));
   c.innerHTML=`${lgObj?`<div class="std-hdr"><img src="${lgObj.logo}" onerror="this.style.opacity='.3'"><h3>${lgObj.n}</h3><small>${type==='scorers'?'득점왕':'도움왕'}</small></div>`:''}
