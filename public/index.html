@@ -667,12 +667,11 @@ async function fd(path,ttl=90000){
   if(!fd._inf)fd._inf={};
   const promise=(async()=>{
     try{
-      let r,d;
-      // Route through Worker (Netlify or Cloudflare)
-      r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(12000)});
-      if(!r.ok)return null;
-      d=await r.json();
-      if(!d)return null;
+      const r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(12000)});
+      // Safe JSON parse — Worker might return HTML on error
+      const txt=await r.text();
+      if(!txt||!txt.trim().startsWith('{')&&!txt.trim().startsWith('['))return null;
+      const d=JSON.parse(txt);
       if(!d.errorCode||d.errorCode===200){sc(path,d);}
       return d;
     }catch(e){console.warn('[fd]',e.message,path);return null;}
@@ -689,8 +688,9 @@ async function klAPI(path,params={}){
     let r,d;
     // Route through Worker
     r=await fetch(`${API}?type=kl&path=${encodeURIComponent(path)}&${qs}`,{signal:AbortSignal.timeout(12000)});
-    if(!r.ok)return null;
-    d=await r.json();
+    const klt=await r.text();
+    if(!klt||!klt.trim().startsWith('{'))return null;
+    d=JSON.parse(klt);
     if(!d||d.errors&&Object.keys(d.errors).length)return null;
     sc(key,d);return d;
   }catch{return null;}
@@ -1059,8 +1059,9 @@ async function renderStd(){
 
   if(!data){
     body.innerHTML=`<div class="err-ban" style="flex-direction:column;align-items:flex-start">
-      <span>⚠ Could not load standings</span>
-      <small style="margin-top:4px;opacity:.6">Check F12 console for details</small>
+      <span>⚠ Cloudflare Worker 응답 없음</span>
+      <small style="margin-top:4px;opacity:.6">Worker가 올바르게 배포됐는지 확인해주세요</small>
+      <small style="opacity:.6">URL: ${API}?type=fd&path=%2Fcompetitions%2F${curLg}%2Fstandings</small>
       <div style="margin-top:8px"><button onclick="renderStd()">🔄 Retry</button></div>
     </div>`;
     return;
@@ -1149,7 +1150,12 @@ async function renderPlayers(){
   body.innerHTML=sk(8);
   if(curPLg==='KL1'||curPLg==='KL2'){await renderKLPlayers(body,curPLg==='KL1'?KL_LG:KL2_LG);return;}
   let data=null;
-  try{const url=`${API}?type=fd&path=${encodeURIComponent('/competitions/'+curPLg+'/scorers?limit=20')}`;const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(r.ok)data=await r.json();}
+  try{
+    const url=`${API}?type=fd&path=${encodeURIComponent('/competitions/'+curPLg+'/scorers?limit=20')}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const txt=await r.text();
+    if(txt&&txt.trim().startsWith('{'))data=JSON.parse(txt);
+  }
   catch(e){body.innerHTML=`<div class="err-ban">⚠ ${e.message}<button onclick="renderPlayers()">Retry</button></div>`;return;}
   if(!data?.scorers?.length){const code=data?.errorCode,msg=data?.message||t('noData')+'';const isRL=code===429||msg.toLowerCase().includes('rate');
     body.innerHTML=`<div class="err-ban">⚠ ${isRL?t('rateLimited'):msg}<button onclick="renderPlayers()">Retry</button></div>`;
