@@ -563,9 +563,10 @@ const KL_KEY  = '421bb1da924d4946cbd3bab1313cc926';
 const FD_BASE = 'https://api.football-data.org/v4';
 const KL_BASE = 'https://v3.football.api-sports.io';
 // CORS proxy — no deployment needed, works everywhere
-const WORKER  = 'https://pitchprofc.skagh662.workers.dev';
-const ON_NETLIFY = location.hostname.endsWith('.netlify.app');
-const API     = ON_NETLIFY ? '/api/football' : WORKER;
+// API: Cloudflare Pages Function at /api/football (same domain, no CORS)
+const API        = '/api/football';
+const FD_DIRECT  = 'https://api.football-data.org/v4';
+const FD_KEY_HDR = 'b00e3059f51741b7add3fcaab7eaadf0';
 const KL_LG=292, KL2_LG=293, KL_SZ=2026;
 
 // ── i18n ──────────────────────────────────
@@ -666,16 +667,27 @@ async function fd(path,ttl=90000){
   if(fd._inf&&fd._inf[path])return fd._inf[path];
   if(!fd._inf)fd._inf={};
   const promise=(async()=>{
-    try{
-      const r=await fetch(`${API}?type=fd&path=${encodeURIComponent(path)}`,{signal:AbortSignal.timeout(12000)});
-      // Safe JSON parse — Worker might return HTML on error
-      const txt=await r.text();
-      if(!txt||!txt.trim().startsWith('{')&&!txt.trim().startsWith('['))return null;
-      const d=JSON.parse(txt);
-      if(!d.errorCode||d.errorCode===200){sc(path,d);}
-      return d;
-    }catch(e){console.warn('[fd]',e.message,path);return null;}
-    finally{if(fd._inf)delete fd._inf[path];}
+    // Helper: safe fetch → JSON
+    async function tryFetch(url,opts){
+      try{
+        const r=await fetch(url,{...opts,signal:AbortSignal.timeout(8000)});
+        const txt=await r.text();
+        if(!txt||(!txt.trim().startsWith('{')&&!txt.trim().startsWith('[')))return null;
+        return JSON.parse(txt);
+      }catch{return null;}
+    }
+
+    let d=null;
+    // 1차: /api/football (Cloudflare Pages Function or Netlify Function)
+    d=await tryFetch(`/api/football?type=fd&path=${encodeURIComponent(path)}`);
+    // 2차: football-data.org 직접 호출 (fallback)
+    if(!d?.competitions&&!d?.matches&&!d?.standings&&!d?.scorers&&!d?.squad&&!d?.errorCode){
+      console.log('[fd] /api/football failed, trying direct...',path);
+      d=await tryFetch(`${FD_DIRECT}${path}`,{headers:{'X-Auth-Token':FD_KEY_HDR}});
+    }
+
+    if(d&&(!d.errorCode||d.errorCode===200)){sc(path,d);}
+    return d||null;
   })();
   fd._inf[path]=promise;
   return promise;
@@ -687,7 +699,7 @@ async function klAPI(path,params={}){
   try{
     let r,d;
     // Route through Worker
-    r=await fetch(`${API}?type=kl&path=${encodeURIComponent(path)}&${qs}`,{signal:AbortSignal.timeout(12000)});
+    r=await fetch(`/api/football?type=kl&path=${encodeURIComponent(path)}&${qs}`,{signal:AbortSignal.timeout(12000)});
     const klt=await r.text();
     if(!klt||!klt.trim().startsWith('{'))return null;
     d=JSON.parse(klt);
@@ -1039,8 +1051,8 @@ async function renderStd(){
     return;
   }
 
-  // Try seasons in order: no param → 2024 → 2025
   let data=null;
+  // Try via fd() which auto-fallbacks to direct API if Worker fails
   const paths=[
     `/competitions/${curLg}/standings`,
     `/competitions/${curLg}/standings?season=2024`,
@@ -1050,7 +1062,6 @@ async function renderStd(){
     const d=await fd(path,600000);
     if(d?.standings?.[0]?.table?.length){data=d;break;}
     if(d?.errorCode===429){
-      // Rate limited
       body.innerHTML=`<div class="err-ban">⏳ Rate limited (429) — auto-retry<div style="margin-top:8px"><button onclick="renderStd()">🔄 Retry</button></div></div>`;
       let n=13;const ti=setInterval(()=>{n--;const b=body.querySelector('button');if(b)b.textContent=`🔄 Retry (${n}s)`;if(n<=0){clearInterval(ti);renderStd();}},1000);
       return;
@@ -1151,7 +1162,7 @@ async function renderPlayers(){
   if(curPLg==='KL1'||curPLg==='KL2'){await renderKLPlayers(body,curPLg==='KL1'?KL_LG:KL2_LG);return;}
   let data=null;
   try{
-    const url=`${API}?type=fd&path=${encodeURIComponent('/competitions/'+curPLg+'/scorers?limit=20')}`;
+    const url=`/api/football?type=fd&path=${encodeURIComponent('/competitions/'+curPLg+'/scorers?limit=20')}`;
     const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
     const txt=await r.text();
     if(txt&&txt.trim().startsWith('{'))data=JSON.parse(txt);
