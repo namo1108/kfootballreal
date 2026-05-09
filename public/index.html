@@ -563,10 +563,8 @@ const KL_KEY  = '421bb1da924d4946cbd3bab1313cc926';
 const FD_BASE = 'https://api.football-data.org/v4';
 const KL_BASE = 'https://v3.football.api-sports.io';
 // CORS proxy — no deployment needed, works everywhere
-// API: Cloudflare Pages Function at /api/football (same domain, no CORS)
-const API        = '/api/football';
-const FD_DIRECT  = 'https://api.football-data.org/v4';
-const FD_KEY_HDR = 'b00e3059f51741b7add3fcaab7eaadf0';
+// Direct API calls — no proxy needed
+// football-data.org supports CORS on free tier
 const KL_LG=292, KL2_LG=293, KL_SZ=2026;
 
 // ── i18n ──────────────────────────────────
@@ -667,27 +665,21 @@ async function fd(path,ttl=90000){
   if(fd._inf&&fd._inf[path])return fd._inf[path];
   if(!fd._inf)fd._inf={};
   const promise=(async()=>{
-    // Helper: safe fetch → JSON
-    async function tryFetch(url,opts){
-      try{
-        const r=await fetch(url,{...opts,signal:AbortSignal.timeout(8000)});
-        const txt=await r.text();
-        if(!txt||(!txt.trim().startsWith('{')&&!txt.trim().startsWith('[')))return null;
-        return JSON.parse(txt);
-      }catch{return null;}
-    }
-
-    let d=null;
-    // 1차: /api/football (Cloudflare Pages Function or Netlify Function)
-    d=await tryFetch(`/api/football?type=fd&path=${encodeURIComponent(path)}`);
-    // 2차: football-data.org 직접 호출 (fallback)
-    if(!d?.competitions&&!d?.matches&&!d?.standings&&!d?.scorers&&!d?.squad&&!d?.errorCode){
-      console.log('[fd] /api/football failed, trying direct...',path);
-      d=await tryFetch(`${FD_DIRECT}${path}`,{headers:{'X-Auth-Token':FD_KEY_HDR}});
-    }
-
-    if(d&&(!d.errorCode||d.errorCode===200)){sc(path,d);}
-    return d||null;
+    // football-data.org 직접 호출 (CORS 지원)
+    const DIRECT='https://api.football-data.org/v4';
+    const KEY='b00e3059f51741b7add3fcaab7eaadf0';
+    try{
+      const r=await fetch(DIRECT+path,{
+        headers:{'X-Auth-Token':KEY},
+        signal:AbortSignal.timeout(10000)
+      });
+      const txt=await r.text();
+      if(!txt||!txt.trim().startsWith('{'))return null;
+      const d=JSON.parse(txt);
+      if(!d.errorCode||d.errorCode===200){sc(path,d);}
+      return d;
+    }catch(e){console.warn('[fd]',e.message,path);return null;}
+    finally{if(fd._inf)delete fd._inf[path];}
   })();
   fd._inf[path]=promise;
   return promise;
@@ -695,15 +687,18 @@ async function fd(path,ttl=90000){
 const fdAll=(paths,ttl)=>Promise.all(paths.map(p=>fd(p,ttl)));
 async function klAPI(path,params={}){
   const qs=new URLSearchParams(params).toString();
-  const key=path+'?'+qs;const c=gc(key,120000);if(c)return c;
+  const key=path+'?'+qs;const c2=gc(key,120000);if(c2)return c2;
+  const KL_DIRECT='https://v3.football.api-sports.io';
+  const KL_KEY='421bb1da924d4946cbd3bab1313cc926';
   try{
-    let r,d;
-    // Route through Worker
-    r=await fetch(`/api/football?type=kl&path=${encodeURIComponent(path)}&${qs}`,{signal:AbortSignal.timeout(12000)});
-    const klt=await r.text();
-    if(!klt||!klt.trim().startsWith('{'))return null;
-    d=JSON.parse(klt);
-    if(!d||d.errors&&Object.keys(d.errors).length)return null;
+    const r=await fetch(`${KL_DIRECT}${path}${qs?'?'+qs:''}`,{
+      headers:{'x-apisports-key':KL_KEY},
+      signal:AbortSignal.timeout(10000)
+    });
+    const txt=await r.text();
+    if(!txt||!txt.trim().startsWith('{'))return null;
+    const d=JSON.parse(txt);
+    if(d.errors&&Object.keys(d.errors).length)return null;
     sc(key,d);return d;
   }catch{return null;}
 }
@@ -1070,9 +1065,8 @@ async function renderStd(){
 
   if(!data){
     body.innerHTML=`<div class="err-ban" style="flex-direction:column;align-items:flex-start">
-      <span>⚠ Cloudflare Worker 응답 없음</span>
-      <small style="margin-top:4px;opacity:.6">Worker가 올바르게 배포됐는지 확인해주세요</small>
-      <small style="opacity:.6">URL: ${API}?type=fd&path=%2Fcompetitions%2F${curLg}%2Fstandings</small>
+      <span>⚠ API 응답 없음 (${curLg} 순위)</span>
+      <small style="margin-top:4px;opacity:.6">잠시 후 다시 시도해주세요</small>
       <div style="margin-top:8px"><button onclick="renderStd()">🔄 Retry</button></div>
     </div>`;
     return;
@@ -1162,8 +1156,10 @@ async function renderPlayers(){
   if(curPLg==='KL1'||curPLg==='KL2'){await renderKLPlayers(body,curPLg==='KL1'?KL_LG:KL2_LG);return;}
   let data=null;
   try{
-    const url=`/api/football?type=fd&path=${encodeURIComponent('/competitions/'+curPLg+'/scorers?limit=20')}`;
-    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const r=await fetch('https://api.football-data.org/v4/competitions/'+curPLg+'/scorers?limit=20',{
+      headers:{'X-Auth-Token':'b00e3059f51741b7add3fcaab7eaadf0'},
+      signal:AbortSignal.timeout(10000)
+    });
     const txt=await r.text();
     if(txt&&txt.trim().startsWith('{'))data=JSON.parse(txt);
   }
